@@ -1,0 +1,79 @@
+{
+  "id": "dc9371b2f0b3dcaf0c927f1aea4df6b2",
+  "target": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+  "requested_target_had_path_query_or_fragment": false,
+  "mode": "live",
+  "scenario": "success",
+  "ai_enabled": true,
+  "state": "completed_with_warnings",
+  "created_at": "2026-10-24T17:02:03.527470+00:00",
+  "updated_at": "2026-10-24T17:02:39.089881+00:00",
+  "completed_at": "2026-10-24T17:02:39.084601+00:00",
+  "authorization": "self_declared_by_submitter",
+  "public_disclosure_acknowledged": true,
+  "providers": {
+    "website_auditor": {
+      "state": "timed_out",
+      "message": "No cached report became available within bounded polling.",
+      "updated_at": "2026-10-24T17:02:29.020011+00:00",
+      "started_at": "2026-10-24T17:02:04.605810+00:00",
+      "http_status": 404,
+      "retry_at": null,
+      "completed_at": "2026-10-24T17:02:29.019810+00:00",
+      "artifact_available": true
+    },
+    "xlogs": {
+      "state": "rate_limited",
+      "message": "Provider returned 429. Retry-After was recorded; no IP/key rotation.",
+      "updated_at": "2026-10-24T17:02:04.771423+00:00",
+      "started_at": "2026-10-24T17:02:04.626221+00:00",
+      "http_status": 429,
+      "retry_at": "2026-10-24T17:03:04.770982+00:00",
+      "completed_at": "2026-10-24T17:02:04.771303+00:00",
+      "artifact_available": true
+    },
+    "vibe_check": {
+      "state": "failed",
+      "message": "Unrecognized/invalid response schema: Vibe result is not a completed module report.",
+      "updated_at": "2026-10-24T17:02:37.624582+00:00",
+      "started_at": "2026-10-24T17:02:04.829120+00:00",
+      "external_scan_id": "af5d4e2dfead4dd09d30cf0a57654a10",
+      "artifact_available": true,
+      "completed_at": "2026-10-24T17:02:37.624471+00:00"
+    },
+    "mdn_observatory": {
+      "state": "completed",
+      "message": "Provider response received.",
+      "updated_at": "2026-10-24T17:02:31.626489+00:00",
+      "started_at": "2026-10-24T17:02:29.029307+00:00",
+      "artifact_available": true,
+      "http_status": 200,
+      "requested_at": "2026-10-24T17:02:29.030971+00:00",
+      "received_at": "2026-10-24T17:02:31.562841+00:00",
+      "scanned_at": "2026-10-24T17:02:29.438Z",
+      "finding_records": 0,
+      "completed_at": "2026-10-24T17:02:31.626262+00:00"
+    },
+    "osv": {
+      "state": "skipped_not_applicable",
+      "message": "No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.",
+      "updated_at": "2026-10-24T17:02:37.638067+00:00",
+      "started_at": "2026-10-24T17:02:37.626208+00:00",
+      "artifact_available": true,
+      "requested_at": "2026-10-24T17:02:37.627417+00:00",
+      "finding_records": 0,
+      "completed_at": "2026-10-24T17:02:37.637796+00:00"
+    }
+  },
+  "warnings": [],
+  "report_available": true,
+  "queue_position": 0,
+  "validation": {
+    "public_addresses_checked": 4,
+    "redirects": 0,
+    "target_http_status": 200,
+    "scope": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "own_requests_ip_pinned": true
+  },
+  "ai_state": "completed"
+}

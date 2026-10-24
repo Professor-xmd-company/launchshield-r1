@@ -1,0 +1,221 @@
+{
+  "events": [
+    {
+      "at": "2026-10-24T17:02:03.530005+00:00",
+      "event": "job_created",
+      "details": {
+        "mode": "live",
+        "authorization": "[REDACTED]",
+        "target": "https://launchshield-r1-professorcj-43cf1823.koyeb.app"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:04.607124+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "website_auditor",
+        "state": "running",
+        "detail": "Provider request in progress."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:04.629029+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "xlogs",
+        "state": "running",
+        "detail": "Provider request in progress."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:04.772582+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "xlogs",
+        "state": "rate_limited",
+        "detail": "Provider returned 429. Retry-After was recorded; no IP/key rotation."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:04.830344+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Provider request in progress."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:05.490376+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Remote scan started."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:05.577652+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "website_auditor",
+        "state": "running",
+        "detail": "No cached report; triggering the documented report route once."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:10.212861+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"running\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"running\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:13.797243+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"running\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"running\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:17.166794+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"running\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:20.306170+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"done\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:23.065989+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"done\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:25.830638+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"done\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:29.026505+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "website_auditor",
+        "state": "timed_out",
+        "detail": "No cached report became available within bounded polling."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:29.030782+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "mdn_observatory",
+        "state": "running",
+        "detail": "Provider request in progress."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:29.133723+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"done\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:31.627870+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "mdn_observatory",
+        "state": "completed",
+        "detail": "Provider response received."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:31.978469+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"done\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:34.884230+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"running\"}, \"cve\": {\"status\": \"done\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:37.620952+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "running",
+        "detail": "Vibe Check modules: {\"headers\": {\"status\": \"done\"}, \"tls\": {\"status\": \"done\"}, \"cors\": {\"status\": \"done\"}, \"apiSurface\": {\"status\": \"done\"}, \"cve\": {\"status\": \"done\"}}"
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:37.626019+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "vibe_check",
+        "state": "failed",
+        "detail": "Unrecognized/invalid response schema: Vibe result is not a completed module report."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:37.627323+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "osv",
+        "state": "running",
+        "detail": "Provider request in progress."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:37.639706+00:00",
+      "event": "provider_state",
+      "details": {
+        "provider": "osv",
+        "state": "skipped_not_applicable",
+        "detail": "No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result."
+      }
+    },
+    {
+      "at": "2026-10-24T17:02:39.091096+00:00",
+      "event": "report_available",
+      "details": {
+        "state": "completed_with_warnings",
+        "unique_findings": 0,
+        "original_records": 0,
+        "ai_state": "completed"
+      }
+    }
+  ]
+}

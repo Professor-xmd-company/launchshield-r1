@@ -1,0 +1,7 @@
+{
+  "http_status": 404,
+  "native": {
+    "ok": false,
+    "error": "No cached report. Run a scan first."
+  }
+}

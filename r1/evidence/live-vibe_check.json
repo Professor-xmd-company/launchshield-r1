@@ -1,0 +1,86 @@
+{
+  "state": "failed",
+  "schema_error": "Vibe result is not a completed module report.",
+  "native": {
+    "scanId": "af5d4e2dfead4dd09d30cf0a57654a10",
+    "url": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "status": "completed",
+    "title": "Scan Results for https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "text": "Scan Results for https://launchshield-r1-professorcj-43cf1823.koyeb.app\nOverall: A (100.0%)\n\nSecurity Headers: 37/37\nTLS/SSL: 30/30 (TLSv1.3)\nCORS Policy: 15/15\nAPI Surface: 10/10 (0 exposures, 0 protected, partial)\nCVE: N/A (not_vulnerable (not_queried))\n\nHighlights:\n- API surface partial: Some API checks timed out. Findings may be incomplete.",
+    "markdown": "*Scan Results for https://launchshield\\-r1\\-professorcj\\-43cf1823\\.koyeb\\.app*\n*Overall*: A (100\\.0%)\n\nSecurity Headers: 37/37\nTLS/SSL: 30/30 (TLSv1.3)\nCORS Policy: 15/15\nAPI Surface: 10/10 (0 exposures, 0 protected, partial)\nCVE: N/A (not_vulnerable (not_queried))\n\n*Highlights*:\n- API surface partial: Some API checks timed out\\. Findings may be incomplete\\.",
+    "remediationBrief": "# Remediation brief — https://launchshield-r1-professorcj-43cf1823.koyeb.app\n\nSource: Vibe Check Scan, external passive scan on 2026-10-24. Grade A (100%).\n\nThese are heuristic findings from outside the app. For each item: confirm it against the codebase first, make the smallest fix, then re-run the scan to verify. Do not treat any single finding as ground truth.\n\nRe-scan when done: `curl -X POST https://vibecheckscan.com/api/scan/start -H 'content-type: application/json' -d '{\"url\":\"https://launchshield-r1-professorcj-43cf1823.koyeb.app\"}'`\n\n## Notes\n- API-surface scan was partial: Some API checks timed out. Findings may be incomplete. Re-run for complete coverage.",
+    "summary": {
+      "scanId": "af5d4e2dfead4dd09d30cf0a57654a10",
+      "url": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+      "timestamp": 1792861325414,
+      "status": "completed",
+      "overallGrade": "A",
+      "overallScore": 99.99999999999999,
+      "modules": {
+        "headers": {
+          "finalUrl": "https://launchshield-r1-professorcj-43cf1823.koyeb.app/",
+          "score": 37,
+          "maxScore": 37,
+          "status": "ok",
+          "missingHeaders": [],
+          "headersToReview": [],
+          "coverage": {
+            "evaluatorVersion": "headers-eval/1",
+            "responseContext": "HTML document, HTTP 200",
+            "limitations": [
+              "HTML meta policies and per-element overrides are not inspected.",
+              "HSTS coverage is limited to the observed host.",
+              "Permissions-Policy is informational in this release."
+            ]
+          }
+        },
+        "tls": {
+          "score": 30,
+          "maxScore": 30,
+          "protocol": "TLSv1.3",
+          "weakestKey": {
+            "subject": "CN=*.koyeb.app",
+            "role": "leaf",
+            "type": "ec",
+            "bits": 256,
+            "curve": "prime256v1",
+            "verdict": "strong",
+            "reasons": []
+          },
+          "keyVerdict": "strong"
+        },
+        "cors": {
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "probeCount": 96
+        },
+        "apiSurface": {
+          "score": 10,
+          "maxScore": 10,
+          "confirmedExposureCount": 0,
+          "protectedSurfaceCount": 0,
+          "secretExposureCount": 0,
+          "credentialReviewCount": 0,
+          "publicClientConfigCount": 0,
+          "partial": true,
+          "note": "Some API checks timed out. Findings may be incomplete."
+        },
+        "cve": {
+          "score": 100,
+          "maxScore": 100,
+          "status": "not_vulnerable",
+          "affectsGrade": false,
+          "isVulnerable": false,
+          "rscDetected": false,
+          "advisorySource": "not_queried",
+          "advisoryCount": 0,
+          "cves": [],
+          "message": "No React Server Components infrastructure was detected. The RSC advisories do not apply to this origin."
+        }
+      }
+    }
+  },
+  "source": "vibe_check",
+  "mode": "live"
+}

@@ -1,5 +1,5 @@
 from __future__ import annotations
-import asyncio,json,time,random,re,hashlib
+import asyncio,json,time,random,re,hashlib,math
 from urllib.parse import quote
 from datetime import datetime,timezone
 from email.utils import parsedate_to_datetime
@@ -14,6 +14,18 @@ class ProviderFailure(Exception):
 
 RULES={'xlogs':(60,3600),'vibe_start':(5,60),'vibe_poll':(100,60),'mdn_observatory':(20,60),'website_trigger':(10,3600),'osv':(60,60)}
 CACHE_TTL={'website_auditor':3600,'xlogs':900,'vibe_check':300,'mdn_observatory':60,'osv':3600}
+def retry_iso(epoch):
+    try:return datetime.fromtimestamp(epoch,timezone.utc).isoformat()
+    except (ValueError,OverflowError,OSError):return None
+
+def retry_seconds(raw,quota):
+    fallback=RULES.get(quota,(60,60))[1]
+    try:seconds=float(raw)
+    except (ValueError,TypeError):
+        try:seconds=parsedate_to_datetime(raw).timestamp()-time.time()
+        except Exception:seconds=fallback
+    return max(1,seconds) if math.isfinite(seconds) else fallback
+
 class ProviderEngine:
     def __init__(self,settings,store,client_factory=None):self.settings,self.store,self.client_factory=settings,store,client_factory
     def reserve(self,name,origin=''):
@@ -22,12 +34,19 @@ class ProviderEngine:
             saved=self.store.read(path,{})
             count,window=RULES.get(name,(60,60));row=saved.get(name,{'attempts':[],'blocked_until':0});attempts=[t for t in row['attempts'] if now-t<window]
             retry=float(row.get('blocked_until',0))
+            configured=getattr(self.settings,'provider_cooldowns',{}).get(name)
+            if configured:
+                try:
+                    stamp=datetime.fromisoformat(str(configured).replace('Z','+00:00'))
+                    if stamp.tzinfo is None:stamp=stamp.replace(tzinfo=timezone.utc)
+                    retry=max(retry,stamp.timestamp())
+                except (TypeError,ValueError,OverflowError):raise ProviderFailure('Invalid server cooldown configuration; request not sent.','unavailable') from None
             if len(attempts)>=count:retry=max(retry,attempts[0]+window)
             host_key=name+'|'+origin
             if name in ('mdn_observatory','website_trigger'):
                 interval=60 if name=='mdn_observatory' else 3600
                 retry=max(retry,saved.get(host_key,0)+interval)
-            if retry>now:raise ProviderFailure('Waiting for provider quota; request was not sent.','rate_limited',retry_at=datetime.fromtimestamp(retry,timezone.utc).isoformat())
+            if retry>now:raise ProviderFailure('Waiting for provider quota; request was not sent.','rate_limited',retry_at=retry_iso(retry))
             row.update(attempts=attempts+[now]);saved[name]=row
             if name in ('mdn_observatory','website_trigger'):saved[host_key]=now
             self.store.write(path,saved)
@@ -57,13 +76,9 @@ class ProviderEngine:
                         if len(content)>self.settings.maximum_response:raise ProviderFailure('Provider response exceeded the size limit.')
                     status=response.status_code
                     if status==429:
-                        raw=response.headers.get('Retry-After','60')
-                        try:seconds=max(1,min(3600,float(raw)))
-                        except ValueError:
-                            try:seconds=max(1,min(3600,parsedate_to_datetime(raw).timestamp()-time.time()))
-                            except Exception:seconds=60
+                        seconds=retry_seconds(response.headers.get('Retry-After'),quota)
                         if quota:self.block(quota,seconds)
-                        raise ProviderFailure('Provider returned 429. Retry-After was recorded; no IP/key rotation.','rate_limited',429,datetime.fromtimestamp(time.time()+seconds,timezone.utc).isoformat())
+                        raise ProviderFailure('Provider returned 429. Retry-After was honored when supplied; otherwise the conservative provider window applies. No IP/key rotation.','rate_limited',429,retry_iso(time.time()+seconds))
                     if status==404:return status,None
                     if status!=200:raise ProviderFailure('Provider returned HTTP '+str(status)+'. No clean result can be inferred.',http_status=status)
                     if 'json' not in response.headers.get('Content-Type','').lower() and kwargs.get('expect_json',True):
@@ -83,7 +98,7 @@ class ProviderEngine:
         async with client:
             async with client.stream('GET','https://websiteauditor.net/report/'+quote(host,safe='')) as response:
                 if response.status_code==429:
-                    self.block('website_trigger',60);raise ProviderFailure('Website Auditor trigger rate limited.','rate_limited',429)
+                    seconds=retry_seconds(response.headers.get('Retry-After'),'website_trigger');self.block('website_trigger',seconds);raise ProviderFailure('Website Auditor trigger rate limited; no trigger retry.','rate_limited',429,retry_iso(time.time()+seconds))
                 if response.status_code not in (200,202):raise ProviderFailure('Website Auditor trigger returned HTTP '+str(response.status_code),http_status=response.status_code)
                 # Do not read/scrape the UI response.
     async def run(self,name,target,mode,scenario,progress,packages=None):
@@ -128,7 +143,9 @@ class ProviderEngine:
                 await progress('running','Vibe Check modules: '+json.dumps(state.get('modules',{}))[:700],external_scan_id=scanid)
                 if state.get('status')=='completed':
                     native=state.get('result')
-                    if not isinstance(native,dict):
+                    # format=agent may inline a summary envelope, not full findings.
+                    # A summary/grade is never treated as a complete evidence report.
+                    if not isinstance(native,dict) or not isinstance(native.get('modules'),dict):
                         _,native=await self.request('GET','https://vibecheckscan.com/api/scan/result','vibe_poll',origin,params={'id':scanid,'format':'full'})
                     break
         elif name=='mdn_observatory':
@@ -146,6 +163,21 @@ class ProviderEngine:
         return result
     def result(self,name,native,requested,mode):
         result={'state':'completed','native':native,'http_status':200,'requested_at':requested,'received_at':utcnow(),'message':'MOCK fixture; no external check ran.' if mode=='mock' else 'Provider response received.','scanned_at':native.get('scannedAt',native.get('scanned_at'))}
+        if name=='vibe_check':
+            result['scanned_at']=native.get('timestamp',result['scanned_at'])
+            warnings=[]
+            modules=native.get('modules')
+            for module_name,module in (modules.items() if isinstance(modules,dict) else ()):
+                if not isinstance(module,dict):continue
+                if module.get('partial') is True or module.get('status') in ('error','timed_out'):
+                    notes=module.get('notes',module.get('note','Provider reported partial/error coverage.'))
+                    warnings.append(module_name+': '+str(notes)[:500])
+                if module_name=='cve' and module.get('advisorySource')=='unavailable':warnings.append('cve: upstream advisory intelligence unavailable; not a clean result.')
+                findings=module.get('findings')
+                if isinstance(findings,dict) and any(isinstance(v,dict) and v.get('assessment')=='unknown' for v in findings.values()):warnings.append(module_name+': one or more assessments are unknown, not passed.')
+            if warnings:
+                result['coverage_warnings']=warnings
+                result['message']='Provider completed with partial/unknown module coverage: '+'; '.join(warnings)
         if name=='website_auditor' and isinstance(native.get('report'),dict):
             result['cache_source']='provider';stamp=native['report'].get('fetchedAt',native.get('cachedAt'));result['cached_at']=native.get('cachedAt');result['scanned_at']=stamp
             try:

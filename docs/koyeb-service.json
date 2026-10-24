@@ -1,0 +1,77 @@
+{
+  "app_id": "2d6db6f0-f8cd-4de3-b6b9-bd06204fc5c6",
+  "name": "web",
+  "definition": {
+    "name": "web",
+    "type": "WEB",
+    "git": {
+      "repository": "github.com/Professor-xmd-company/launchshield-r1",
+      "branch": "main",
+      "docker": {
+        "dockerfile": "Dockerfile"
+      },
+      "no_deploy_on_push": true
+    },
+    "regions": [
+      "fra"
+    ],
+    "instance_types": [
+      {
+        "type": "free"
+      }
+    ],
+    "scalings": [
+      {
+        "min": 1,
+        "max": 1
+      }
+    ],
+    "ports": [
+      {
+        "port": 8080,
+        "protocol": "http"
+      }
+    ],
+    "routes": [
+      {
+        "port": 8080,
+        "path": "/"
+      }
+    ],
+    "env": [
+      {
+        "key": "PORT",
+        "value": "8080"
+      },
+      {
+        "key": "LAUNCHSHIELD_DATA_DIR",
+        "value": "/data/launchshield"
+      },
+      {
+        "key": "LAUNCHSHIELD_LIVE_TARGETS",
+        "value": "https://launchshield-r1-professorcj-43cf1823.koyeb.app"
+      },
+      {
+        "key": "GEMINI_MODEL",
+        "value": "gemini-3.5-flash-lite"
+      },
+      {
+        "key": "GEMINI_API_KEY",
+        "secret": "launchshield-r1-gemini"
+      }
+    ],
+    "health_checks": [
+      {
+        "http": {
+          "port": 8080,
+          "path": "/healthz",
+          "method": "GET"
+        },
+        "grace_period": 15,
+        "interval": 15,
+        "timeout": 5,
+        "restart_limit": 3
+      }
+    ]
+  }
+}

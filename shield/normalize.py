@@ -39,7 +39,7 @@ def normalize(provider,data,origin):
             if not isinstance(m,dict) or not m.get('title'):raise SchemaChanged('Invalid xlogs finding.')
             rows.append(_finding(provider,m.get('vulnId',str(i)),m['title'],str(m.get('severity','unknown')).lower(),{'statements':m.get('statements'),'cwe':m.get('cwe'),'interpretationBasis':m.get('interpretationBasis'),'reviewReasons':m.get('reviewReasons',[])},origin,str(m.get('observationConfidence',m.get('confidence','unknown'))),str(m.get('interpretationConfidence','unknown')),resource=m.get('url',origin),remediation='; '.join(m.get('fixSteps',[])),verification=m.get('verify','')))
     elif provider=='vibe_check':
-        if data.get('status') not in ('completed','done') or not isinstance(data.get('modules'),dict):raise SchemaChanged('Vibe result is not a completed module report.')
+        if data.get('status') not in ('completed','done') or not isinstance(data.get('modules'),dict) or not data['modules']:raise SchemaChanged('Vibe result is not a completed module report.')
         modules=data['modules'];headers=modules.get('headers',{}).get('findings',{})
         if isinstance(headers,dict):
             for name,m in headers.items():

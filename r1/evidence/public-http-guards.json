@@ -1,0 +1,47 @@
+[
+  {
+    "check": "/",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "check": "/static/main.js",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "check": "/static/style.css",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "check": "/static/favicon.svg",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "check": "/login",
+    "http": 404,
+    "expected": 404
+  },
+  {
+    "check": "/register",
+    "http": 404,
+    "expected": 404
+  },
+  {
+    "check": "private target rejected",
+    "http": 422,
+    "expected": 422
+  },
+  {
+    "check": "cross-origin mutation rejected",
+    "http": 403,
+    "expected": 403
+  },
+  {
+    "check": "job ID alone not authorized",
+    "http": 404,
+    "expected": 404
+  }
+]

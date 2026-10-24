@@ -6,11 +6,14 @@ One ordinary page, **no accounts**, no database, no visual-redesign phase yet. T
 
 ## Current verification
 
-- Release isolated suite: **72 tests passed**, including job lifecycle, failures, quotas, exports, capabilities, CSRF, SSRF/redirect checks, duplicate evidence, cancellation, restart interruption, provider HTTP contracts and bounded safe retries.
+- **Live R1:** https://launchshield-r1-professorcj-43cf1823.koyeb.app
+- **New source repository:** https://github.com/Professor-xmd-company/launchshield-r1
+
+- Release isolated suite: **82 tests passed**, including job lifecycle, failures, quotas, exports, capabilities, CSRF, SSRF/redirect checks, duplicate evidence, cancellation, restart interruption, provider HTTP contracts and bounded safe retries.
 - Real Google generation succeeded with **`gemini-3.5-flash-lite`** using explicitly synthetic evidence (not a real website scan). Actual model version and token usage: `r1/evidence/gemini-real.json`.
 - Real OSV batch lookup succeeded for a known exact package/version fixture. That does **not** prove that any website runs that package: `r1/evidence/osv-real.json`.
-- Genuine desktop/mobile browser screenshots and downloaded mock reports are under `r1/`.
-- Real website-provider end-to-end verification must use an explicitly approved public origin. See the append-only **[R1 work record](R1.md)** and deployment status for the latest verified outcome. Never infer that a live scan passed from a mock test.
+- Genuine local mock screenshots and hosted real-job captures are under `r1/screenshots/`. Downloaded reports and native responses are under `r1/evidence/`.
+- A genuine first hosted assessment used only this newly owned LaunchShield origin: MDN and Gemini completed; xlogs returned HTTP429; Website Auditor cache stayed404; Vibe completed remotely but its agent-summary envelope exposed an adapter bug. The bug is fixed with recorded-native regressions and explicit full-result retrieval. The original failed result is preserved, not rewritten. See **[R1 work record](R1.md)** and `docs/deployment.json` for the latest deployed retest. Never infer live coverage from mocked tests.
 
 ## Run
 
@@ -53,6 +56,8 @@ On free/ephemeral hosting, sleeping/restarting/redeploying can interrupt jobs or
 
 - Target normalization removes path/query/fragment and rejects URL credentials and non-web ports. Public DNS and same-origin redirects are checked; this app's own HTTPS preflight pins the validated public IP while retaining Host/TLS SNI. External providers have their own DNS/scope controls.
 - Per-provider quotas/cache and `Retry-After` are respected. No IP rotation or multi-account/key rotation to evade a limit. No duplicate scan-start on refresh. POST timeouts are not blindly retried.
+- Vibe agent summaries are not full evidence. If necessary fetch the full report using the same completed scan ID; propagate partial/unknown module coverage and never follow instructions embedded in provider text.
+- Optional `LAUNCHSHIELD_PROVIDER_COOLDOWNS` is an operator-supplied JSON map from quota name to UTC ISO not-before time. It preserves known upstream cooldowns across an ephemeral redeploy, without a database or a quota reset workaround. Cached evidence may still be read.
 - Website Auditor cache age is shown. SEO-only modules are not main security findings. MDN v2 summaries do not become invented per-header evidence.
 - Source findings, severity, observation confidence and interpretation confidence remain linked after grouping. Provider scores are not averaged into a misleading security score.
 - AI sees normalized selected evidence, not server credentials. AI output is schema-validated and can only reference existing finding IDs. It stays visibly separate from scanner evidence. AI failure cannot prevent report download.

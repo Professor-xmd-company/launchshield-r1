@@ -4,12 +4,40 @@
     "id": 1432395924,
     "full_name": "Professor-xmd-company/launchshield-r1",
     "url": "https://github.com/Professor-xmd-company/launchshield-r1",
-    "private": false
+    "private": false,
+    "release_commit": "010e1798e012c033230ff780e7eadaf9159b6314"
   },
   "hosting": {
     "provider": "Koyeb",
-    "status": "not_yet_deployed"
+    "status": "healthy",
+    "app_id": "2d6db6f0-f8cd-4de3-b6b9-bd06204fc5c6",
+    "app_name": "launchshield-r1",
+    "url": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "region": "fra",
+    "instance_type": "free",
+    "auto_deploy_on_push": false,
+    "gemini_secret_name": "launchshield-r1-gemini",
+    "gemini_secret_id": "d22f2c25-8d00-48f1-824d-4feb215980aa",
+    "service_id": "cd48bc18-6659-413f-8254-ea43618210f1",
+    "deployment_id": "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e",
+    "deployment_state": "HEALTHY",
+    "verified_root_http": 200,
+    "verified_health_http": 200
   },
   "protected_database_app": "database",
-  "owner_approved_old_app_removed": "professor-xmd"
+  "owner_approved_old_app_removed": "professor-xmd",
+  "verification": {
+    "real_job_id": "dc9371b2f0b3dcaf0c927f1aea4df6b2",
+    "real_job_state": "completed_with_warnings",
+    "providers": {
+      "website_auditor": "timed_out",
+      "xlogs": "rate_limited",
+      "vibe_check": "failed",
+      "mdn_observatory": "completed",
+      "osv": "skipped_not_applicable"
+    },
+    "ai_state": "completed",
+    "findings": 0,
+    "http_guard_checks": 9
+  }
 }

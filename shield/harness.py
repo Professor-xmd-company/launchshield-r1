@@ -145,7 +145,7 @@ class JobManager:
                 except Exception:ai={'state':'unavailable','message':'AI failed; original evidence remains available.'}
         states=[r['state'] for r in self.store.get(jid)['providers'].values()]
         successful=any(s in ('completed','cached','stale_result') for s in states)
-        warnings=any(s not in ('completed','cached','skipped_not_applicable') for s in states) or (job['ai_enabled'] and ai['state'] not in ('completed','mock'))
+        warnings=any(s not in ('completed','cached','skipped_not_applicable') for s in states) or any(p.get('coverage_warnings') for p in self.store.get(jid)['providers'].values()) or (job['ai_enabled'] and ai['state'] not in ('completed','mock'))
         final='failed' if not successful else ('completed_with_warnings' if warnings else 'completed')
         self.store.update(jid,state=final,completed_at=utcnow());self.save_report(jid,records,ai)
     def reserve_ai(self):
@@ -156,7 +156,7 @@ class JobManager:
     def build_report(self,jid,records,ai):
         job=self.store.get(jid);findings=deduplicate(records);coverage=[]
         for name,p in job['providers'].items():coverage.append({'provider':name,**p})
-        return {'version':'R1','job_id':jid,'target':job['target'],'mode':job['mode'],'synthetic':job['mode']=='mock','state':job['state'],'created_at':job['created_at'],'completed_at':job.get('completed_at'),'authorization':job['authorization'],'coverage':coverage,'findings':findings,'original_finding_records':redact(records),'counts':dict(Counter(f['severity'] for f in findings)),'coverage_counts':dict(Counter(p['state'] for p in coverage)),'limitations':LIMITATIONS,'warnings':job.get('warnings',[]),'ai':ai,'storage':'Temporary file-backed instance; download reports you need.','security_guarantee':False}
+        return {'version':'R1','job_id':jid,'target':job['target'],'mode':job['mode'],'synthetic':job['mode']=='mock','state':job['state'],'created_at':job['created_at'],'completed_at':job.get('completed_at'),'authorization':job['authorization'],'coverage':coverage,'findings':findings,'original_finding_records':redact(records),'counts':dict(Counter(f['severity'] for f in findings)),'coverage_counts':dict(Counter(p['state'] for p in coverage)),'limitations':LIMITATIONS,'warnings':list(dict.fromkeys(job.get('warnings',[])+[p['provider']+': '+warning for p in coverage for warning in p.get('coverage_warnings',[])])),'ai':ai,'storage':'Temporary file-backed instance; download reports you need.','security_guarantee':False}
     def save_report(self,jid,records,ai):
         report=self.build_report(jid,records,ai);folder=self.store.job_dir(jid)
         self.store.write(folder/'findings.json',report['findings']);self.store.write(folder/'report.json',redact(report))

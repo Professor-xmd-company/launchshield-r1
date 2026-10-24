@@ -1,5 +1,5 @@
 from __future__ import annotations
-import os
+import os,json
 from dataclasses import dataclass,field
 from pathlib import Path
 from datetime import datetime,timezone
@@ -26,6 +26,7 @@ class Settings:
     maximum_response:int=2_000_000
     provider_concurrency:int=2
     ai_calls_per_hour:int=10
+    provider_cooldowns:dict[str,str]=field(default_factory=lambda:json.loads(os.environ.get('LAUNCHSHIELD_PROVIDER_COOLDOWNS','{}')))
     max_queue:int=10
 
 class ScanRequest(BaseModel):

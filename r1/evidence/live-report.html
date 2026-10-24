@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield R1 report</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:1000px;margin:30px auto;padding:0 20px;color:#17202b}table{border-collapse:collapse;width:100%}td,th{padding:9px;border:1px solid #bbc2ca;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f4f6;padding:15px}section{border-top:1px solid #bbc2ca;padding:15px 0}</style><h1>LaunchShield R1 — Passive assessment report</h1><p>https://launchshield-r1-professorcj-43cf1823.koyeb.app · completed_with_warnings</p><p>No guarantee of security. No exploitation was performed.</p><h2>Provider coverage</h2><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Scan timestamp</th></tr><tr><td>website_auditor</td><td>timed_out</td><td>No cached report became available within bounded polling.</td><td>not supplied</td></tr><tr><td>xlogs</td><td>rate_limited</td><td>Provider returned 429. Retry-After was recorded; no IP/key rotation.</td><td>not supplied</td></tr><tr><td>vibe_check</td><td>failed</td><td>Unrecognized/invalid response schema: Vibe result is not a completed module report.</td><td>not supplied</td></tr><tr><td>mdn_observatory</td><td>completed</td><td>Provider response received.</td><td>2026-10-24T17:02:29.438Z</td></tr><tr><td>osv</td><td>skipped_not_applicable</td><td>No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.</td><td>not supplied</td></tr></table></div><h2>Findings and evidence</h2><h2>AI interpretation — separate from observed evidence</h2><pre>{
+  &quot;state&quot;: &quot;completed&quot;,
+  &quot;model&quot;: &quot;gemini-3.5-flash-lite&quot;,
+  &quot;model_version&quot;: &quot;gemini-3.5-flash-lite&quot;,
+  &quot;generated_at&quot;: &quot;2026-10-24T17:02:39.084019+00:00&quot;,
+  &quot;usage&quot;: {
+    &quot;promptTokenCount&quot;: 1419,
+    &quot;candidatesTokenCount&quot;: 312,
+    &quot;totalTokenCount&quot;: 1731,
+    &quot;promptTokensDetails&quot;: [
+      {
+        &quot;modality&quot;: &quot;TEXT&quot;,
+        &quot;tokenCount&quot;: 1419
+      }
+    ],
+    &quot;serviceTier&quot;: &quot;standard&quot;
+  },
+  &quot;data&quot;: {
+    &quot;summary&quot;: &quot;The passive assessment for https://launchshield-r1-professorcj-43cf1823.koyeb.app completed with zero recorded findings. Several coverage limitations, rate limits, and timeouts occurred during provider polling.&quot;,
+    &quot;analysis&quot;: [],
+    &quot;limitations&quot;: [
+      &quot;Passive/read-only, public and unauthenticated assessment; not a penetration test.&quot;,
+      &quot;No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.&quot;,
+      &quot;No combined security score is calculated from incompatible provider scores.&quot;,
+      &quot;Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.&quot;,
+      &quot;Only this application’s own validation requests are IP-pinned; external providers use their own DNS and scope controls.&quot;,
+      &quot;No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.&quot;,
+      &quot;Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.&quot;,
+      &quot;Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked.&quot;,
+      &quot;Website auditor provider timed out waiting for a cached report.&quot;,
+      &quot;Xlogs provider was rate-limited with a 429 status code.&quot;,
+      &quot;Vibe check provider failed due to an unrecognized or invalid response schema.&quot;,
+      &quot;OSV provider was skipped because no reliable package ecosystem or exact-version evidence was present.&quot;
+    ]
+  },
+  &quot;label&quot;: &quot;AI interpretation; not independently verified scanner evidence&quot;
+}</pre><h2>Limitations</h2><ul><li>Passive/read-only, public and unauthenticated assessment; not a penetration test.</li><li>No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.</li><li>No combined security score is calculated from incompatible provider scores.</li><li>Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.</li><li>Only this application’s own validation requests are IP-pinned; external providers use their own DNS and scope controls.</li><li>No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.</li><li>Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.</li><li>Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked.</li></ul></html>
