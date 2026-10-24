@@ -5,7 +5,7 @@
     "full_name": "Professor-xmd-company/launchshield-r1",
     "url": "https://github.com/Professor-xmd-company/launchshield-r1",
     "private": false,
-    "release_commit": "869ffca6cfd24b770cbcb88c67c4415995173578",
+    "release_commit": "9f74ea1a384293bad975ac755edbf085bb740f56",
     "initial_release_commit": "010e1798e012c033230ff780e7eadaf9159b6314",
     "evidence_commit": "75c926449c00e8c37cef372241f896462adcb59a"
   },
@@ -21,28 +21,32 @@
     "gemini_secret_name": "launchshield-r1-gemini",
     "gemini_secret_id": "d22f2c25-8d00-48f1-824d-4feb215980aa",
     "service_id": "cd48bc18-6659-413f-8254-ea43618210f1",
-    "deployment_id": "0571263c-a143-4044-bb5c-2140825c45a8",
+    "deployment_id": "26d65f6a-01ba-4318-a378-7c60a08243de",
     "deployment_state": "HEALTHY",
     "verified_root_http": 200,
     "verified_health_http": 200,
-    "requested_release_commit": "869ffca6cfd24b770cbcb88c67c4415995173578",
+    "requested_release_commit": "9f74ea1a384293bad975ac755edbf085bb740f56",
     "previous_deployments": [
       "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e",
-      "e31d7b8d-d4cf-45ee-bd51-bb24de19b286"
+      "e31d7b8d-d4cf-45ee-bd51-bb24de19b286",
+      "0571263c-a143-4044-bb5c-2140825c45a8"
     ],
     "provider_cooldowns": {
       "xlogs": "2026-10-24T18:02:39.084601+00:00",
       "website_trigger": "2026-10-24T18:02:39.084601+00:00"
-    }
+    },
+    "public_targets_enabled": true,
+    "mock_execution_enabled": false,
+    "user_flow": "website_link_test_automatic_ai_report"
   },
   "protected_database_app": "database",
   "owner_approved_old_app_removed": "professor-xmd",
   "verification": {
-    "evidence_prefix": "live-final",
-    "real_job_id": "e2e25fc452e9a5f24bce4d1ed636fe4f",
+    "evidence_prefix": "simple-real-only",
+    "real_job_id": "5d6028ce93d5d5aa5877df78a309889f",
     "real_job_state": "completed_with_warnings",
     "providers": {
-      "website_auditor": "rate_limited",
+      "website_auditor": "timed_out",
       "xlogs": "rate_limited",
       "vibe_check": "completed",
       "mdn_observatory": "completed",
@@ -51,22 +55,33 @@
     "ai_state": "completed",
     "findings": 1,
     "http_guard_checks": 9,
-    "checked_at": "2026-10-24T17:34:32.709534+00:00",
-    "isolated_tests_passed": 82,
+    "isolated_tests_passed": 100,
+    "production_mock_post_http": 422,
+    "click_through_consent_verified": true,
+    "automatic_ai_verified": true,
     "browser": {
-      "desktop_screenshot": "r1/screenshots/koyeb-completed-desktop.png",
-      "mobile_screenshot": "r1/screenshots/koyeb-completed-mobile.png",
-      "mobile_viewport_screenshot": "r1/screenshots/koyeb-mobile-viewport.png",
+      "initial_inputs": 1,
+      "initial_action": "Test",
+      "mode_selectors": 0,
+      "checkboxes": 0,
+      "raw_code_blocks": 0,
+      "automatic_report_cards": true,
+      "desktop_screenshot": "r1/screenshots/simple-real-only-report-desktop.png",
+      "mobile_screenshot": "r1/screenshots/simple-real-only-report-mobile.png",
       "mobile_viewport_width": 390,
       "mobile_document_width": 390,
-      "provider_table_scroll_width": 610,
-      "provider_table_viewport_width": 342,
+      "scan_post_count_including_reload": 1,
+      "same_job_after_reload": true,
       "console_errors": 0,
       "console_warnings": 0,
-      "reload_same_job": true,
-      "scan_start_posts_in_browser_session": 1,
-      "actual_json_download_bytes": 8375,
-      "actual_html_download_bytes": 7848
+      "screenshots_captured_and_inspected": true,
+      "json_download_bytes": 7963,
+      "html_download_bytes": 6384,
+      "downloads_match_server_evidence": true
     }
+  },
+  "upstream_cooldowns": {
+    "xlogs": "2026-10-24T19:10:28.625821+00:00",
+    "website_trigger": "2026-10-24T19:11:01.962677+00:00"
   }
 }

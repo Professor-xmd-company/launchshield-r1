@@ -43,7 +43,7 @@ The application needs only its Gemini runtime secret. It does not need GitHub, K
 - **100 isolated tests passed**: lifecycle, provider contracts, real-only defaults, production mock rejection, automatic AI, public submission permission, DNS/SSRF/redirect guards, private capabilities, exports, cache age, quota handling and readable/escaped reports.
 - Tests inject fixtures/transports. They do not mean100 websites were scanned and need no production key.
 - Genuine previous owned-origin assessments verified MDN, full Vibe retrieval and Gemini. They also exposed actual provider limits/failures and a corrected Vibe agent-summary contract. Original failures remain preserved rather than rewritten.
-- The simplified real-only UI is being reverified against the deployed revision; actual current outcome, screenshots and source pin are in `docs/deployment.json` and the append-only R1 record. Do not treat a fixture/test run as a live scan.
+- The simplified real-only UI was genuinely tested live: one bare hostname → one Test click → real MDN/Vibe results → Gemini overview and finding cards automatically. Website Auditor timed out and xlogs was rate-limited; both gaps are visible. Actual source pin, screenshots and measurements are in `docs/deployment.json` and the append-only R1 record. No fixture was presented as a live result.
 
 ```sh
 python -m pip install -r requirements-test.txt

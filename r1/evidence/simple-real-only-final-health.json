@@ -1,0 +1,17 @@
+{
+  "root_http": 200,
+  "health_http": 200,
+  "health": {
+    "ok": true,
+    "revision": "R1",
+    "accounts": false,
+    "database": false,
+    "storage": "temporary files",
+    "gemini_configured": true
+  },
+  "execution_mode": "live",
+  "public_targets_enabled": true,
+  "mock_execution_enabled": false,
+  "runtime_code_pin": "9f74ea1a384293bad975ac755edbf085bb740f56",
+  "deployment_id": "26d65f6a-01ba-4318-a378-7c60a08243de"
+}

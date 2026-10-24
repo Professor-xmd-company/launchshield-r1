@@ -1,0 +1,20 @@
+{
+  "root_http": 200,
+  "health_http": 200,
+  "health": {
+    "ok": true,
+    "revision": "R1",
+    "accounts": false,
+    "database": false,
+    "storage": "temporary files",
+    "gemini_configured": true
+  },
+  "security_headers": {
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'",
+    "Strict-Transport-Security": "max-age=86400",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer"
+  },
+  "build_source": "9f74ea1a384293bad975ac755edbf085bb740f56",
+  "seconds_observed": 12.11
+}

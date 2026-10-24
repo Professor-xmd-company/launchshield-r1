@@ -1,0 +1,8 @@
+{
+  "state": "rate_limited",
+  "error": "Provider returned 429. Retry-After was honored when supplied; otherwise the conservative provider window applies. No IP/key rotation.",
+  "http_status": 429,
+  "retry_at": "2026-10-24T19:10:28.625821+00:00",
+  "source": "xlogs",
+  "mode": "live"
+}

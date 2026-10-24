@@ -1,0 +1,8 @@
+{
+  "state": "timed_out",
+  "error": "No cached report became available within bounded polling.",
+  "http_status": 404,
+  "retry_at": null,
+  "source": "website_auditor",
+  "mode": "live"
+}

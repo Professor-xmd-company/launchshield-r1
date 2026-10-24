@@ -1,0 +1,16 @@
+### Result
+{
+  "viewport": 390,
+  "documentWidth": 390,
+  "inputs": 1,
+  "selects": 0,
+  "checkboxes": 0,
+  "rawCodeBlocks": 0,
+  "reportVisible": true,
+  "aiOverview": "This assessment provides a passive, read-only review of your website. One potential TLS certificate signal was reported and requires verification before any action is taken.",
+  "progressHidden": true
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({viewport:innerWidth,documentWidth:document.documentElement.scrollWidth,inputs:document.querySelectorAll(\'input\').length,selects:document.querySelectorAll(\'select\').length,checkboxes:document.querySelectorAll(\'input[type=checkbox]\').length,rawCodeBlocks:document.querySelectorAll(\'pre\').length,reportVisible:!document.getElementById(\'report\').hidden,aiOverview:document.getElementById(\'overview-text\').textContent,progressHidden:document.getElementById(\'progress\').hidden})');
+```

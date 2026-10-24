@@ -1,0 +1,8 @@
+{
+  "revision": "R1",
+  "execution_mode": "live",
+  "public_targets_enabled": true,
+  "mock_execution_enabled": false,
+  "gemini_configured": true,
+  "gemini_model": "gemini-3.5-flash-lite"
+}

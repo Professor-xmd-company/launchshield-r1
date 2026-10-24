@@ -1,0 +1,6 @@
+### Result
+{"jobId":"5d6028ce93d5d5aa5877df78a309889f","reportVisible":true,"progressHidden":true,"urlField":"https://launchshield-r1-professorcj-43cf1823.koyeb.app"}
+### Ran Playwright code
+```js
+await (async page => {await page.getByRole('heading',{name:'Your website report',exact:true}).waitFor({state:'visible',timeout:30000});return await page.evaluate(() => ({jobId:JSON.parse(sessionStorage.getItem('ls_last')||'null')?.id,reportVisible:!document.getElementById('report').hidden,progressHidden:document.getElementById('progress').hidden,urlField:document.getElementById('website').value}));})(page);
+```

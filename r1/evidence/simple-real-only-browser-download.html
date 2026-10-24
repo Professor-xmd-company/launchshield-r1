@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield report</title><style>body{font:15px/1.65 system-ui,sans-serif;max-width:920px;margin:30px auto;padding:0 20px;color:#182534;overflow-wrap:anywhere;background:#f6f8fb}h1{line-height:1.2}article,.overview,.coverage{background:white;border:1px solid #dce3ed;border-radius:10px;padding:22px;margin:16px 0}.heading{display:flex;gap:14px;align-items:start;justify-content:space-between}.heading h3{margin:0}.heading span{font-size:12px;border:1px solid #ddd;padding:2px 8px;border-radius:5px}.muted{color:#657383;font-size:13px}h4{margin-bottom:4px}p{margin-top:7px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:#f1f4f8;padding:12px}summary{cursor:pointer;color:#5a6c80;font-size:13px}table{width:100%;border-collapse:collapse}td,th{padding:8px;border:1px solid #dce3ed;text-align:left;vertical-align:top}.warning{background:#fff7e7;border:1px solid #eedfc1;padding:12px 18px;border-radius:8px}</style><p class="muted">LaunchShield R1</p><h1>Website security report</h1><p>https://launchshield-r1-professorcj-43cf1823.koyeb.app</p><p class="muted">Passive, read-only assessment. No exploitation or security guarantee.</p><section class="overview"><h2>AI overview</h2><p>This assessment provides a passive, read-only review of your website. One potential TLS certificate signal was reported and requires verification before any action is taken.</p><p class="muted">AI explanation is interpretation, not independently verified scanner evidence.</p></section><div class="warning"><strong>Coverage warnings</strong><ul><li>vibe_check: apiSurface: [&#x27;Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.&#x27;]</li></ul></div><article><div class="heading"><h3>TLS configuration signal: certExpiry</h3><span>medium</span></div><p class="muted">Reported by vibe_check. Verify before making changes.</p><p>AI interpretation: The provider reported a potential signal regarding the TLS certificate expiration. This provider-reported potential signal is unverified and should not be treated as a confirmed issue.</p><h4>Verify first</h4><p>Verify the current certificate expiration date directly using standard tools or your hosting dashboard before making any configuration changes.</p><h4>Suggested next step</h4><p>Do not order immediate certificate renewal based only on this unconfirmed provider signal.</p><details><summary>Source evidence and confidence</summary><pre>{
+  &quot;id&quot;: &quot;f_ee429414a376dbf08470&quot;,
+  &quot;type&quot;: &quot;tls:certexpiry&quot;,
+  &quot;title&quot;: &quot;TLS configuration signal: certExpiry&quot;,
+  &quot;severity&quot;: &quot;medium&quot;,
+  &quot;resource&quot;: &quot;https://launchshield-r1-professorcj-43cf1823.koyeb.app&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;provider&quot;: &quot;vibe_check&quot;,
+      &quot;native_id&quot;: &quot;tls:certExpiry&quot;,
+      &quot;type&quot;: &quot;tls:certexpiry&quot;,
+      &quot;title&quot;: &quot;TLS configuration signal: certExpiry&quot;,
+      &quot;severity&quot;: &quot;medium&quot;,
+      &quot;provider_severity&quot;: null,
+      &quot;resource&quot;: &quot;https://launchshield-r1-professorcj-43cf1823.koyeb.app&quot;,
+      &quot;observation_confidence&quot;: &quot;provider_reported&quot;,
+      &quot;interpretation_confidence&quot;: &quot;potential&quot;,
+      &quot;evidence&quot;: {
+        &quot;valid&quot;: false,
+        &quot;daysUntilExpiry&quot;: 0,
+        &quot;score&quot;: 0
+      },
+      &quot;remediation&quot;: &quot;&quot;,
+      &quot;verification&quot;: &quot;&quot;,
+      &quot;scanned_at&quot;: 1792865429144,
+      &quot;requested_at&quot;: &quot;2026-10-24T18:10:28.634029+00:00&quot;,
+      &quot;mode&quot;: &quot;live&quot;
+    }
+  ],
+  &quot;confidence&quot;: {
+    &quot;observation&quot;: &quot;provider_reported&quot;,
+    &quot;interpretation&quot;: &quot;potential&quot;
+  },
+  &quot;overlap_count&quot;: 1,
+  &quot;note&quot;: &quot;Related signals grouped; original provider records and distinct confidence fields retained.&quot;
+}</pre></details></article><section class="coverage"><h2>What was checked</h2><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Observation time</th></tr><tr><td>website_auditor</td><td>timed_out</td><td>No cached report became available within bounded polling.</td><td>not supplied</td></tr><tr><td>xlogs</td><td>rate_limited</td><td>Provider returned 429. Retry-After was honored when supplied; otherwise the conservative provider window applies. No IP/key rotation.</td><td>not supplied</td></tr><tr><td>vibe_check</td><td>completed</td><td>Provider completed with partial/unknown module coverage: apiSurface: [&#x27;Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.&#x27;]</td><td>1792865429144</td></tr><tr><td>mdn_observatory</td><td>completed</td><td>Provider response received.</td><td>2026-10-24T18:10:51.006Z</td></tr><tr><td>osv</td><td>skipped_not_applicable</td><td>No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.</td><td>not supplied</td></tr></table></div><details><summary>Report limitations</summary><ul><li>Passive/read-only, public and unauthenticated assessment; not a penetration test.</li><li>No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.</li><li>No combined security score is calculated from incompatible provider scores.</li><li>Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.</li><li>Only this application’s own validation requests are IP-pinned; external providers use their own DNS and scope controls.</li><li>No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.</li><li>Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.</li><li>Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked.</li></ul></details></section><p class="muted">Temporary file-backed report. Download a copy to keep it.</p></html>

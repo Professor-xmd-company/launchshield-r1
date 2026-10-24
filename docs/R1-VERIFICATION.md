@@ -1,67 +1,52 @@
-# LaunchShield R1 — Hali ya uwasilishaji
+# R1 — simple real-only website testing
 
-**24 Oktoba 2026 · Logic-first prototype · si full pentest**
+## Current website
 
-## Fungua
+https://launchshield-r1-professorcj-43cf1823.koyeb.app
 
-- **Website live:** https://launchshield-r1-professorcj-43cf1823.koyeb.app
-- **Repo mpya:** https://github.com/Professor-xmd-company/launchshield-r1
-- **Rekodi yote ya R1:** https://github.com/Professor-xmd-company/launchshield-r1/blob/main/R1.md
-- **Code inayotumika Koyeb:** `869ffca6cfd24b770cbcb88c67c4415995173578`.
+**Website link → Test → real read-only checks → automatic AI report cards on the same page.**
 
-Page moja ya kawaida imejengwa: hakuna signup/login/accounts, hakuna database, wala redesign kubwa. Koyeb deployment ni **HEALTHY**; `/` na `/healthz` zimerudisha **HTTP 200**. Instance ni free, moja tu kwa wakati, na inafuata sleep policy ya Koyeb. Hakuna paid upgrade au VPS iliyotumika.
+One blank website-link field and one Test button initially. No execution/scenario selectors, permission checkboxes, AI switch, provider dashboard, raw AI JSON, manual report generation or accounts. Clicking Test attests to the plainly displayed ownership/permission and public-provider disclosure. Accepts authorized public website origins, not just LaunchShield itself. Bare hostnames automatically receive HTTPS.
 
-## Vipimo vilivyofanyika
+## Actual deployed test
 
-- **82 isolated tests zimepita**; hizi hutumia mocks/fixtures na recorded-native responses, si madai kwamba websites 82 zimescaniwa.
-- **Checks 9 za HTTP halisi zimepita:** page/assets, routes zisizopo za accounts, private-target rejection, cross-origin protection, na kutoruhusu kusoma ripoti kwa job ID pekee.
-- Assessments halisi zimetumia **LaunchShield hii mpya yenyewe tu**, si app/domain za zamani wala private preview.
-- Gemini **`gemini-3.5-flash-lite`** imezalisha explanations halisi. Key iko backend kupitia runtime secret; si frontend, README au commit.
-- Nimechukua na kufungua screenshots halisi za desktop na simu. Tatizo la maandishi kupita upana wa simu lilirekebishwa na ku-deployiwa: viewport 390px, document 390px. Jedwali la providers pekee lina scroll yake.
-- Nimebonyeza downloads kwenye browser: JSON **8,375 bytes**, HTML **7,848 bytes**; yaliyopakuliwa yamelingana na ripoti ya server.
-- Reload imerudisha job ileile bila kuanzisha scan nyingine. Browser session imeonyesha POST moja ya kuanzisha scan na **console errors 0/warnings 0**.
+- Runtime code: `9f74ea1a384293bad975ac755edbf085bb740f56`.
+- Same existing app/service; deployment `26d65f6a-01ba-4318-a378-7c60a08243de`, healthy/root200/health200.
+- Runtime: real execution, public targets enabled, production mock execution disabled, Gemini configured. A tampered mock POST was actually rejected422 without a synthetic job.
+- Browser job `5d6028ce93d5d5aa5877df78a309889f`: entered the owned LaunchShield hostname without HTTPS and clicked Test exactly once. No other person's website was scanned.
+- Real MDN and Vibe reports returned. Website Auditor timed out; xlogs returned429. OSV not applicable because no reliable exact package version was detected.
+- Gemini actually completed. Its overview and finding card appeared automatically without a second user action.
+- Finished with partial coverage, honestly displayed as **Limited coverage /2 of4 website reports received**. No fake fallback or overall secure score.
+- One provider-reported potential TLS signal remains unconfirmed. The AI says verify first and do not order immediate certificate renewal. An independent CA/hostname-verified TLS check previously showed expiry2027-01-20, contradicting the potential Vibe signal; no certificate configuration was changed.
 
-## Matokeo halisi ya providers — coverage bado ina mapungufu
+## Genuine browser evidence
 
-| Provider | Matokeo yaliyothibitishwa |
-|---|---|
-| MDN Observatory | Ripoti halisi imepokelewa. Hii si uthibitisho wa usalama wote wa app. |
-| Vibe Check Scan | Full result imepokelewa baada ya kurekebisha agent-summary contract. API-surface coverage ni partial; timeouts/path limits zimehifadhiwa. |
-| xlogs | Jaribio la kwanza lilirudisha HTTP 429. Cooldown imeheshimiwa hata baada ya redeploy; hakuna IP/key/account rotation. |
-| Website Auditor | Cached report iliendelea kurudisha 404 baada ya trigger moja na bounded polling. Trigger haijarudiwa ndani ya cooldown. |
-| OSV | Imekuwa `skipped_not_applicable`: hakuna ushahidi wa kuaminika wa exact package/version. Hii si clean vulnerability result. Real OSV fixture lookup ya awali imehifadhiwa tofauti. |
-| Gemini | Explanation halisi imekamilika; imetenganishwa na scanner evidence. AI haizuii downloads ikishindwa. |
+All captured from the actual deployed website and visually inspected:
 
-Hali ya assessment ya mwisho ni **`completed_with_warnings`**, si “providers zote zimepita.”
+- `r1/screenshots/simple-real-only-empty-desktop.png`
+- `r1/screenshots/simple-real-only-progress.png`
+- `r1/screenshots/simple-real-only-report-desktop.png`
+- `r1/screenshots/simple-real-only-report-mobile.png`
+- `r1/screenshots/simple-real-only-mobile-viewport.png`
 
-### Tahadhari kuhusu TLS signal
+Mobile viewport/document width390/390, no horizontal page overflow. Field1, selectors0, checkboxes0, raw code blocks0. Browser console0errors/0warnings.
 
-Vibe imeripoti `certExpiry` kama **provider-reported/potential**, si vulnerability iliyothibitishwa. TLS handshake moja ya kujitegemea ilifaulu CA/hostname verification na kuonyesha certificate expiry **20 Januari 2027**. Huo ni ushahidi unaokinzana unaohitaji review; haujafutwa au kufichwa. **Usichukulie pendekezo la AI la kurekebisha certificate kuwa uthibitisho au idhini ya kubadilisha Koyeb-managed TLS.** Hakuna certificate iliyobadilishwa.
+Actual browser downloads match server evidence exactly: HTML6384bytes, JSON7963bytes. HTML is a readable AI overview/finding-card report. JSON retains normalized source evidence.
 
-## Jinsi ya kujaribu
+Reload automatically retrieved the same stored job/report; browser network log contains only the original1scan POST. An early measurement sampled while the asynchronous report fetch was pending; that transient evidence is preserved. Waiting for the visible report heading returned the actual same job ID, reportVisible=true and progressHidden=true. A subsequent audit assertion assumed spaced JSON, but the CLI returned compact JSON; parsing its actual JSON confirmed success. No new scan or manual report loading was used.
 
-1. Fungua website. **Mock fixtures** zina scenarios 8 bila external scans.
-2. **Real external providers** kwa R1 hii imewekewa allowlist ya origin ya LaunchShield yenyewe. Origin nyingine inahitaji approval na server allowlist; checkbox peke yake haitoi ruhusa ya kuscan domain nyingine.
-3. Thibitisha ownership/permission na public/cached provider visibility kabla ya real assessment.
-4. Angalia actual provider states, evidence/confidence na timestamps; pakua ripoti unayohitaji.
+## Automated verification
 
-## Ulinzi wa resources na limitations
+**100 isolated tests passed**, Python compile and JS syntax checks passed.18 added contracts cover real/AI defaults, production mock rejection, public input, permission/disclosure, private/mixed DNS and redirect rejection, the one-input page and readable escaped HTML. Existing82 remain green.
 
-- **`professor-xmd` pekee imefutwa kwa idhini yako**, na GET yake imethibitishwa 404.
-- `database` app pamoja na service yake ya awali zipo; zote zimethibitishwa HTTP 200. Supabase, repos nyingine na existing tokens hazijaguswa.
-- Hakuna database ya LaunchShield: ripoti ni temporary per-job files. Sleep/restart/redeploy au expiry inaweza kuzipoteza. Browser history si report database; hakuna permanent archive/recovery guarantee.
-- Hii ni passive/read-only, public/unauthenticated assessment; hakuna terminal, exploitation, ZAP/Nuclei, authenticated scan au overall security guarantee.
+These are injected fixture/transport tests, not100 live websites or hosted demo modes. First expanded run caught consent metadata being secret-redacted; renamed the safe enum to `consent_method` without weakening Authorization-header redaction. All meaningful failures/fixes remain recorded under R1.
 
-## Mahali pa ushahidi kwenye repo/workspace
+## Limits and protections
 
-- `R1.md`, `r1/events.jsonl` — hatua, matokeo, failures na marekebisho ya R1.
-- `r1/evidence/tests-release.txt` / `.xml` — 82 passing isolated tests.
-- `r1/evidence/live-final-*` — actual final job, provider-native artifacts, events na exports.
-- `r1/evidence/browser-download-final.json` / `.html` — downloads halisi za Chromium.
-- `r1/evidence/browser-final-*` — layout, reload, requests na console checks.
-- `r1/evidence/tls-independent-check.json` — independent TLS observation.
-- `r1/evidence/protected-resources-final.json` — scoped cleanup/protection/free-quota verification.
-- `r1/screenshots/koyeb-completed-desktop.png`, `koyeb-completed-mobile.png`, `koyeb-mobile-viewport.png` — final inspected screenshots.
-- `docs/deployment.json`, `docs/koyeb-service.json` — actual resource/config metadata; hakuna secret value.
+Provider results can be unavailable, stale, partial or wrong. OSV skipped is not a clean result. AI interpretation is not scanner evidence. No exploitation or security guarantee.
 
-**R1 imewasilishwa kama prototype inayofanya kazi, yenye limitations zilizo wazi. Urembo wa full product bado haujafanywa, kama ulivyoelekeza.**
+Public DNS/private-address checks, IP pinning and single-origin redirects remain enforced. Anonymous private capabilities, CSRF/origin guards and bounded quotas remain active. Newly observed provider cooldowns are recorded for future same-service updates; the current pod retains its private quota files. No extra scan, redeploy or IP/key/account rotation was used to bypass failures.
+
+One existing free Koyeb instance/worker, native min0/max1sleep policy. No paid upgrade, database or extra app/service. Other protected workloads, repositories and shared secrets were not altered. Reports are temporary and may disappear on restart/sleep/redeploy/expiry: download a copy.
+
+Runtime remains pinned to the verified code; evidence-only Git pushes do not deploy. See `R1.md`, `r1/events.jsonl`, `docs/deployment.json` and `r1/evidence/simple-real-only-*`. Older harness screenshots are historical, not the current public UI.

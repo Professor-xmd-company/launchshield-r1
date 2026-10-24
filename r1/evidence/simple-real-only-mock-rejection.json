@@ -1,0 +1,5 @@
+{
+  "http_status": 422,
+  "detail": "Mock execution is not available on this website.",
+  "synthetic_job_created": false
+}
