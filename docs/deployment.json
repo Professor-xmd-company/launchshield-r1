@@ -6,7 +6,8 @@
     "url": "https://github.com/Professor-xmd-company/launchshield-r1",
     "private": false,
     "release_commit": "869ffca6cfd24b770cbcb88c67c4415995173578",
-    "initial_release_commit": "010e1798e012c033230ff780e7eadaf9159b6314"
+    "initial_release_commit": "010e1798e012c033230ff780e7eadaf9159b6314",
+    "evidence_commit": "75c926449c00e8c37cef372241f896462adcb59a"
   },
   "hosting": {
     "provider": "Koyeb",
