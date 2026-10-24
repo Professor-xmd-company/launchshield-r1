@@ -48,11 +48,11 @@ async def test_partial_module_sets_job_and_report_warnings(tmp_path,monkeypatch)
         if name=='vibe_check':data['modules']['apiSurface'].update(partial=True,notes=['FIXTURE: some checks timed out.'])
         return data
     monkeypatch.setattr('shield.providers.native_fixture',partial_fixture)
-    app=create_app(Settings(data_dir=tmp_path,gemini_key='',mock_delay=0))
+    app=create_app(Settings(data_dir=tmp_path,gemini_key='',allow_mock=True,mock_delay=0))
     async with app.router.lifespan_context(app):
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),base_url='https://shield.test') as client:
             config=(await client.get('/api/config')).json();headers={'X-Client-Token':config['client_token'],'X-CSRF-Token':config['csrf'],'Origin':'https://shield.test'}
-            response=await client.post('/api/scans',json={'target':'https://fixture.example','authorized':True,'ai':False},headers=headers)
+            response=await client.post('/api/scans',json={'target':'https://fixture.example','mode':'mock','authorized':True,'ai':False},headers=headers)
             assert response.status_code==202;jobid=response.json()['job']['id'];await asyncio.wait_for(app.state.manager.queue.join(),3)
             job=(await client.get('/api/scans/'+jobid,headers=headers)).json();report=(await client.get('/api/scans/'+jobid+'/report',headers=headers)).json()
             assert job['state']=='completed_with_warnings' and job['providers']['vibe_check']['state']=='completed'

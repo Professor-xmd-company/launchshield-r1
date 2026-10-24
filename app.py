@@ -6,7 +6,7 @@ from urllib.parse import urlsplit
 from fastapi import FastAPI,Request,HTTPException
 from fastapi.responses import FileResponse,JSONResponse
 from fastapi.staticfiles import StaticFiles
-from shield.models import Settings,ScanRequest,PROVIDERS,SCENARIOS
+from shield.models import Settings,ScanRequest,PROVIDERS
 from shield.harness import JobManager,JobConflict
 from shield.safety import TargetRejected
 from shield.persistence import hash_token
@@ -73,12 +73,13 @@ def create_app(settings=None,manager=None):
     @app.get('/api/config')
     async def config(request:Request):
         sid=identify(request) or secrets.token_hex(32);token=sid+'.'+signature(sid)
-        response=JSONResponse({'revision':'R1','client_token':token,'csrf':csrf(sid),'gemini_configured':bool(settings.gemini_key),'gemini_model':settings.gemini_model,'live_targets':list(settings.live_targets),'scenarios':list(SCENARIOS),'retention_seconds':settings.retention_seconds,'limitations':'No database. Files/jobs can be lost on sleep/restart/redeploy. No security guarantee.'})
+        response=JSONResponse({'revision':'R1','client_token':token,'csrf':csrf(sid),'gemini_configured':bool(settings.gemini_key),'gemini_model':settings.gemini_model,'execution_mode':'live','public_targets_enabled':settings.allow_public_targets,'mock_execution_enabled':settings.allow_mock,'retention_seconds':settings.retention_seconds,'limitations':'No database. Files/jobs can be lost on sleep/restart/redeploy. No security guarantee.'})
         response.set_cookie('ls_client',token,httponly=True,secure=True,samesite='strict',max_age=86400,path='/')
         return response
     @app.post('/api/scans')
     async def submit(spec:ScanRequest,request:Request):
         sid=require_mutation(request);key=hash_token((request.client.host if request.client else 'local'))
+        if not settings.allow_mock and spec.mode=='live':spec=spec.model_copy(update={'ai':True})
         now=time.monotonic();recent=[x for x in attempts.get(key,[]) if now-x<60]
         if len(recent)>=20:return JSONResponse({'detail':'Local submission limit reached; wait before retrying.'},429,headers={'Retry-After':'60'})
         attempts[key]=recent+[now]

@@ -18,6 +18,8 @@ class Settings:
     gemini_key:str=field(default_factory=lambda:os.environ.get('GEMINI_API_KEY',''))
     gemini_model:str=field(default_factory=lambda:os.environ.get('GEMINI_MODEL','gemini-3.5-flash-lite'))
     live_targets:tuple[str,...]=field(default_factory=lambda:tuple(x.strip().rstrip('/') for x in os.environ.get('LAUNCHSHIELD_LIVE_TARGETS','').split(',') if x.strip()))
+    allow_public_targets:bool=field(default_factory=lambda:os.environ.get('LAUNCHSHIELD_ALLOW_PUBLIC_TARGETS','false').lower()=='true')
+    allow_mock:bool=field(default_factory=lambda:os.environ.get('LAUNCHSHIELD_ALLOW_MOCK','false').lower()=='true')
     retention_seconds:int=86400
     provider_timeout:float=120
     job_timeout:float=240
@@ -32,9 +34,10 @@ class Settings:
 class ScanRequest(BaseModel):
     model_config=ConfigDict(extra='forbid')
     target:str=Field(min_length=4,max_length=2048)
-    mode:Literal['mock','live']='mock'
+    mode:Literal['mock','live']='live'
     authorized:bool=False
     public_disclosure:bool=False
+    consent_method:Literal['explicit_confirmation','click_through']='explicit_confirmation'
     ai:bool=True
     scenario:Literal['success','partial_failure','rate_limited','malformed','timeout','osv_skip','ai_failure','stale_cache']='success'
 

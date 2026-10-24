@@ -47,17 +47,18 @@ class JobManager:
         while True:
             await asyncio.sleep(60);self.store.cleanup(self.settings.retention_seconds)
     async def create(self,spec:ScanRequest,owner_hash):
+        if spec.mode=='mock' and not self.settings.allow_mock:raise TargetRejected('Mock execution is not available on this website.')
         if not spec.authorized:raise TargetRejected('Explicit ownership/permission confirmation is required.')
         if spec.mode=='live' and not spec.public_disclosure:raise TargetRejected('Acknowledge public/cached third-party result visibility before live checks.')
         target=normalize_target(spec.target)
-        if spec.mode=='live' and target.origin not in {normalize_target(x).origin for x in self.settings.live_targets}:raise TargetRejected('Live testing is limited to owner-approved origins configured on the server.')
+        if spec.mode=='live' and not self.settings.allow_public_targets and target.origin not in {normalize_target(x).origin for x in self.settings.live_targets}:raise TargetRejected('Live testing is limited to owner-approved origins configured on the server.')
         for job in self.store.all_jobs():
             if job['target']==target.origin and job['mode']==spec.mode and job['state'] not in TERMINAL:
                 if job['owner_hash']!=owner_hash:raise JobConflict('That target already has an active job. No private job identifier was disclosed.')
                 return self.public(job),None,True
         if self.queue.full():raise JobConflict('R1 job queue is full; retry later.')
         jid=secrets.token_hex(16);token=secrets.token_urlsafe(32)
-        job={'id':jid,'owner_hash':owner_hash,'access_hash':hash_token(token),'target':target.origin,'requested_target_had_path_query_or_fragment':target.stripped_path,'mode':spec.mode,'scenario':spec.scenario if spec.mode=='mock' else 'success','ai_enabled':spec.ai,'state':'queued','created_at':utcnow(),'updated_at':utcnow(),'completed_at':None,'authorization':'self_declared_by_submitter','public_disclosure_acknowledged':spec.public_disclosure,'providers':{p:{'state':'queued','message':'Not started.','updated_at':utcnow()} for p in PROVIDERS},'warnings':(['Path/query/fragment was removed; scope is the single normalized origin.'] if target.stripped_path else []),'report_available':False,'queue_position':self.queue.qsize()+int(self.current_id is not None)+1}
+        job={'id':jid,'owner_hash':owner_hash,'access_hash':hash_token(token),'target':target.origin,'requested_target_had_path_query_or_fragment':target.stripped_path,'mode':spec.mode,'scenario':spec.scenario if spec.mode=='mock' else 'success','ai_enabled':spec.ai,'state':'queued','created_at':utcnow(),'updated_at':utcnow(),'completed_at':None,'authorization':'self_declared_by_submitter','consent_method':spec.consent_method,'public_disclosure_acknowledged':spec.public_disclosure,'providers':{p:{'state':'queued','message':'Not started.','updated_at':utcnow()} for p in PROVIDERS},'warnings':(['Path/query/fragment was removed; scope is the single normalized origin.'] if target.stripped_path else []),'report_available':False,'queue_position':self.queue.qsize()+int(self.current_id is not None)+1}
         self.store.create(job);await self.queue.put(jid);return self.public(job),token,False
     def public(self,job):
         return {k:v for k,v in job.items() if k not in ('owner_hash','access_hash')}
@@ -96,7 +97,9 @@ class JobManager:
     async def process(self,jid):
         job=self.store.get(jid);target=normalize_target(job['target']);self.store.update(jid,state='validating',queue_position=0)
         if job['mode']=='live':
-            try:validation=await self.validator(target,self.settings.live_targets)
+            # Public submissions authorize only this normalized origin, never private DNS/redirects.
+            approved=(target.origin,) if self.settings.allow_public_targets else self.settings.live_targets
+            try:validation=await self.validator(target,approved)
             except (TargetRejected,asyncio.TimeoutError,OSError) as e:
                 await self.terminate(jid,'failed','Target validation failed: '+str(e)[:400]);return
         else:validation={'mode':'mock','network_validation_performed':False,'note':'Synthetic fixtures; no target/provider request.'}
@@ -156,7 +159,7 @@ class JobManager:
     def build_report(self,jid,records,ai):
         job=self.store.get(jid);findings=deduplicate(records);coverage=[]
         for name,p in job['providers'].items():coverage.append({'provider':name,**p})
-        return {'version':'R1','job_id':jid,'target':job['target'],'mode':job['mode'],'synthetic':job['mode']=='mock','state':job['state'],'created_at':job['created_at'],'completed_at':job.get('completed_at'),'authorization':job['authorization'],'coverage':coverage,'findings':findings,'original_finding_records':redact(records),'counts':dict(Counter(f['severity'] for f in findings)),'coverage_counts':dict(Counter(p['state'] for p in coverage)),'limitations':LIMITATIONS,'warnings':list(dict.fromkeys(job.get('warnings',[])+[p['provider']+': '+warning for p in coverage for warning in p.get('coverage_warnings',[])])),'ai':ai,'storage':'Temporary file-backed instance; download reports you need.','security_guarantee':False}
+        return {'version':'R1','job_id':jid,'target':job['target'],'mode':job['mode'],'synthetic':job['mode']=='mock','state':job['state'],'created_at':job['created_at'],'completed_at':job.get('completed_at'),'authorization':job['authorization'],'consent_method':job.get('consent_method','explicit_confirmation'),'coverage':coverage,'findings':findings,'original_finding_records':redact(records),'counts':dict(Counter(f['severity'] for f in findings)),'coverage_counts':dict(Counter(p['state'] for p in coverage)),'limitations':LIMITATIONS,'warnings':list(dict.fromkeys(job.get('warnings',[])+[p['provider']+': '+warning for p in coverage for warning in p.get('coverage_warnings',[])])),'ai':ai,'storage':'Temporary file-backed instance; download reports you need.','security_guarantee':False}
     def save_report(self,jid,records,ai):
         report=self.build_report(jid,records,ai);folder=self.store.job_dir(jid)
         self.store.write(folder/'findings.json',report['findings']);self.store.write(folder/'report.json',redact(report))
@@ -164,7 +167,30 @@ class JobManager:
         self.store.update(jid,report_available=True,ai_state=ai.get('state'));self.store.event(jid,'report_available',{'state':report['state'],'unique_findings':len(report['findings']),'original_records':len(records),'ai_state':ai.get('state')})
         return report
     def render_html(self,report):
-        esc=lambda x:escape(str(x),quote=True)
+        esc=lambda value:escape(str(value),quote=True)
+        ai=report.get('ai',{});ready=ai.get('state')=='completed' and isinstance(ai.get('data'),dict)
+        ai_data=ai.get('data',{}) if ready else {}
+        if report.get('synthetic'):
+            title='MOCK FIXTURE REPORT — not a real assessment'
+            summary=ai.get('data',{}).get('summary','Synthetic fixture report; no website check ran.')
+        else:
+            title='Website security report'
+            summary=ai_data.get('summary','The AI explanation is unavailable. The provider evidence below remains available; unavailable checks are not a security pass.')
+        interpretations={item.get('finding_id'):item for item in ai_data.get('analysis',[]) if isinstance(item,dict)}
+        blocks=[]
+        for finding in report['findings']:
+            item=interpretations.get(finding['id'],{})
+            sources=', '.join(dict.fromkeys(source.get('provider','unknown') for source in finding.get('sources',[])))
+            explanation=item.get('explanation','Provider-reported configuration signal. This has not been independently confirmed as an exploitable vulnerability.')
+            verification=item.get('verification','Verify this provider observation against the current website configuration before making any changes.')
+            remediation=item.get('remediation') or next((source.get('remediation') for source in finding.get('sources',[]) if source.get('remediation')),'')
+            block='<article><div class="heading"><h3>'+esc(finding['title'])+'</h3><span>'+esc(finding['severity'])+'</span></div><p class="muted">Reported by '+esc(sources)+'. Verify before making changes.</p><p>'+esc(explanation)+'</p><h4>Verify first</h4><p>'+esc(verification)+'</p>'
+            if remediation:block+='<h4>Suggested next step</h4><p>'+esc(remediation)+'</p>'
+            block+='<details><summary>Source evidence and confidence</summary><pre>'+esc(json.dumps(finding,indent=2,ensure_ascii=False))+'</pre></details></article>'
+            blocks.append(block)
+        if not blocks:blocks.append('<article><h3>No findings reported by the available checks</h3><p>This is not proof that the website is secure. Review provider coverage below.</p></article>')
         coverage=''.join('<tr><td>'+esc(p['provider'])+'</td><td>'+esc(p['state'])+'</td><td>'+esc(p.get('message',''))+'</td><td>'+esc(p.get('scanned_at','not supplied'))+'</td></tr>' for p in report['coverage'])
-        findings=''.join('<section><h3>'+esc(f['title'])+'</h3><p>Severity: '+esc(f['severity'])+' · Source records: '+str(len(f['sources']))+'</p><pre>'+esc(json.dumps(f,indent=2,ensure_ascii=False))+'</pre></section>' for f in report['findings'])
-        return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield R1 report</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:1000px;margin:30px auto;padding:0 20px;color:#17202b;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%}td,th{padding:9px;border:1px solid #bbc2ca;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f4f6;padding:15px}section{border-top:1px solid #bbc2ca;padding:15px 0}</style><h1>LaunchShield R1 — '+('MOCK FIXTURE REPORT' if report['synthetic'] else 'Passive assessment report')+'</h1><p>'+esc(report['target'])+' · '+esc(report['state'])+'</p><p>No guarantee of security. No exploitation was performed.</p><h2>Provider coverage</h2><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Scan timestamp</th></tr>'+coverage+'</table></div><h2>Findings and evidence</h2>'+findings+'<h2>AI interpretation — separate from observed evidence</h2><pre>'+esc(json.dumps(report['ai'],indent=2,ensure_ascii=False))+'</pre><h2>Limitations</h2><ul>'+''.join('<li>'+esc(s)+'</li>' for s in report['limitations'])+'</ul></html>'
+        limitations=''.join('<li>'+esc(text)+'</li>' for text in report['limitations'])
+        warnings=''.join('<li>'+esc(text)+'</li>' for text in report.get('warnings',[]))
+        style='body{font:15px/1.65 system-ui,sans-serif;max-width:920px;margin:30px auto;padding:0 20px;color:#182534;overflow-wrap:anywhere;background:#f6f8fb}h1{line-height:1.2}article,.overview,.coverage{background:white;border:1px solid #dce3ed;border-radius:10px;padding:22px;margin:16px 0}.heading{display:flex;gap:14px;align-items:start;justify-content:space-between}.heading h3{margin:0}.heading span{font-size:12px;border:1px solid #ddd;padding:2px 8px;border-radius:5px}.muted{color:#657383;font-size:13px}h4{margin-bottom:4px}p{margin-top:7px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:#f1f4f8;padding:12px}summary{cursor:pointer;color:#5a6c80;font-size:13px}table{width:100%;border-collapse:collapse}td,th{padding:8px;border:1px solid #dce3ed;text-align:left;vertical-align:top}.warning{background:#fff7e7;border:1px solid #eedfc1;padding:12px 18px;border-radius:8px}'
+        return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield report</title><style>'+style+'</style><p class="muted">LaunchShield R1</p><h1>'+esc(title)+'</h1><p>'+esc(report['target'])+'</p><p class="muted">Passive, read-only assessment. No exploitation or security guarantee.</p><section class="overview"><h2>'+('AI overview' if ready else 'Assessment summary')+'</h2><p>'+esc(summary)+'</p><p class="muted">AI explanation is interpretation, not independently verified scanner evidence.</p></section>'+('<div class="warning"><strong>Coverage warnings</strong><ul>'+warnings+'</ul></div>' if warnings else '')+''.join(blocks)+'<section class="coverage"><h2>What was checked</h2><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Observation time</th></tr>'+coverage+'</table></div><details><summary>Report limitations</summary><ul>'+limitations+'</ul></details></section><p class="muted">Temporary file-backed report. Download a copy to keep it.</p></html>'

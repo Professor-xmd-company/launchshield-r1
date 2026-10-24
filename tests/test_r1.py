@@ -13,7 +13,7 @@ from shield.ai import analyze
 
 @pytest_asyncio.fixture
 async def context(tmp_path):
-    settings=Settings(data_dir=tmp_path,gemini_key='',mock_delay=.01,provider_timeout=1,job_timeout=5)
+    settings=Settings(data_dir=tmp_path,gemini_key='',allow_mock=True,mock_delay=.01,provider_timeout=1,job_timeout=5)
     app=create_app(settings)
     async with app.router.lifespan_context(app):
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),base_url='https://shield.test') as client:
