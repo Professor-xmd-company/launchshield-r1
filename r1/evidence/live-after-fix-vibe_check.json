@@ -1,0 +1,1185 @@
+{
+  "state": "completed",
+  "native": {
+    "scanId": "f6c855316c164c0f945636ced5dd780f",
+    "url": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "timestamp": 1792862410666,
+    "status": "completed",
+    "modules": {
+      "headers": {
+        "finalUrl": "https://launchshield-r1-professorcj-43cf1823.koyeb.app/",
+        "score": 37,
+        "maxScore": 37,
+        "coverage": {
+          "evaluatorVersion": "headers-eval/1",
+          "responseContext": "HTML document, HTTP 200",
+          "limitations": [
+            "HTML meta policies and per-element overrides are not inspected.",
+            "HSTS coverage is limited to the observed host.",
+            "Permissions-Policy is informational in this release."
+          ]
+        },
+        "findings": {
+          "csp": {
+            "presence": "present",
+            "assessment": "effective",
+            "source": "header",
+            "reason": "csp.script.restrictive",
+            "explanation": "An enforced policy constrains script execution via nonce, hash, or an explicit source list.",
+            "evidence": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'",
+            "gradeEligible": true,
+            "score": 14,
+            "maxScore": 14,
+            "present": true,
+            "note": "An enforced policy constrains script execution via nonce, hash, or an explicit source list."
+          },
+          "hsts": {
+            "presence": "present",
+            "assessment": "effective",
+            "source": "header",
+            "reason": "hsts.enforced",
+            "explanation": "HTTPS is enforced for return visits (max-age=86400).",
+            "evidence": "max-age=86400",
+            "gradeEligible": true,
+            "score": 8,
+            "maxScore": 8,
+            "present": true,
+            "note": "HTTPS is enforced for return visits (max-age=86400)."
+          },
+          "xFrameOptions": {
+            "presence": "present",
+            "assessment": "effective",
+            "source": "header",
+            "reason": "framing.restrictive",
+            "explanation": "frame-ancestors restricts embedding to 'none'.",
+            "evidence": "frame-ancestors 'none'",
+            "gradeEligible": true,
+            "score": 6,
+            "maxScore": 6,
+            "present": true,
+            "note": "frame-ancestors restricts embedding to 'none'."
+          },
+          "xContentTypeOptions": {
+            "presence": "present",
+            "assessment": "effective",
+            "source": "header",
+            "reason": "nosniff.on",
+            "explanation": "X-Content-Type-Options: nosniff stops MIME-type sniffing. It does not affect documents served with a correct type.",
+            "evidence": "nosniff",
+            "gradeEligible": true,
+            "score": 5,
+            "maxScore": 5,
+            "present": true,
+            "note": "X-Content-Type-Options: nosniff stops MIME-type sniffing. It does not affect documents served with a correct type."
+          },
+          "referrerPolicy": {
+            "presence": "present",
+            "assessment": "effective",
+            "source": "header",
+            "reason": "referrer.strong_policy",
+            "explanation": "Referrer-Policy: no-referrer limits how much of the URL is sent to other origins. HTML and per-element overrides are not inspected.",
+            "evidence": "no-referrer",
+            "gradeEligible": true,
+            "score": 4,
+            "maxScore": 4,
+            "present": true,
+            "note": "Referrer-Policy: no-referrer limits how much of the URL is sent to other origins. HTML and per-element overrides are not inspected."
+          },
+          "permissionsPolicy": {
+            "presence": "present",
+            "assessment": "effective",
+            "source": "header",
+            "reason": "permissions.informational",
+            "explanation": "A Permissions-Policy header is present. Feature-by-feature evaluation is deferred, so this is surfaced for information and not graded.",
+            "evidence": "camera=(), microphone=(), geolocation=()",
+            "gradeEligible": false,
+            "score": 0,
+            "maxScore": 0,
+            "present": true,
+            "note": "A Permissions-Policy header is present. Feature-by-feature evaluation is deferred, so this is surfaced for information and not graded."
+          }
+        }
+      },
+      "tls": {
+        "score": 20,
+        "maxScore": 25,
+        "findings": {
+          "protocol": {
+            "version": "TLSv1.3",
+            "score": 10
+          },
+          "certExpiry": {
+            "valid": false,
+            "daysUntilExpiry": 0,
+            "score": 0
+          },
+          "trustChain": {
+            "valid": true,
+            "score": 5
+          },
+          "cipherStrength": {
+            "strength": "TLS_AES_256_GCM_SHA384",
+            "score": 5
+          },
+          "keyStrength": {
+            "score": 0,
+            "maxScore": 0,
+            "weakestVerdict": "unknown",
+            "keys": [
+              {
+                "subject": "Unknown subject",
+                "role": "leaf",
+                "type": "unknown",
+                "verdict": "unknown",
+                "reasons": [
+                  "key.raw_certificate_unavailable"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "cve": {
+        "score": 100,
+        "maxScore": 100,
+        "status": "not_vulnerable",
+        "affectsGrade": false,
+        "isVulnerable": false,
+        "rscDetected": false,
+        "advisorySource": "not_queried",
+        "advisories": [],
+        "message": "No React Server Components infrastructure was detected. The RSC advisories do not apply to this origin.",
+        "recommendations": []
+      },
+      "cors": {
+        "score": 15,
+        "maxScore": 15,
+        "findings": {
+          "platform": {
+            "provider": "unknown",
+            "managedStaticHost": false
+          },
+          "wildcardOrigin": false,
+          "wildcardOnPublicStatic": false,
+          "wildcardOnDataEndpoint": false,
+          "credentialsWithWildcard": false,
+          "safeOriginPolicy": true,
+          "dynamicAllowlistHits": [],
+          "subdomainWildcardHits": [],
+          "localhostAllowed": false,
+          "nullOriginAllowed": false,
+          "probes": [
+            {
+              "path": "/",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "null",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "null",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "null",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/api/v1",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "null",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/rest",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": null,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": null,
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": 404,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "image/svg+xml",
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": 404,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": 404,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": 404,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/javascript; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "image/svg+xml",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/css; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "null",
+              "method": "GET",
+              "status": 404,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": 404,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "image/svg+xml",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "null",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/css; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/css; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "image/svg+xml",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "image/svg+xml",
+              "riskRelevant": false
+            },
+            {
+              "path": "/cors",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": 404,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/javascript; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://localhost:3000",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/css; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://localhost:3000",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://scanner-test-vibe.dev",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/css; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "null",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "null",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/javascript; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/javascript; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/style.css",
+              "origin": "https://malicious.example",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/css; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "null",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "image/svg+xml",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://evil.com",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/javascript; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/favicon.svg",
+              "origin": "https://evil.com",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://attacker.com",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://attacker.com",
+              "method": "GET",
+              "status": 200,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "text/javascript; charset=utf-8",
+              "riskRelevant": false
+            },
+            {
+              "path": "/static/main.js",
+              "origin": "https://malicious.example",
+              "method": "OPTIONS",
+              "status": 405,
+              "allowOrigin": null,
+              "allowCredentials": null,
+              "contentType": "application/json",
+              "riskRelevant": false
+            }
+          ]
+        }
+      },
+      "apiSurface": {
+        "score": 10,
+        "maxScore": 10,
+        "findings": [],
+        "partial": true,
+        "notes": [
+          "Some API checks timed out. Findings may be incomplete.",
+          "Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage."
+        ],
+        "requestsIssued": 80
+      }
+    },
+    "overallScore": 93.99999999999999,
+    "overallGrade": "A"
+  },
+  "http_status": 200,
+  "requested_at": "2026-10-24T17:20:10.061408+00:00",
+  "received_at": "2026-10-24T17:20:39.541011+00:00",
+  "message": "Provider completed with partial/unknown module coverage: apiSurface: ['Some API checks timed out. Findings may be incomplete.', 'Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.']",
+  "scanned_at": 1792862410666,
+  "coverage_warnings": [
+    "apiSurface: ['Some API checks timed out. Findings may be incomplete.', 'Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.']"
+  ],
+  "external_scan_id": "f6c855316c164c0f945636ced5dd780f",
+  "source": "vibe_check",
+  "mode": "live",
+  "native_response_sha256": "b53679d3589cbafae75ebb847c9d460d6b0ad58976a40008f071f698885bd70b",
+  "normalized_findings": [
+    {
+      "provider": "vibe_check",
+      "native_id": "tls:certExpiry",
+      "type": "tls:certexpiry",
+      "title": "TLS configuration signal: certExpiry",
+      "severity": "medium",
+      "provider_severity": null,
+      "resource": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+      "observation_confidence": "provider_reported",
+      "interpretation_confidence": "potential",
+      "evidence": {
+        "valid": false,
+        "daysUntilExpiry": 0,
+        "score": 0
+      },
+      "remediation": "",
+      "verification": "",
+      "scanned_at": 1792862410666,
+      "requested_at": "2026-10-24T17:20:10.061408+00:00",
+      "mode": "live"
+    }
+  ]
+}

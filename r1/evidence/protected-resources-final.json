@@ -1,0 +1,113 @@
+{
+  "checked_at": "2026-10-24T17:21:21.383293+00:00",
+  "deleted_professor_app_http": 404,
+  "protected_database_app_http": 200,
+  "protected_database_service_http": 200,
+  "new_r1_app_http": 200,
+  "protected_database_service_updated_at": "2026-08-01T11:35:41.346131Z",
+  "quota_limits": {
+    "quotas": {
+      "apps": "10",
+      "services": "2",
+      "domains": "0",
+      "service_provisioning_concurrency": "1",
+      "memory_mb": "512",
+      "instance_types": [
+        "free"
+      ],
+      "regions": [
+        "fra",
+        "was"
+      ],
+      "max_organization_members": "1",
+      "max_instances_by_type": {
+        "2-gpu-nvidia-a100": "0",
+        "2-gpu-nvidia-a100-sxm": "0",
+        "2-gpu-nvidia-h100": "0",
+        "2-gpu-nvidia-h200": "0",
+        "4-gpu-nvidia-a100": "0",
+        "4-gpu-nvidia-a100-sxm": "0",
+        "4-gpu-nvidia-h100": "0",
+        "4-gpu-nvidia-h200": "0",
+        "4-gpu-tenstorrent-n300s": "0",
+        "4-gpu-tenstorrent-p150b": "0",
+        "8-gpu-nvidia-a100": "0",
+        "8-gpu-nvidia-a100-sxm": "0",
+        "8-gpu-nvidia-h100": "0",
+        "8-gpu-nvidia-h200": "0",
+        "free": "1",
+        "gpu-nvidia-a100": "0",
+        "gpu-nvidia-a100-sxm": "0",
+        "gpu-nvidia-h100": "0",
+        "gpu-nvidia-h200": "0",
+        "gpu-nvidia-l4": "0",
+        "gpu-nvidia-l40s": "0",
+        "gpu-nvidia-rtx-4000-sff-ada": "0",
+        "gpu-nvidia-rtx-a6000": "0",
+        "gpu-nvidia-rtx-pro-6000": "0",
+        "gpu-nvidia-v100-sxm2-16gb": "0",
+        "gpu-tenstorrent-n300s": "0",
+        "gpu-tenstorrent-p150b": "0"
+      },
+      "persistent_volumes_by_region": {
+        "*": {
+          "max_total_size": 100,
+          "max_volume_size": 10,
+          "max_per_instance_size": 30
+        }
+      },
+      "custom_domains": "0",
+      "domains_load_balancer": {
+        "max_koyeb": 0
+      },
+      "metrics_retention": 1,
+      "logs_retention": 1,
+      "access_reserved_subdomains": [],
+      "proxy_ports": 0,
+      "scale_to_zero": {
+        "is_deep_sleep_enabled": true,
+        "deep_sleep_idle_delay_min": 3600,
+        "deep_sleep_idle_delay_max": 3900,
+        "is_light_sleep_enabled": false,
+        "light_sleep_idle_delay_min": 0,
+        "light_sleep_idle_delay_max": 0
+      },
+      "archives": "50",
+      "archive_max_size_mb": "50",
+      "lifecycle": null,
+      "max_projects": "0",
+      "instance_snapshots": {
+        "filesystem": 500,
+        "full": 500
+      }
+    }
+  },
+  "quota_usage": {
+    "usage": {
+      "apps_used": 2,
+      "apps_limit": 10,
+      "services_used": 2,
+      "services_limit": 2,
+      "memory_mb_used": 512,
+      "memory_mb_limit": 512,
+      "custom_domains_used": 0,
+      "custom_domains_limit": 0,
+      "koyeb_lb_domains_used": 0,
+      "koyeb_lb_domains_limit": 0,
+      "proxy_ports_used": 0,
+      "proxy_ports_limit": 0,
+      "instances_by_type": [
+        {
+          "instance_type": "free",
+          "used": 1,
+          "limit": 1
+        }
+      ],
+      "persistent_volumes_by_region": [],
+      "instance_snapshots_by_type": []
+    }
+  },
+  "paid_upgrade_performed": false,
+  "supabase_untouched": true,
+  "unrelated_repos_and_tokens_untouched": true
+}

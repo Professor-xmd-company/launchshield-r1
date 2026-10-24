@@ -13,7 +13,10 @@ One ordinary page, **no accounts**, no database, no visual-redesign phase yet. T
 - Real Google generation succeeded with **`gemini-3.5-flash-lite`** using explicitly synthetic evidence (not a real website scan). Actual model version and token usage: `r1/evidence/gemini-real.json`.
 - Real OSV batch lookup succeeded for a known exact package/version fixture. That does **not** prove that any website runs that package: `r1/evidence/osv-real.json`.
 - Genuine local mock screenshots and hosted real-job captures are under `r1/screenshots/`. Downloaded reports and native responses are under `r1/evidence/`.
-- A genuine first hosted assessment used only this newly owned LaunchShield origin: MDN and Gemini completed; xlogs returned HTTP429; Website Auditor cache stayed404; Vibe completed remotely but its agent-summary envelope exposed an adapter bug. The bug is fixed with recorded-native regressions and explicit full-result retrieval. The original failed result is preserved, not rewritten. See **[R1 work record](R1.md)** and `docs/deployment.json` for the latest deployed retest. Never infer live coverage from mocked tests.
+- Genuine hosted assessments used only the newly owned LaunchShield origin. **MDN, full Vibe retrieval and Gemini completed on the corrected deployed backend**. Vibe reported partial API-surface coverage. The first run exposed an agent-envelope adapter mismatch, now fixed and replay-tested; original failed artifacts are preserved.
+- **Incomplete coverage remains:** xlogs returned HTTP429; Website Auditor cache stayed404. Their waiting periods are respected across redeploys, not bypassed. OSV skipped because there was no reliable exact package/version evidence. These are not clean scan results.
+- A Vibe `certExpiry` potential signal conflicted with an independent CA/hostname-validated TLS handshake showing expiry **2027-01-20**. Preserve the provider observation, but do not claim a confirmed expired certificate or blindly act on AI remediation. See `r1/evidence/tls-independent-check.json`.
+- See **[R1 work record](R1.md)** and `docs/deployment.json` for current deployed source, browser/export evidence and actual provider states. Isolated tests, recorded-native replay and genuine live checks are deliberately distinguished.
 
 ## Run
 

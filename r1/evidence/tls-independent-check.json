@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-24T17:22:42.320469+00:00",
+  "host": "launchshield-r1-professorcj-43cf1823.koyeb.app",
+  "scope": "Single direct TLS handshake; not proof of all geographic edges or complete security.",
+  "provider_report_preserved": true,
+  "verification": "default CA and hostname verification succeeded",
+  "tls_version": "TLSv1.3",
+  "certificate_not_before": "Oct 22 15:33:22 2026 GMT",
+  "certificate_not_after": "Jan 20 15:33:21 2027 GMT",
+  "sha256": "b621193378efa34f21c405f82e6991a0d05e4886dadb432d75ba3d3b66c789d2",
+  "days_until_expiry_observed": 87.92
+}

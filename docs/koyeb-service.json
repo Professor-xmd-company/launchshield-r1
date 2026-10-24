@@ -10,7 +10,8 @@
       "docker": {
         "dockerfile": "Dockerfile"
       },
-      "no_deploy_on_push": true
+      "no_deploy_on_push": true,
+      "sha": "6b96a8d9db3f543c0d4788ebc269c69592ab90cc"
     },
     "regions": [
       "fra"
@@ -22,8 +23,20 @@
     ],
     "scalings": [
       {
-        "min": 1,
-        "max": 1
+        "scopes": [
+          "region:fra"
+        ],
+        "min": 0,
+        "max": 1,
+        "targets": [
+          {
+            "sleep_idle_delay": {
+              "value": 0,
+              "deep_sleep_value": 3900,
+              "light_sleep_value": 0
+            }
+          }
+        ]
       }
     ],
     "ports": [
@@ -58,6 +71,10 @@
       {
         "key": "GEMINI_API_KEY",
         "secret": "launchshield-r1-gemini"
+      },
+      {
+        "key": "LAUNCHSHIELD_PROVIDER_COOLDOWNS",
+        "value": "{\"xlogs\":\"2026-10-24T18:02:39.084601+00:00\",\"website_trigger\":\"2026-10-24T18:02:39.084601+00:00\"}"
       }
     ],
     "health_checks": [

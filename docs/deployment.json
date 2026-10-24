@@ -5,7 +5,8 @@
     "full_name": "Professor-xmd-company/launchshield-r1",
     "url": "https://github.com/Professor-xmd-company/launchshield-r1",
     "private": false,
-    "release_commit": "010e1798e012c033230ff780e7eadaf9159b6314"
+    "release_commit": "6b96a8d9db3f543c0d4788ebc269c69592ab90cc",
+    "initial_release_commit": "010e1798e012c033230ff780e7eadaf9159b6314"
   },
   "hosting": {
     "provider": "Koyeb",
@@ -19,25 +20,34 @@
     "gemini_secret_name": "launchshield-r1-gemini",
     "gemini_secret_id": "d22f2c25-8d00-48f1-824d-4feb215980aa",
     "service_id": "cd48bc18-6659-413f-8254-ea43618210f1",
-    "deployment_id": "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e",
+    "deployment_id": "e31d7b8d-d4cf-45ee-bd51-bb24de19b286",
     "deployment_state": "HEALTHY",
     "verified_root_http": 200,
-    "verified_health_http": 200
+    "verified_health_http": 200,
+    "requested_release_commit": "6b96a8d9db3f543c0d4788ebc269c69592ab90cc",
+    "previous_deployments": [
+      "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e"
+    ],
+    "provider_cooldowns": {
+      "xlogs": "2026-10-24T18:02:39.084601+00:00",
+      "website_trigger": "2026-10-24T18:02:39.084601+00:00"
+    }
   },
   "protected_database_app": "database",
   "owner_approved_old_app_removed": "professor-xmd",
   "verification": {
-    "real_job_id": "dc9371b2f0b3dcaf0c927f1aea4df6b2",
+    "evidence_prefix": "live-after-fix",
+    "real_job_id": "4fd263e01fd458ec0aae5456485e1264",
     "real_job_state": "completed_with_warnings",
     "providers": {
-      "website_auditor": "timed_out",
+      "website_auditor": "rate_limited",
       "xlogs": "rate_limited",
-      "vibe_check": "failed",
+      "vibe_check": "completed",
       "mdn_observatory": "completed",
       "osv": "skipped_not_applicable"
     },
     "ai_state": "completed",
-    "findings": 0,
+    "findings": 1,
     "http_guard_checks": 9
   }
 }
