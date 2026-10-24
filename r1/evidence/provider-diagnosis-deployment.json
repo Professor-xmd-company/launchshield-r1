@@ -1,0 +1,17 @@
+{
+  "deployment_id": "6560fa48-32fc-4e66-9ca2-1d67e9cf1fec",
+  "status": "HEALTHY",
+  "code_pin": "8b7f112c92505acf42e1d4549dbd737d9505aa43",
+  "root_http": 200,
+  "health_http": 200,
+  "public_targets_enabled": true,
+  "mock_execution_enabled": false,
+  "health": {
+    "ok": true,
+    "revision": "R1",
+    "accounts": false,
+    "database": false,
+    "storage": "temporary files",
+    "gemini_configured": true
+  }
+}

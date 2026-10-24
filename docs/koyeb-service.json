@@ -4,22 +4,78 @@
   "definition": {
     "name": "web",
     "type": "WEB",
-    "git": {
-      "repository": "github.com/Professor-xmd-company/launchshield-r1",
-      "branch": "main",
-      "docker": {
-        "dockerfile": "Dockerfile"
-      },
-      "no_deploy_on_push": true,
-      "sha": "9f74ea1a384293bad975ac755edbf085bb740f56"
+    "strategy": {
+      "type": "DEPLOYMENT_STRATEGY_TYPE_ROLLING"
     },
+    "routes": [
+      {
+        "port": 8080,
+        "path": "/",
+        "security_policies": null
+      }
+    ],
+    "ports": [
+      {
+        "port": 8080,
+        "protocol": "http"
+      }
+    ],
+    "proxy_ports": [],
+    "env": [
+      {
+        "scopes": [
+          "region:fra"
+        ],
+        "key": "GEMINI_API_KEY",
+        "secret": "launchshield-r1-gemini"
+      },
+      {
+        "scopes": [
+          "region:fra"
+        ],
+        "key": "GEMINI_MODEL",
+        "value": "gemini-3.5-flash-lite"
+      },
+      {
+        "scopes": [
+          "region:fra"
+        ],
+        "key": "LAUNCHSHIELD_DATA_DIR",
+        "value": "/data/launchshield"
+      },
+      {
+        "scopes": [
+          "region:fra"
+        ],
+        "key": "LAUNCHSHIELD_LIVE_TARGETS",
+        "value": "https://launchshield-r1-professorcj-43cf1823.koyeb.app"
+      },
+      {
+        "scopes": [
+          "region:fra"
+        ],
+        "key": "PORT",
+        "value": "8080"
+      },
+      {
+        "key": "LAUNCHSHIELD_ALLOW_PUBLIC_TARGETS",
+        "value": "true"
+      },
+      {
+        "key": "LAUNCHSHIELD_ALLOW_MOCK",
+        "value": "false"
+      },
+      {
+        "key": "LAUNCHSHIELD_PROVIDER_COOLDOWNS",
+        "value": "{\"xlogs\":\"2026-10-24T19:10:28.625821+00:00\",\"website_trigger\":\"2026-10-24T20:00:47.325776+00:00\",\"vibe_start\":\"2026-10-24T19:02:17.325776+00:00\",\"vibe_poll\":\"2026-10-24T19:02:17.325776+00:00\",\"mdn_observatory\":\"2026-10-24T19:02:17.325776+00:00\"}"
+      },
+      {
+        "key": "LAUNCHSHIELD_DIAGNOSTICS_UNTIL",
+        "value": "2026-10-24T19:20:47.325776+00:00"
+      }
+    ],
     "regions": [
       "fra"
-    ],
-    "instance_types": [
-      {
-        "type": "free"
-      }
     ],
     "scalings": [
       {
@@ -39,64 +95,52 @@
         ]
       }
     ],
-    "ports": [
+    "instance_types": [
       {
-        "port": 8080,
-        "protocol": "http"
-      }
-    ],
-    "routes": [
-      {
-        "port": 8080,
-        "path": "/"
-      }
-    ],
-    "env": [
-      {
-        "key": "PORT",
-        "value": "8080"
-      },
-      {
-        "key": "LAUNCHSHIELD_DATA_DIR",
-        "value": "/data/launchshield"
-      },
-      {
-        "key": "LAUNCHSHIELD_LIVE_TARGETS",
-        "value": "https://launchshield-r1-professorcj-43cf1823.koyeb.app"
-      },
-      {
-        "key": "GEMINI_MODEL",
-        "value": "gemini-3.5-flash-lite"
-      },
-      {
-        "key": "GEMINI_API_KEY",
-        "secret": "launchshield-r1-gemini"
-      },
-      {
-        "key": "LAUNCHSHIELD_PROVIDER_COOLDOWNS",
-        "value": "{\"xlogs\":\"2026-10-24T18:02:39.084601+00:00\",\"website_trigger\":\"2026-10-24T18:02:39.084601+00:00\"}"
-      },
-      {
-        "key": "LAUNCHSHIELD_ALLOW_PUBLIC_TARGETS",
-        "value": "true"
-      },
-      {
-        "key": "LAUNCHSHIELD_ALLOW_MOCK",
-        "value": "false"
+        "scopes": [
+          "region:fra"
+        ],
+        "type": "free"
       }
     ],
     "health_checks": [
       {
+        "grace_period": 15,
+        "interval": 15,
+        "restart_limit": 3,
+        "timeout": 5,
         "http": {
           "port": 8080,
           "path": "/healthz",
-          "method": "GET"
-        },
-        "grace_period": 15,
-        "interval": 15,
-        "timeout": 5,
-        "restart_limit": 3
+          "method": "GET",
+          "headers": []
+        }
       }
-    ]
+    ],
+    "volumes": [],
+    "config_files": [],
+    "skip_cache": false,
+    "mesh": "DEPLOYMENT_MESH_AUTO",
+    "network_policy": null,
+    "git": {
+      "repository": "github.com/Professor-xmd-company/launchshield-r1",
+      "branch": "main",
+      "tag": "",
+      "sha": "8b7f112c92505acf42e1d4549dbd737d9505aa43",
+      "build_command": "",
+      "run_command": "",
+      "no_deploy_on_push": true,
+      "workdir": "",
+      "docker": {
+        "dockerfile": "Dockerfile",
+        "entrypoint": [],
+        "command": "",
+        "args": [],
+        "target": "",
+        "privileged": false
+      },
+      "credential_source": "",
+      "skip_submodules": false
+    }
   }
 }

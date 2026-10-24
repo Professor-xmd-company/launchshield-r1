@@ -20,7 +20,7 @@ def engine(tmp_path,handler,**kwargs):
 def full_vibe():return json.loads((ROOT/'r1/evidence/simple-real-only-vibe_check.json').read_text())['native']
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize('status',[200,403,429])
+@pytest.mark.parametrize('status',[200,403,429,503])
 async def test_security_checkpoint_is_not_mislabeled_json_quota_or_retried(tmp_path,status):
     calls=[]
     async def handler(request):

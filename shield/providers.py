@@ -63,7 +63,7 @@ class ProviderEngine:
         for attempt in range(attempts):
             try:return await self._request_once(method,url,quota,origin,**kwargs)
             except ProviderFailure as error:
-                transient=error.state in ('unavailable','timed_out') or (error.http_status is not None and error.http_status>=500)
+                transient=error.state!='blocked' and (error.state in ('unavailable','timed_out') or (error.http_status is not None and error.http_status>=500))
                 if attempt+1>=attempts or not transient:raise
                 await asyncio.sleep(max(2.5 if url.startswith('https://vibecheckscan.com/') else 1,2**attempt)+random.uniform(0,.25))
     def response_error(self,method,url,status,headers,content,quota):

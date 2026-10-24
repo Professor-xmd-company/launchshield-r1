@@ -5,7 +5,7 @@
     "full_name": "Professor-xmd-company/launchshield-r1",
     "url": "https://github.com/Professor-xmd-company/launchshield-r1",
     "private": false,
-    "release_commit": "9f74ea1a384293bad975ac755edbf085bb740f56",
+    "release_commit": "8b7f112c92505acf42e1d4549dbd737d9505aa43",
     "initial_release_commit": "010e1798e012c033230ff780e7eadaf9159b6314",
     "evidence_commit": "dc614bd71f37399758a99afb484dc128dcbd4848"
   },
@@ -21,27 +21,37 @@
     "gemini_secret_name": "launchshield-r1-gemini",
     "gemini_secret_id": "d22f2c25-8d00-48f1-824d-4feb215980aa",
     "service_id": "cd48bc18-6659-413f-8254-ea43618210f1",
-    "deployment_id": "26d65f6a-01ba-4318-a378-7c60a08243de",
+    "deployment_id": "6560fa48-32fc-4e66-9ca2-1d67e9cf1fec",
     "deployment_state": "HEALTHY",
     "verified_root_http": 200,
     "verified_health_http": 200,
-    "requested_release_commit": "9f74ea1a384293bad975ac755edbf085bb740f56",
+    "requested_release_commit": "8b7f112c92505acf42e1d4549dbd737d9505aa43",
     "previous_deployments": [
       "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e",
       "e31d7b8d-d4cf-45ee-bd51-bb24de19b286",
-      "0571263c-a143-4044-bb5c-2140825c45a8"
+      "0571263c-a143-4044-bb5c-2140825c45a8",
+      "26d65f6a-01ba-4318-a378-7c60a08243de"
     ],
     "provider_cooldowns": {
-      "xlogs": "2026-10-24T18:02:39.084601+00:00",
-      "website_trigger": "2026-10-24T18:02:39.084601+00:00"
+      "xlogs": "2026-10-24T19:10:28.625821+00:00",
+      "website_trigger": "2026-10-24T20:00:47.325776+00:00",
+      "vibe_start": "2026-10-24T19:02:17.325776+00:00",
+      "vibe_poll": "2026-10-24T19:02:17.325776+00:00",
+      "mdn_observatory": "2026-10-24T19:02:17.325776+00:00"
     },
     "public_targets_enabled": true,
     "mock_execution_enabled": false,
-    "user_flow": "website_link_test_automatic_ai_report"
+    "user_flow": "website_link_test_automatic_ai_report",
+    "temporary_diagnostics_until": "2026-10-24T19:20:47.325776+00:00",
+    "previous_runtime_code": "9f74ea1a384293bad975ac755edbf085bb740f56"
   },
   "protected_database_app": "database",
   "owner_approved_old_app_removed": "professor-xmd",
-  "verification": {
+  "upstream_cooldowns": {
+    "xlogs": "2026-10-24T19:10:28.625821+00:00",
+    "website_trigger": "2026-10-24T19:11:01.962677+00:00"
+  },
+  "verification_previous_simple_flow": {
     "evidence_prefix": "simple-real-only",
     "real_job_id": "5d6028ce93d5d5aa5877df78a309889f",
     "real_job_state": "completed_with_warnings",
@@ -79,9 +89,5 @@
       "html_download_bytes": 6384,
       "downloads_match_server_evidence": true
     }
-  },
-  "upstream_cooldowns": {
-    "xlogs": "2026-10-24T19:10:28.625821+00:00",
-    "website_trigger": "2026-10-24T19:11:01.962677+00:00"
   }
 }
