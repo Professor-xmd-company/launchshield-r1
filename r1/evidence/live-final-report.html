@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield R1 report</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:1000px;margin:30px auto;padding:0 20px;color:#17202b;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%}td,th{padding:9px;border:1px solid #bbc2ca;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f4f6;padding:15px}section{border-top:1px solid #bbc2ca;padding:15px 0}</style><h1>LaunchShield R1 — Passive assessment report</h1><p>https://launchshield-r1-professorcj-43cf1823.koyeb.app · completed_with_warnings</p><p>No guarantee of security. No exploitation was performed.</p><h2>Provider coverage</h2><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Scan timestamp</th></tr><tr><td>website_auditor</td><td>rate_limited</td><td>Waiting for provider quota; request was not sent.</td><td>not supplied</td></tr><tr><td>xlogs</td><td>rate_limited</td><td>Waiting for provider quota; request was not sent.</td><td>not supplied</td></tr><tr><td>vibe_check</td><td>completed</td><td>Provider completed with partial/unknown module coverage: apiSurface: [&#x27;Some API checks timed out. Findings may be incomplete.&#x27;, &#x27;Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.&#x27;]</td><td>1792862956963</td></tr><tr><td>mdn_observatory</td><td>completed</td><td>Provider response received.</td><td>2026-10-24T17:29:17.181Z</td></tr><tr><td>osv</td><td>skipped_not_applicable</td><td>No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.</td><td>not supplied</td></tr></table></div><h2>Findings and evidence</h2><section><h3>TLS configuration signal: certExpiry</h3><p>Severity: medium · Source records: 1</p><pre>{
+  &quot;id&quot;: &quot;f_ee429414a376dbf08470&quot;,
+  &quot;type&quot;: &quot;tls:certexpiry&quot;,
+  &quot;title&quot;: &quot;TLS configuration signal: certExpiry&quot;,
+  &quot;severity&quot;: &quot;medium&quot;,
+  &quot;resource&quot;: &quot;https://launchshield-r1-professorcj-43cf1823.koyeb.app&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;provider&quot;: &quot;vibe_check&quot;,
+      &quot;native_id&quot;: &quot;tls:certExpiry&quot;,
+      &quot;type&quot;: &quot;tls:certexpiry&quot;,
+      &quot;title&quot;: &quot;TLS configuration signal: certExpiry&quot;,
+      &quot;severity&quot;: &quot;medium&quot;,
+      &quot;provider_severity&quot;: null,
+      &quot;resource&quot;: &quot;https://launchshield-r1-professorcj-43cf1823.koyeb.app&quot;,
+      &quot;observation_confidence&quot;: &quot;provider_reported&quot;,
+      &quot;interpretation_confidence&quot;: &quot;potential&quot;,
+      &quot;evidence&quot;: {
+        &quot;valid&quot;: false,
+        &quot;daysUntilExpiry&quot;: 0,
+        &quot;score&quot;: 0
+      },
+      &quot;remediation&quot;: &quot;&quot;,
+      &quot;verification&quot;: &quot;&quot;,
+      &quot;scanned_at&quot;: 1792862956963,
+      &quot;requested_at&quot;: &quot;2026-10-24T17:29:16.546193+00:00&quot;,
+      &quot;mode&quot;: &quot;live&quot;
+    }
+  ],
+  &quot;confidence&quot;: {
+    &quot;observation&quot;: &quot;provider_reported&quot;,
+    &quot;interpretation&quot;: &quot;potential&quot;
+  },
+  &quot;overlap_count&quot;: 1,
+  &quot;note&quot;: &quot;Related signals grouped; original provider records and distinct confidence fields retained.&quot;
+}</pre></section><h2>AI interpretation — separate from observed evidence</h2><pre>{
+  &quot;state&quot;: &quot;completed&quot;,
+  &quot;model&quot;: &quot;gemini-3.5-flash-lite&quot;,
+  &quot;model_version&quot;: &quot;gemini-3.5-flash-lite&quot;,
+  &quot;generated_at&quot;: &quot;2026-10-24T17:29:57.805503+00:00&quot;,
+  &quot;usage&quot;: {
+    &quot;promptTokenCount&quot;: 1897,
+    &quot;candidatesTokenCount&quot;: 490,
+    &quot;totalTokenCount&quot;: 2387,
+    &quot;promptTokensDetails&quot;: [
+      {
+        &quot;modality&quot;: &quot;TEXT&quot;,
+        &quot;tokenCount&quot;: 1897
+      }
+    ],
+    &quot;serviceTier&quot;: &quot;standard&quot;
+  },
+  &quot;data&quot;: {
+    &quot;summary&quot;: &quot;This assessment provides an AI interpretation of passive and read-only website checks for https://launchshield-r1-professorcj-43cf1823.koyeb.app. The scan encountered rate limits, partial coverage warnings, and skipped checks from certain providers, and identified a single finding related to TLS certificate expiration.&quot;,
+    &quot;analysis&quot;: [
+      {
+        &quot;finding_id&quot;: &quot;f_ee429414a376dbf08470&quot;,
+        &quot;explanation&quot;: &quot;AI interpretation: The provider &#x27;vibe_check&#x27; reported a TLS configuration signal indicating that the certificate has reached or passed its expiration date (daysUntilExpiry: 0, valid: false). If correct, visitors may experience trust warnings when attempting to access the site securely.&quot;,
+        &quot;remediation&quot;: &quot;AI interpretation: Renew and install a valid TLS/SSL certificate on the server immediately to ensure secure and trusted encrypted communications.&quot;,
+        &quot;verification&quot;: &quot;AI interpretation: Inspect the TLS certificate chain using standard command-line tools or browser inspection utilities to verify that a valid, unexpired certificate is actively served.&quot;
+      }
+    ],
+    &quot;limitations&quot;: [
+      &quot;Passive/read-only, public and unauthenticated assessment; not a penetration test.&quot;,
+      &quot;No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.&quot;,
+      &quot;No combined security score is calculated from incompatible provider scores.&quot;,
+      &quot;Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.&quot;,
+      &quot;Only this application’s own validation requests are IP-pinned; external providers use their own DNS and scope controls.&quot;,
+      &quot;No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.&quot;,
+      &quot;Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.&quot;,
+      &quot;Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked.&quot;,
+      &quot;Provider coverage failures and rate-limiting affected website_auditor and xlogs.&quot;,
+      &quot;OSV scan was skipped due to lack of reliable package ecosystem/name/exact-version evidence.&quot;,
+      &quot;Vibe_check reported partial coverage with timeouts and path-probing limitations.&quot;
+    ]
+  },
+  &quot;label&quot;: &quot;AI interpretation; not independently verified scanner evidence&quot;
+}</pre><h2>Limitations</h2><ul><li>Passive/read-only, public and unauthenticated assessment; not a penetration test.</li><li>No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.</li><li>No combined security score is calculated from incompatible provider scores.</li><li>Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.</li><li>Only this application’s own validation requests are IP-pinned; external providers use their own DNS and scope controls.</li><li>No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.</li><li>Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.</li><li>Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked.</li></ul></html>

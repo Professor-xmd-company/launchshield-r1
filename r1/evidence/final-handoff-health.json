@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-24T17:36:01.048616+00:00",
+  "deployment_state": "HEALTHY",
+  "source_commit": "869ffca6cfd24b770cbcb88c67c4415995173578",
+  "free_scalings": [
+    {
+      "scopes": [
+        "region:fra"
+      ],
+      "min": 0,
+      "max": 1,
+      "targets": [
+        {
+          "sleep_idle_delay": {
+            "value": 0,
+            "deep_sleep_value": 3900,
+            "light_sleep_value": 0
+          }
+        }
+      ]
+    }
+  ],
+  "root_http": 200,
+  "health_http": 200,
+  "health": {
+    "ok": true,
+    "revision": "R1",
+    "accounts": false,
+    "database": false,
+    "storage": "temporary files",
+    "gemini_configured": true
+  },
+  "protected_database_http": 200,
+  "deleted_professor_http": 404
+}

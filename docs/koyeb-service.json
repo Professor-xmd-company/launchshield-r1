@@ -11,7 +11,7 @@
         "dockerfile": "Dockerfile"
       },
       "no_deploy_on_push": true,
-      "sha": "6b96a8d9db3f543c0d4788ebc269c69592ab90cc"
+      "sha": "869ffca6cfd24b770cbcb88c67c4415995173578"
     },
     "regions": [
       "fra"

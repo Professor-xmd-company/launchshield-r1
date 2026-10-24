@@ -1,0 +1,8 @@
+{
+  "state": "rate_limited",
+  "error": "Waiting for provider quota; request was not sent.",
+  "http_status": null,
+  "retry_at": "2026-10-24T18:02:39.084601+00:00",
+  "source": "xlogs",
+  "mode": "live"
+}

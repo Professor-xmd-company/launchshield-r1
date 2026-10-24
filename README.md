@@ -17,6 +17,7 @@ One ordinary page, **no accounts**, no database, no visual-redesign phase yet. T
 - **Incomplete coverage remains:** xlogs returned HTTP429; Website Auditor cache stayed404. Their waiting periods are respected across redeploys, not bypassed. OSV skipped because there was no reliable exact package/version evidence. These are not clean scan results.
 - A Vibe `certExpiry` potential signal conflicted with an independent CA/hostname-validated TLS handshake showing expiry **2027-01-20**. Preserve the provider observation, but do not claim a confirmed expired certificate or blindly act on AI remediation. See `r1/evidence/tls-independent-check.json`.
 - See **[R1 work record](R1.md)** and `docs/deployment.json` for current deployed source, browser/export evidence and actual provider states. Isolated tests, recorded-native replay and genuine live checks are deliberately distinguished.
+- Final hosted desktop/mobile screenshots were genuinely captured and inspected. At a390px viewport the deployed document is390px wide; only its provider table scrolls horizontally. Native browser JSON/HTML downloads match the server report, reload does not start another scan, and the final browser console has zero errors/warnings. See **[R1 verification handoff](docs/R1-VERIFICATION.md)**.
 
 ## Run
 

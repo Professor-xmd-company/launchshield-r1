@@ -5,7 +5,7 @@
     "full_name": "Professor-xmd-company/launchshield-r1",
     "url": "https://github.com/Professor-xmd-company/launchshield-r1",
     "private": false,
-    "release_commit": "6b96a8d9db3f543c0d4788ebc269c69592ab90cc",
+    "release_commit": "869ffca6cfd24b770cbcb88c67c4415995173578",
     "initial_release_commit": "010e1798e012c033230ff780e7eadaf9159b6314"
   },
   "hosting": {
@@ -20,13 +20,14 @@
     "gemini_secret_name": "launchshield-r1-gemini",
     "gemini_secret_id": "d22f2c25-8d00-48f1-824d-4feb215980aa",
     "service_id": "cd48bc18-6659-413f-8254-ea43618210f1",
-    "deployment_id": "e31d7b8d-d4cf-45ee-bd51-bb24de19b286",
+    "deployment_id": "0571263c-a143-4044-bb5c-2140825c45a8",
     "deployment_state": "HEALTHY",
     "verified_root_http": 200,
     "verified_health_http": 200,
-    "requested_release_commit": "6b96a8d9db3f543c0d4788ebc269c69592ab90cc",
+    "requested_release_commit": "869ffca6cfd24b770cbcb88c67c4415995173578",
     "previous_deployments": [
-      "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e"
+      "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e",
+      "e31d7b8d-d4cf-45ee-bd51-bb24de19b286"
     ],
     "provider_cooldowns": {
       "xlogs": "2026-10-24T18:02:39.084601+00:00",
@@ -36,8 +37,8 @@
   "protected_database_app": "database",
   "owner_approved_old_app_removed": "professor-xmd",
   "verification": {
-    "evidence_prefix": "live-after-fix",
-    "real_job_id": "4fd263e01fd458ec0aae5456485e1264",
+    "evidence_prefix": "live-final",
+    "real_job_id": "e2e25fc452e9a5f24bce4d1ed636fe4f",
     "real_job_state": "completed_with_warnings",
     "providers": {
       "website_auditor": "rate_limited",
@@ -48,6 +49,23 @@
     },
     "ai_state": "completed",
     "findings": 1,
-    "http_guard_checks": 9
+    "http_guard_checks": 9,
+    "checked_at": "2026-10-24T17:34:32.709534+00:00",
+    "isolated_tests_passed": 82,
+    "browser": {
+      "desktop_screenshot": "r1/screenshots/koyeb-completed-desktop.png",
+      "mobile_screenshot": "r1/screenshots/koyeb-completed-mobile.png",
+      "mobile_viewport_screenshot": "r1/screenshots/koyeb-mobile-viewport.png",
+      "mobile_viewport_width": 390,
+      "mobile_document_width": 390,
+      "provider_table_scroll_width": 610,
+      "provider_table_viewport_width": 342,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "reload_same_job": true,
+      "scan_start_posts_in_browser_session": 1,
+      "actual_json_download_bytes": 8375,
+      "actual_html_download_bytes": 7848
+    }
   }
 }

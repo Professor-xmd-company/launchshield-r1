@@ -1,0 +1,87 @@
+{
+  "id": "e2e25fc452e9a5f24bce4d1ed636fe4f",
+  "target": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+  "requested_target_had_path_query_or_fragment": false,
+  "mode": "live",
+  "scenario": "success",
+  "ai_enabled": true,
+  "state": "completed_with_warnings",
+  "created_at": "2026-10-24T17:29:16.395948+00:00",
+  "updated_at": "2026-10-24T17:29:57.812350+00:00",
+  "completed_at": "2026-10-24T17:29:57.806110+00:00",
+  "authorization": "self_declared_by_submitter",
+  "public_disclosure_acknowledged": true,
+  "providers": {
+    "website_auditor": {
+      "state": "rate_limited",
+      "message": "Waiting for provider quota; request was not sent.",
+      "updated_at": "2026-10-24T17:29:17.013263+00:00",
+      "started_at": "2026-10-24T17:29:16.532199+00:00",
+      "http_status": null,
+      "retry_at": "2026-10-24T18:02:39.084601+00:00",
+      "completed_at": "2026-10-24T17:29:17.013142+00:00",
+      "artifact_available": true
+    },
+    "xlogs": {
+      "state": "rate_limited",
+      "message": "Waiting for provider quota; request was not sent.",
+      "updated_at": "2026-10-24T17:29:16.541370+00:00",
+      "started_at": "2026-10-24T17:29:16.539925+00:00",
+      "http_status": null,
+      "retry_at": "2026-10-24T18:02:39.084601+00:00",
+      "completed_at": "2026-10-24T17:29:16.541287+00:00",
+      "artifact_available": true
+    },
+    "vibe_check": {
+      "state": "completed",
+      "message": "Provider completed with partial/unknown module coverage: apiSurface: ['Some API checks timed out. Findings may be incomplete.', 'Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.']",
+      "updated_at": "2026-10-24T17:29:50.928771+00:00",
+      "started_at": "2026-10-24T17:29:16.544884+00:00",
+      "external_scan_id": "f350330135b34d869090e1a0380e8382",
+      "artifact_available": true,
+      "http_status": 200,
+      "requested_at": "2026-10-24T17:29:16.546193+00:00",
+      "received_at": "2026-10-24T17:29:50.750173+00:00",
+      "scanned_at": 1792862956963,
+      "coverage_warnings": [
+        "apiSurface: ['Some API checks timed out. Findings may be incomplete.', 'Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.']"
+      ],
+      "finding_records": 1,
+      "completed_at": "2026-10-24T17:29:50.928540+00:00"
+    },
+    "mdn_observatory": {
+      "state": "completed",
+      "message": "Provider response received.",
+      "updated_at": "2026-10-24T17:29:18.500454+00:00",
+      "started_at": "2026-10-24T17:29:17.017575+00:00",
+      "artifact_available": true,
+      "http_status": 200,
+      "requested_at": "2026-10-24T17:29:17.019088+00:00",
+      "received_at": "2026-10-24T17:29:18.494454+00:00",
+      "scanned_at": "2026-10-24T17:29:17.181Z",
+      "finding_records": 0,
+      "completed_at": "2026-10-24T17:29:18.500304+00:00"
+    },
+    "osv": {
+      "state": "skipped_not_applicable",
+      "message": "No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.",
+      "updated_at": "2026-10-24T17:29:50.937116+00:00",
+      "started_at": "2026-10-24T17:29:50.931091+00:00",
+      "artifact_available": true,
+      "requested_at": "2026-10-24T17:29:50.932989+00:00",
+      "finding_records": 0,
+      "completed_at": "2026-10-24T17:29:50.936965+00:00"
+    }
+  },
+  "warnings": [],
+  "report_available": true,
+  "queue_position": 0,
+  "validation": {
+    "public_addresses_checked": 4,
+    "redirects": 0,
+    "target_http_status": 200,
+    "scope": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "own_requests_ip_pinned": true
+  },
+  "ai_state": "completed"
+}

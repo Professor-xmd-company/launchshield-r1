@@ -1,0 +1,10 @@
+{
+  "state": "skipped_not_applicable",
+  "message": "No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.",
+  "requested_at": "2026-10-24T17:29:50.932989+00:00",
+  "native": null,
+  "source": "osv",
+  "mode": "live",
+  "native_response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+  "normalized_findings": []
+}

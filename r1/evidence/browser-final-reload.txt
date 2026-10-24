@@ -1,0 +1,12 @@
+### Result
+{
+  "job": "REAL PROVIDER JOB · https://launchshield-r1-professorcj-43cf1823.koyeb.app · completed_with_warnings · ID e2e25fc452e9a5f24bce4d1ed636fe4f",
+  "jsonEnabled": true,
+  "htmlEnabled": true,
+  "viewport": 390,
+  "documentWidth": 390
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({job:document.querySelector(\'#job-summary\').textContent,jsonEnabled:!document.querySelector(\'#json\').disabled,htmlEnabled:!document.querySelector(\'#html\').disabled,viewport:innerWidth,documentWidth:document.documentElement.scrollWidth})');
+```
