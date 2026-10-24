@@ -1,5 +1,5 @@
 from __future__ import annotations
-import json,os,re,secrets,hashlib,threading,shutil
+import json,os,re,secrets,hashlib,threading,shutil,math
 from pathlib import Path
 from datetime import datetime,timezone
 from .models import PROVIDERS,TERMINAL,utcnow
@@ -57,7 +57,9 @@ class FileStore:
         if name not in PROVIDERS:raise KeyError('Unknown provider')
         with self.lock:
             job=self.get(jid);job['providers'][name].update(values,updated_at=utcnow());job['updated_at']=utcnow();self.write(self.job_dir(jid)/'job.json',job)
-            self.event(jid,'provider_state',{'provider':name,'state':job['providers'][name]['state'],'detail':job['providers'][name].get('message','')})
+            detail={'provider':name,'state':job['providers'][name]['state'],'detail':job['providers'][name].get('message','')}
+            if 'dispatch' in values:detail['dispatch']=values['dispatch']
+            self.event(jid,'provider_state',detail)
     def artifact(self,jid,name,value):
         if name not in PROVIDERS:raise KeyError('Unknown provider')
         self.write(self.job_dir(jid)/'providers'/f'{name}.json',redact(value))
@@ -72,8 +74,9 @@ class FileStore:
     def cached(self,provider,origin,max_age):
         key=hash_token(provider+'|'+origin);value=self.read(self.cache/(key+'.json'))
         if not value:return None
-        age=datetime.now(timezone.utc).timestamp()-value['stored_at']
-        return value['value'] if age<max_age else None
+        try:age=datetime.now(timezone.utc).timestamp()-float(value['stored_at'])
+        except (KeyError,ValueError,TypeError):return None
+        return value.get('value') if math.isfinite(age) and 0<=age<max_age else None
     def put_cache(self,provider,origin,value):
         self.write(self.cache/(hash_token(provider+'|'+origin)+'.json'),{'stored_at':datetime.now(timezone.utc).timestamp(),'value':redact(value)})
     def cleanup(self,retention):

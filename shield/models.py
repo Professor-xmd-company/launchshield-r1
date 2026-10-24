@@ -1,5 +1,5 @@
 from __future__ import annotations
-import os,json
+import os,json,math
 from dataclasses import dataclass,field
 from pathlib import Path
 from datetime import datetime,timezone
@@ -8,7 +8,7 @@ from pydantic import BaseModel,Field,ConfigDict
 
 PROVIDERS=('website_auditor','xlogs','vibe_check','mdn_observatory','osv')
 TERMINAL={'completed','completed_with_warnings','failed','cancelled','expired'}
-PROVIDER_TERMINAL={'completed','cached','stale_result','failed','rate_limited','timed_out','skipped_not_applicable','cancelled','unavailable','blocked'}
+PROVIDER_TERMINAL={'completed','cached','stale_result','failed','rate_limited','timed_out','skipped_not_applicable','cancelled','unavailable','blocked','skipped_cooldown'}
 SCENARIOS=('success','partial_failure','rate_limited','malformed','timeout','osv_skip','ai_failure','stale_cache')
 def utcnow():return datetime.now(timezone.utc).isoformat()
 
@@ -28,9 +28,12 @@ class Settings:
     maximum_response:int=2_000_000
     provider_concurrency:int=2
     ai_calls_per_hour:int=10
-    provider_cooldowns:dict[str,str]=field(default_factory=lambda:json.loads(os.environ.get('LAUNCHSHIELD_PROVIDER_COOLDOWNS','{}')))
+    provider_cooldowns:dict[str,dict|str]=field(default_factory=lambda:json.loads(os.environ.get('LAUNCHSHIELD_PROVIDER_COOLDOWNS','{}')))
+    xlogs_target_interval:float=field(default_factory=lambda:float(os.environ.get('LAUNCHSHIELD_XLOGS_TARGET_INTERVAL','0')))
     diagnostics_until:str=field(default_factory=lambda:os.environ.get('LAUNCHSHIELD_DIAGNOSTICS_UNTIL',''))
     max_queue:int=10
+    def __post_init__(self):
+        if not math.isfinite(self.xlogs_target_interval) or self.xlogs_target_interval<0:raise ValueError('xlogs_target_interval must be a finite non-negative number of seconds.')
 
 class ScanRequest(BaseModel):
     model_config=ConfigDict(extra='forbid')

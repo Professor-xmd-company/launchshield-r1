@@ -16,10 +16,14 @@ def response_receipt(method,url,status,headers,body):
     # Never retain Set-Cookie, Authorization, challenge-token headers or raw HTML.
     for key in ('retry-after','x-vercel-mitigated','cf-mitigated','x-ratelimit-limit','x-ratelimit-remaining','x-ratelimit-reset'):
         if headers.get(key) is not None:entry[key]=str(headers[key])[:160]
-    if status>=400 and 'json' in entry['content_type'].lower():
+    if 'json' in entry['content_type'].lower():
         try:
             data=json.loads(body)
-            if isinstance(data,dict):
+            if isinstance(data,dict) and (status>=400 or data.get('ok') is False):
+                nested=data.get('error')
+                if isinstance(nested,dict):
+                    for key in ('code','message','request_id'):
+                        if isinstance(nested.get(key),(str,int,float)):entry['provider_'+('error' if key=='message' else key)]=redact(str(nested[key])[:400])
                 for key in ('code','error','message','request_id'):
                     if isinstance(data.get(key),(str,int,float)):entry['provider_'+key]=redact(str(data[key])[:400])
         except (ValueError,TypeError):pass

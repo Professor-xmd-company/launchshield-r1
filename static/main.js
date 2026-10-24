@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id);
 const finished=new Set(['completed','completed_with_warnings','failed','cancelled','expired']);
 const received=new Set(['completed','cached','stale_result']);
 const providerNames={website_auditor:'Website Auditor',xlogs:'xlogs',vibe_check:'Vibe Check',mdn_observatory:'MDN Observatory',osv:'Package advisories'};
-let config=null,current=null,timer=null,polling=false,busy=false,version=0,readFailures=0,renderedId=null;
+let config=null,current=null,timer=null,polling=false,busy=false,version=0,readFailures=0,renderedId=null,retryTimer=null,serverOffset=0;
 const element=(tag,text,className)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=String(text);if(className)e.className=className;return e;};
 function getStored(key){try{return sessionStorage.getItem(key)}catch{return null}}
 function setStored(key,value){try{if(value===null)sessionStorage.removeItem(key);else sessionStorage.setItem(key,value)}catch{}}
@@ -39,7 +39,7 @@ function sourceStatus(p){
   if(checkpoint)return (p.diagnostics?.request_sent===false?'Scan not sent during cooldown. A separate no-scan API check from this server was blocked at the provider’s security checkpoint.':'The provider blocked automated API access at its security checkpoint. No scan report was returned.')+waiting+' Provider access may still need to be resolved after the wait.';
   if(p.reason_code==='report_not_generated')return 'The provider API still returned404 (no cached report) after its documented report-page request and60seconds of bounded polling. A completed scan could not be confirmed.';
   if(p.state==='skipped_not_applicable')return 'Not tested: no reliable exact package version was detected. This is not a clean advisory result.';
-  if(p.provider==='website_auditor'&&p.reason_code==='local_cooldown')return 'The provider API has no cached report. A new report trigger was not sent while its cooldown is active.'+waiting;
+  if(p.state==='skipped_cooldown'){const d=p.dispatch||p.diagnostics?.dispatch;const scope=d?.cooldown?.scope||p.diagnostics?.cooldown?.scope||'provider';const missing=p.diagnostics?.cache_http_status===404||(d?.requests||[]).some(r=>r.http_status===404&&r.operation==='read_cache');return (p.provider==='website_auditor'&&missing?'The cached-report lookup returned404. The scan trigger was not sent. ':'The provider request was not sent; no new report was received. ')+({target_interval:'This target’s scan interval is active.',request_in_flight:'An existing dispatch is still in flight.',local_provider_budget:'The sent-request budget for this provider is full.',upstream_429:'A cooldown from an actual upstream HTTP429 is active.',provider_security_checkpoint:'The cooldown from an actual provider security checkpoint is active.',legacy_explicit_operator_hold:'An absolute operator-preserved cooldown is active.',operator_hold:'An explicitly configured operator hold is active.'}[d?.cooldown?.reason||p.diagnostics?.cooldown?.reason]||(scope==='target'?'This target’s interval is active.':'A provider-wide cooldown is active.'))+waiting;}
   if(p.state==='rate_limited')return (p.reason_code==='local_cooldown'?'Request not sent: preserving the shared provider cooldown or per-host interval.':'The provider returned HTTP429 and no scan report. LaunchShield users share the server’s provider quota.')+waiting;
   if(p.state==='timed_out')return 'A network or provider deadline was reached. No completed result was received.';
   if(p.state==='stale_result')return 'Older cached evidence was returned; it may not describe the current website.';
@@ -47,6 +47,16 @@ function sourceStatus(p){
   if(p.state==='completed')return p.coverage_warnings?.length?'Limited report received. Some module results are inconclusive or constrained by the provider’s scan budget.':'Report received for this provider’s limited scope.';
   if(p.state==='cancelled')return 'This check did not finish.';
   return 'No usable report was returned.'+(typeof p.message==='string'?' '+p.message:'');
+}
+function configureRetry(data){
+  clearTimeout(retryTimer);const button=$('retry-test');
+  const candidates=(data.coverage||[]).filter(p=>!received.has(p.state)&&p.state!=='skipped_not_applicable'&&!['invalid_target','invalid_request'].includes(p.reason_code));
+  button.hidden=!candidates.length;if(!candidates.length)return;
+  const deadlines=candidates.map(p=>Date.parse(p.dispatch?.next_allowed_at||p.retry_at||'')).filter(Number.isFinite);
+  const anyImmediate=candidates.some(p=>!(p.dispatch?.next_allowed_at||p.retry_at));
+  const until=anyImmediate?0:Math.min(...deadlines);
+  const update=()=>{const wait=Number.isFinite(until)?until-(Date.now()+serverOffset):0;button.disabled=wait>0;button.textContent=wait>0?'Retry after '+dateLabel(until):'Retry test';if(wait>0)retryTimer=setTimeout(update,Math.min(wait+50,60000));};
+  update();button.onclick=()=>{if(button.disabled||busy)return;$('website').value=data.target;$('test-form').requestSubmit();};
 }
 function paragraph(container,text){if(text)container.append(element('p',text));}
 function drawReport(data){
@@ -89,12 +99,14 @@ function drawReport(data){
   for(const provider of coverage){
     const li=element('li');li.append(element('strong',providerNames[provider.provider]||provider.provider),element('span',sourceStatus(provider)));
     const when=dateLabel(provider.scanned_at??provider.cached_at);if(when)li.append(element('span','Provider observation: '+when,'source-time'));
+    const dispatch=provider.dispatch||provider.diagnostics?.dispatch;
+    if(dispatch){const sent=dispatch.scan_request_sent===null?'uncertain':(dispatch.scan_request_sent?'yes':'no');li.append(element('span','HTTP requests sent: '+dispatch.requests_sent+'. Scan-start sent: '+sent+'. Valid report received: '+(dispatch.report_received?'yes':'no')+'.','source-time'));const next=dateLabel(dispatch.next_allowed_at||provider.retry_at);li.append(element('span',next?'Next attempt allowed: '+next+'.':'Next attempt: no active local deadline recorded.','source-time'));}
     const modules=(provider.module_coverage||[]).filter(m=>m.state!=='complete');
     if(modules.length){const details=element('details');details.append(element('summary','Module coverage'));for(const module of modules)paragraph(details,module.module+': '+module.notes.join(' '));li.append(details);}list.append(li);
   }
   const tls=data.scope_verification?.tls;
   if(tls?.chain_and_hostname_verified&&tls.not_after){const li=element('li');li.append(element('strong','Direct connection verification'),element('span',(tls.protocol||'TLS')+' connection verified with certificate-chain and hostname checks. Certificate expires '+dateLabel(tls.not_after)+'.'),element('span','Observed during the existing scope-validation connection, not an extra scan. This does not verify every TLS setting or application vulnerability.','source-time'));list.append(li);} 
-  $('progress').hidden=true;$('report').hidden=false;renderedId=data.job_id;
+  $('progress').hidden=true;$('report').hidden=false;renderedId=data.job_id;configureRetry(data);
 }
 async function refresh(v){
   if(v!==version||!current)return;if(polling){schedule(v,200);return;}polling=true;
@@ -113,7 +125,7 @@ async function refresh(v){
   }finally{polling=false;}
 }
 $('test-form').addEventListener('submit',async event=>{
-  event.preventDefault();if(busy||!config)return;clearPoll();const v=++version;readFailures=0;renderedId=null;error('');$('report').hidden=true;
+  event.preventDefault();if(busy||!config)return;clearTimeout(retryTimer);$('retry-test').hidden=true;clearPoll();const v=++version;readFailures=0;renderedId=null;error('');$('report').hidden=true;
   try{
     const target=normalizeLink($('website').value);$('website').value=target;setBusy(true);$('progress').hidden=false;$('progress-title').textContent='Starting your website test…';$('progress-message').textContent='Real checks and the AI report run automatically.';
     const previous=saved();const result=await api('/scans',{method:'POST',body:JSON.stringify({target,mode:'live',ai:true,authorized:true,public_disclosure:true,consent_method:'click_through'})});
@@ -128,7 +140,7 @@ $('download-report').addEventListener('click',()=>download('html'));
 $('download-json').addEventListener('click',()=>download('json'));
 (async()=>{
   try{
-    const response=await fetch('/api/config',{headers:{'X-Client-Token':getStored('ls_client')||''},credentials:'same-origin'});if(!response.ok)throw new Error('Unable to connect. Please reload the page.');config=await response.json();setStored('ls_client',config.client_token);setBusy(false);
+    const response=await fetch('/api/config',{headers:{'X-Client-Token':getStored('ls_client')||''},credentials:'same-origin'});if(!response.ok)throw new Error('Unable to connect. Please reload the page.');config=await response.json();serverOffset=Date.parse(config.server_time||'')-Date.now();if(!Number.isFinite(serverOffset))serverOffset=0;setStored('ls_client',config.client_token);setBusy(false);
     const old=saved();if(old?.id){current=old;try{const job=await api('/scans/'+old.id);if(job.mode!=='live')throw new Error('Not a live report');$('website').value=job.target;setBusy(true);await refresh(++version);}catch{current=null;setStored('ls_last',null);setBusy(false);$('progress').hidden=true;}}
   }catch(e){error(e.message);setBusy(false);}
 })();

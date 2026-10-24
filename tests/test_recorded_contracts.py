@@ -76,7 +76,7 @@ async def test_operator_cooldown_survives_empty_ephemeral_quota_store(tmp_path):
     async def handler(request):calls.append(request);raise AssertionError('No external request is permitted during cooldown')
     e=engine(tmp_path,handler,provider_cooldowns={'xlogs':until})
     with pytest.raises(ProviderFailure) as caught:await e.run('xlogs',normalize_target('https://fixture.example'),'live','success',noop)
-    assert caught.value.state=='rate_limited' and caught.value.http_status is None and not calls
+    assert caught.value.state=='skipped_cooldown' and caught.value.http_status is None and not calls
     assert caught.value.retry_at==until
 
 @pytest.mark.parametrize('data',[{'status':'completed','modules':{}},{'status':'completed','summary':{'modules':{'headers':{'score':100}}}}])

@@ -147,15 +147,15 @@ class JobManager:
                     if cache_origin and result['state'] in ('completed','cached','stale_result'):self.store.put_cache(name,cache_origin,{k:v for k,v in result.items() if k!='_cache_origin'})
                     self.store.provider(jid,name,**{k:v for k,v in result.items() if k not in ('native','_cache_origin')},finding_records=len(normalized),completed_at=utcnow())
                 except SchemaChanged as e:
-                    self.store.artifact(jid,name,{'state':'failed','schema_error':str(e),'native':native,'source':name,'mode':job['mode']})
-                    self.store.provider(jid,name,state='failed',message='Unrecognized/invalid response schema: '+str(e),completed_at=utcnow())
+                    self.store.artifact(jid,name,{'state':'failed','schema_error':str(e),'native':getattr(e,'native',None),'dispatch':getattr(e,'dispatch',{}),'source':name,'mode':job['mode']})
+                    self.store.provider(jid,name,state='failed',message='Unrecognized/invalid response schema: '+str(e),dispatch=getattr(e,'dispatch',{}),lifecycle_state='failed',completed_at=utcnow())
                 except ProviderFailure as e:
                     details=dict(e.diagnostics)
                     if name=='xlogs':
                         access=self.store.read(self.store.root/'provider-access-diagnostic.json')
                         if access and access.get('state')!='pending':details['provider_access_check']=access
-                    self.store.provider(jid,name,state=e.state,message=e.message,http_status=e.http_status,retry_at=e.retry_at,reason_code=e.code,diagnostics=details,completed_at=utcnow())
-                    self.store.artifact(jid,name,{'state':e.state,'error':e.message,'http_status':e.http_status,'retry_at':e.retry_at,'reason_code':e.code,'diagnostics':details,'source':name,'mode':job['mode']})
+                    self.store.provider(jid,name,state=e.state,message=e.message,http_status=e.http_status,retry_at=e.retry_at,reason_code=e.code,diagnostics=details,dispatch=details.get('dispatch',{}),lifecycle_state=details.get('dispatch',{}).get('lifecycle_state','failed'),completed_at=utcnow())
+                    self.store.artifact(jid,name,{'state':e.state,'error':e.message,'http_status':e.http_status,'retry_at':e.retry_at,'reason_code':e.code,'diagnostics':details,'dispatch':details.get('dispatch',{}),'source':name,'mode':job['mode']})
                 except asyncio.TimeoutError:
                     self.store.artifact(jid,name,{'state':'timed_out','source':name,'mode':job['mode'],'error':'Provider deadline reached.'})
                     self.store.provider(jid,name,state='timed_out',message='Provider deadline reached; other providers continue.',completed_at=utcnow())
@@ -224,7 +224,12 @@ class JobManager:
             block+='<details><summary>Source evidence and confidence</summary><pre>'+esc(json.dumps(finding,indent=2,ensure_ascii=False))+'</pre></details></article>'
             blocks.append(block)
         if not blocks:blocks.append('<article><h3>No findings reported by the available checks</h3><p>This is not proof that the website is secure. Review provider coverage below.</p></article>')
-        coverage=''.join('<tr><td>'+esc(p['provider'])+'</td><td>'+esc(p['state'])+'</td><td>'+esc(p.get('message',''))+'</td><td>'+esc(p.get('scanned_at','not supplied'))+'</td></tr>' for p in report['coverage'])
+        def dispatch_label(provider):
+            d=provider.get('dispatch') or provider.get('diagnostics',{}).get('dispatch')
+            if not d:return 'Dispatch metadata not recorded for this older result.'
+            flag=lambda value:'uncertain' if value is None else ('yes' if value else 'no')
+            return 'HTTP requests sent: '+str(d.get('requests_sent',0))+'. Scan-start sent: '+flag(d.get('scan_request_sent'))+'. Valid report received: '+flag(d.get('report_received'))+'. Next allowed: '+str(d.get('next_allowed_at') or provider.get('retry_at') or 'no active deadline recorded')+'.'
+        coverage=''.join('<tr><td>'+esc(p['provider'])+'</td><td>'+esc(p['state'])+'</td><td>'+esc(p.get('message',''))+'<br>'+esc(dispatch_label(p))+'</td><td>'+esc(p.get('scanned_at','not supplied'))+'</td></tr>' for p in report['coverage'])
         module_notes=''.join('<li><strong>'+esc(p['provider'])+' / '+esc(m['module'])+'</strong>: '+esc('; '.join(m.get('notes',[])))+'</li>' for p in report['coverage'] for m in p.get('module_coverage',[]) if m.get('state')!='complete')
         conclusion=report.get('assessment',{}).get('conclusion','Passive checks only; not a security guarantee.')
         direct=report.get('scope_verification',{}).get('tls',{})

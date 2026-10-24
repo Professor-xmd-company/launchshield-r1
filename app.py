@@ -6,7 +6,7 @@ from urllib.parse import urlsplit
 from fastapi import FastAPI,Request,HTTPException
 from fastapi.responses import FileResponse,JSONResponse
 from fastapi.staticfiles import StaticFiles
-from shield.models import Settings,ScanRequest,PROVIDERS
+from shield.models import Settings,ScanRequest,PROVIDERS,utcnow
 from shield.harness import JobManager,JobConflict
 from shield.safety import TargetRejected
 from shield.persistence import hash_token
@@ -73,7 +73,7 @@ def create_app(settings=None,manager=None):
     @app.get('/api/config')
     async def config(request:Request):
         sid=identify(request) or secrets.token_hex(32);token=sid+'.'+signature(sid)
-        response=JSONResponse({'revision':'R1','client_token':token,'csrf':csrf(sid),'gemini_configured':bool(settings.gemini_key),'gemini_model':settings.gemini_model,'execution_mode':'live','public_targets_enabled':settings.allow_public_targets,'mock_execution_enabled':settings.allow_mock,'retention_seconds':settings.retention_seconds,'limitations':'No database. Files/jobs can be lost on sleep/restart/redeploy. No security guarantee.'})
+        response=JSONResponse({'revision':'R1','server_time':utcnow(),'client_token':token,'csrf':csrf(sid),'gemini_configured':bool(settings.gemini_key),'gemini_model':settings.gemini_model,'execution_mode':'live','public_targets_enabled':settings.allow_public_targets,'mock_execution_enabled':settings.allow_mock,'retention_seconds':settings.retention_seconds,'limitations':'No database. Files/jobs can be lost on sleep/restart/redeploy. No security guarantee.'})
         response.set_cookie('ls_client',token,httponly=True,secure=True,samesite='strict',max_age=86400,path='/')
         return response
     @app.post('/api/scans')

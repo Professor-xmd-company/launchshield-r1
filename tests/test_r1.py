@@ -221,9 +221,9 @@ async def test_provider_429_backoff_no_retry(tmp_path):
     calls=[]
     async def handler(request):calls.append(request);return httpx.Response(429,headers={'Retry-After':'600'},json={'error':'rate limited'})
     settings=Settings(data_dir=tmp_path);engine=ProviderEngine(settings,FileStore(tmp_path),lambda:httpx.AsyncClient(transport=httpx.MockTransport(handler)))
-    for _ in range(2):
+    for index in range(2):
         with pytest.raises(ProviderFailure) as error:await engine.request('POST','https://xlogs.com/api/v1/scan','xlogs','https://owned.example',json={'url':'https://owned.example'})
-        assert error.value.state=='rate_limited' and error.value.retry_at
+        assert error.value.state==('rate_limited' if index==0 else 'skipped_cooldown') and error.value.retry_at
     assert len(calls)==1
 
 @pytest.mark.asyncio
