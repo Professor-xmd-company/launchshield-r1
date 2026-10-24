@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-10-24T19:20:05.750199+00:00",
+  "deployment_id": "6474a91f-b1e7-48e3-a953-7facad6bbda1",
+  "status": "HEALTHY",
+  "code_pin": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c",
+  "root_http": 200,
+  "health_http": 200,
+  "real_mode": "live",
+  "public_targets_enabled": true,
+  "mock_execution_enabled": false,
+  "gemini_configured": true,
+  "automatic_operator_probe_disabled": true,
+  "git_push_auto_deploy_disabled": true
+}

@@ -1,0 +1,25 @@
+{
+  "state": "completed",
+  "native": {
+    "id": 130721596,
+    "details_url": "https://developer.mozilla.org/en-US/observatory/analyze?host=launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "algorithm_version": 6,
+    "scanned_at": "2026-10-24T19:10:59.738Z",
+    "error": null,
+    "grade": "A+",
+    "score": 115,
+    "status_code": 200,
+    "tests_failed": 0,
+    "tests_passed": 12,
+    "tests_quantity": 12
+  },
+  "http_status": 200,
+  "requested_at": "2026-10-24T19:10:59.480439+00:00",
+  "received_at": "2026-10-24T19:11:00.902636+00:00",
+  "message": "Provider response received.",
+  "scanned_at": "2026-10-24T19:10:59.738Z",
+  "source": "mdn_observatory",
+  "mode": "live",
+  "native_response_sha256": "eea11e263cfb80dd9d266919c0b4c4939b9b52f9176281bcbae259f2770fed47",
+  "normalized_findings": []
+}

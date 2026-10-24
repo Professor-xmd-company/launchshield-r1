@@ -1,0 +1,6 @@
+### Result
+{"jobId":"d716a1b2c93c3b976e189d13943c27d1","reportVisible":true,"progressHidden":true,"status":"Assessment incomplete"}
+### Ran Playwright code
+```js
+await (async page => {await page.getByRole('heading',{name:'Your website report',exact:true}).waitFor({state:'visible',timeout:30000});return await page.evaluate(()=>({jobId:JSON.parse(sessionStorage.getItem('ls_last')||'null')?.id,reportVisible:!document.getElementById('report').hidden,progressHidden:document.getElementById('progress').hidden,status:document.getElementById('report-status').textContent}));})(page);
+```

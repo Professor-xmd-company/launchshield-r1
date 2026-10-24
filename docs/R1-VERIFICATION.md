@@ -8,7 +8,16 @@ https://launchshield-r1-professorcj-43cf1823.koyeb.app
 
 One blank website-link field and one Test button initially. No execution/scenario selectors, permission checkboxes, AI switch, provider dashboard, raw AI JSON, manual report generation or accounts. Clicking Test attests to the plainly displayed ownership/permission and public-provider disclosure. Accepts authorized public website origins, not just LaunchShield itself. Bare hostnames automatically receive HTTPS.
 
-## Actual deployed test
+## Latest provider-reliability verification —2026-10-24
+
+The current runtime is `c2172b41dae3f8d182bb2e8365ea1d091ea5267c`, deployment `6474a91f-b1e7-48e3-a953-7facad6bbda1`, HEALTHY/root200/health200. **123isolated tests passed**. See [provider diagnosis](R1-PROVIDER-DIAGNOSIS.md) for exact causes, fixes and unresolved provider limitations.
+
+Actual current owned-origin browser job `d716a1b2c93c3b976e189d13943c27d1`: one hostname/Test click after the preserved xlogs window. xlogs returned a confirmed server-side429 HTML Vercel security checkpoint, not a presumed JSON hourly quota. Website Auditor cached read404/new trigger held by a preserved local restart guard. Vibe/MDN returned real reports; Vibe CORS41/96 unknown and API80-request cap/timeouts remain partial. OSV not tested without exact packages. Real Gemini completed; signals0 is **inconclusive, not clean**. An unsupported missing/zero Vibe expiry is no longer a vulnerability finding; native evidence remains unchanged. Existing strict connection validation recorded real CA/hostname-verifiedTLS1.3, expiry2027-01-20.
+
+Genuine current screenshots under `r1/screenshots/provider-diagnosis-*` were captured and visually inspected. Viewport/document390/390; no selectors/checkboxes/raw AI code; console0. Actual browser HTML5486bytes/JSON8877bytes match the server. Reload restored the same job with1original browser scan POST total. Final optional operator startup probe is disabled. No further deploy/scan after verification; docs-only pushes do not deploy.
+
+## Historical first simple-flow test
+
 
 - Runtime code: `9f74ea1a384293bad975ac755edbf085bb740f56`.
 - Same existing app/service; deployment `26d65f6a-01ba-4318-a378-7c60a08243de`, healthy/root200/health200.
@@ -17,7 +26,7 @@ One blank website-link field and one Test button initially. No execution/scenari
 - Real MDN and Vibe reports returned. Website Auditor timed out; xlogs returned429. OSV not applicable because no reliable exact package version was detected.
 - Gemini actually completed. Its overview and finding card appeared automatically without a second user action.
 - Finished with partial coverage, honestly displayed as **Limited coverage /2 of4 website reports received**. No fake fallback or overall secure score.
-- One provider-reported potential TLS signal remains unconfirmed. The AI says verify first and do not order immediate certificate renewal. An independent CA/hostname-verified TLS check previously showed expiry2027-01-20, contradicting the potential Vibe signal; no certificate configuration was changed.
+- At that historical time, one provider-reported potential TLS signal was unconfirmed. The current correction described above excludes the unsupported missing/zero-date finding. The AI says verify first and do not order immediate certificate renewal. An independent CA/hostname-verified TLS check previously showed expiry2027-01-20, contradicting the potential Vibe signal; no certificate configuration was changed.
 
 ## Genuine browser evidence
 

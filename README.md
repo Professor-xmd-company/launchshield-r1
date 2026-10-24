@@ -10,7 +10,7 @@
 
 One website-link field and a **Test** button. No execution modes, scenarios, checkboxes, AI switches, provider dashboard, raw AI JSON, accounts or manual report loading.
 
-Pressing Test automatically runs real public/read-only provider checks, then Gemini explains the returned evidence. A readable AI overview and finding cards appear on the same page. Download a readable HTML report or the full evidence JSON if needed. A failed/unavailable provider is disclosed; it never becomes a fake pass or an overall security score.
+Pressing Test automatically runs real public/read-only provider checks, then Gemini explains the returned evidence. A readable AI overview and finding cards appear on the same page. Download a readable HTML report or the normalized evidence JSON if needed. A failed/unavailable provider is disclosed; it never becomes a fake pass or an overall security score.
 
 **Production rejects mock scan requests.** Synthetic adapters remain only for isolated automated tests, explicitly enabled in their test fixtures. They are not public website features and are never a fallback for real scans or AI failures.
 
@@ -40,10 +40,10 @@ The application needs only its Gemini runtime secret. It does not need GitHub, K
 
 ## Verification
 
-- **100 isolated tests passed**: lifecycle, provider contracts, real-only defaults, production mock rejection, automatic AI, public submission permission, DNS/SSRF/redirect guards, private capabilities, exports, cache age, quota handling and readable/escaped reports.
-- Tests inject fixtures/transports. They do not mean100 websites were scanned and need no production key.
+- **123 isolated tests passed**: lifecycle, provider contracts, real-only defaults, production mock rejection, automatic AI, public submission permission, DNS/SSRF/redirect guards, private capabilities, exports, cache age, quota handling and readable/escaped reports.
+- Tests inject fixtures/transports. They do not mean123 websites were scanned and need no production key.
 - Genuine previous owned-origin assessments verified MDN, full Vibe retrieval and Gemini. They also exposed actual provider limits/failures and a corrected Vibe agent-summary contract. Original failures remain preserved rather than rewritten.
-- The simplified real-only UI was genuinely tested live: one bare hostname → one Test click → real MDN/Vibe results → Gemini overview and finding cards automatically. Website Auditor timed out and xlogs was rate-limited; both gaps are visible. Actual source pin, screenshots and measurements are in `docs/deployment.json` and the append-only R1 record. No fixture was presented as a live result.
+- The simple real-only flow was genuinely tested. A later user report exposed insufficient diagnostic fidelity and an unsupported zero-date Vibe TLS signal. The current correction distinguishes security checkpoints, actual HTTP429 quotas, preserved local cooldowns, and Website Auditor404/no-generated-report. Vibe module coverage and direct verified TLS metadata are explicit, and incomplete coverage cannot produce a security verdict. Current live recheck and exact source pin are recorded in `docs/deployment.json`, `docs/R1-PROVIDER-DIAGNOSIS.md` and the append-only R1 record. No fixture is presented as a live result.
 
 ```sh
 python -m pip install -r requirements-test.txt
@@ -59,7 +59,7 @@ node --check static/main.js
 - Vibe agent summaries are not complete findings: retrieve the full result using the existing scan ID when required. Preserve native timestamps, confidence, partial/unknown module coverage and original evidence.
 - Website Auditor cache age is retained; SEO-only modules are not security findings. MDN summary grades do not become invented per-header vulnerabilities. Provider scores are not combined into a security guarantee.
 - AI is automatic but separate from observed evidence. Its structured output can only reference supplied finding IDs. It receives no server credentials. Provider output is untrusted; nothing in it is executed. AI failure cannot block evidence downloads.
-- Provider signals can be wrong: a Vibe certificate-expiry signal conflicted with an independently CA/hostname-verified TLS handshake showing expiry2027-01-20. It remains labelled provider-reported/potential, not independently confirmed. Verify before changing configuration or following AI remediation.
+- Provider signals can be wrong: a Vibe certificate-expiry signal conflicted with an independently CA/hostname-verified TLS handshake showing expiry2027-01-20. The unsupported false/zero expiry value with no actual certificate date is now treated as inconclusive provider coverage, not a vulnerability finding. Native evidence is retained unchanged. Existing IP-pinned scope validation records its real CA/hostname-verified handshake, expiry and fingerprint with no added target requests. This observes one connection, not complete TLS/application security.
 
 ## Hosting and privacy
 
@@ -78,6 +78,7 @@ Only the owner-authorized old `professor-xmd` app was removed. Protected `databa
 - `shield/safety.py` — public DNS, IP pinning and redirect/SSRF guards.
 - `shield/normalize.py` — native evidence/confidence, grouping and package provenance.
 - `shield/ai.py` — server-side Gemini explanation and schema validation.
+- `shield/diagnostics.py` — bounded/redacted error receipts, security-checkpoint classification and module coverage.
 - `tests/` — isolated regressions, never hosted demo results.
 - `docs/deployment.json` — actual owned resource IDs, code pin and verification metadata; no secret values.
 - `R1.md`, `r1/events.jsonl`, `r1/evidence/`, `r1/screenshots/` — chronological actions, failures and genuine evidence. Older harness screenshots are historical, not the current UI.

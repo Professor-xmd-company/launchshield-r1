@@ -1,0 +1,224 @@
+{
+  "version": "R1",
+  "job_id": "d716a1b2c93c3b976e189d13943c27d1",
+  "target": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+  "mode": "live",
+  "synthetic": false,
+  "state": "completed_with_warnings",
+  "created_at": "2026-10-24T19:10:57.827471+00:00",
+  "completed_at": "2026-10-24T19:11:30.007788+00:00",
+  "authorization": "[REDACTED]",
+  "consent_method": "click_through",
+  "coverage": [
+    {
+      "provider": "website_auditor",
+      "state": "rate_limited",
+      "message": "A preserved local/provider cooldown is active; this scan request was not sent.",
+      "updated_at": "2026-10-24T19:10:59.475299+00:00",
+      "started_at": "2026-10-24T19:10:58.632705+00:00",
+      "http_status": null,
+      "retry_at": "2026-10-24T20:04:39.231282+00:00",
+      "reason_code": "local_cooldown",
+      "diagnostics": {
+        "request_sent": false,
+        "quota": "website_trigger",
+        "reason": "Local request budget, per-host interval or operator-preserved cooldown.",
+        "cache_http_status": 404,
+        "scan_acceptance_confirmed": false
+      },
+      "completed_at": "2026-10-24T19:10:59.475205+00:00",
+      "artifact_available": true
+    },
+    {
+      "provider": "xlogs",
+      "state": "blocked",
+      "message": "The provider blocked automated access at a security checkpoint. No scan result was returned; waiting alone may not resolve this.",
+      "updated_at": "2026-10-24T19:10:58.930932+00:00",
+      "started_at": "2026-10-24T19:10:58.641224+00:00",
+      "http_status": 429,
+      "retry_at": "2026-10-24T20:10:58.930248+00:00",
+      "reason_code": "provider_security_checkpoint",
+      "diagnostics": {
+        "observed_at": "2026-10-24T19:10:58.928198+00:00",
+        "request_sent": true,
+        "method": "POST",
+        "endpoint": "https://xlogs.com/api/v1/scan",
+        "http_status": 429,
+        "content_type": "text/html; charset=utf-8",
+        "body_sha256": "e42695524899e11a49a5c0bf4d834504816f740e716e981611d716a9d6c4de81",
+        "x-vercel-mitigated": "challenge",
+        "security_checkpoint": "vercel_security_checkpoint"
+      },
+      "completed_at": "2026-10-24T19:10:58.930784+00:00",
+      "artifact_available": true
+    },
+    {
+      "provider": "vibe_check",
+      "state": "completed",
+      "message": "Provider completed with partial/unknown module coverage: cors: 41 of 96 CORS probes returned no HTTP result; those cases are untested.; apiSurface: Some API checks timed out. Findings may be incomplete.; Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.; 80 requests issued by this bounded provider check; not exhaustive endpoint coverage.",
+      "updated_at": "2026-10-24T19:11:26.738530+00:00",
+      "started_at": "2026-10-24T19:10:58.938222+00:00",
+      "external_scan_id": "b412f663d7f64c8da846b7991f5e22af",
+      "artifact_available": true,
+      "http_status": 200,
+      "requested_at": "2026-10-24T19:10:58.939709+00:00",
+      "received_at": "2026-10-24T19:11:26.714836+00:00",
+      "scanned_at": 1792869059643,
+      "module_coverage": [
+        {
+          "module": "tls",
+          "state": "complete",
+          "notes": []
+        },
+        {
+          "module": "headers",
+          "state": "complete",
+          "notes": [],
+          "results_observed": 6,
+          "results_unknown": 0
+        },
+        {
+          "module": "cors",
+          "state": "partial",
+          "notes": [
+            "41 of 96 CORS probes returned no HTTP result; those cases are untested."
+          ],
+          "results_observed": 55,
+          "results_unknown": 41
+        },
+        {
+          "module": "cve",
+          "state": "not_applicable",
+          "notes": [
+            "No React Server Components detected; this specific RSC advisory check is not a general dependency audit."
+          ]
+        },
+        {
+          "module": "apiSurface",
+          "state": "partial",
+          "notes": [
+            "Some API checks timed out. Findings may be incomplete.",
+            "Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.",
+            "80 requests issued by this bounded provider check; not exhaustive endpoint coverage."
+          ]
+        }
+      ],
+      "coverage_warnings": [
+        "cors: 41 of 96 CORS probes returned no HTTP result; those cases are untested.",
+        "apiSurface: Some API checks timed out. Findings may be incomplete.; Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.; 80 requests issued by this bounded provider check; not exhaustive endpoint coverage."
+      ],
+      "finding_records": 0,
+      "completed_at": "2026-10-24T19:11:26.738381+00:00"
+    },
+    {
+      "provider": "mdn_observatory",
+      "state": "completed",
+      "message": "Provider response received.",
+      "updated_at": "2026-10-24T19:11:00.908582+00:00",
+      "started_at": "2026-10-24T19:10:59.479149+00:00",
+      "artifact_available": true,
+      "http_status": 200,
+      "requested_at": "2026-10-24T19:10:59.480439+00:00",
+      "received_at": "2026-10-24T19:11:00.902636+00:00",
+      "scanned_at": "2026-10-24T19:10:59.738Z",
+      "finding_records": 0,
+      "completed_at": "2026-10-24T19:11:00.908454+00:00"
+    },
+    {
+      "provider": "osv",
+      "state": "skipped_not_applicable",
+      "message": "No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.",
+      "updated_at": "2026-10-24T19:11:26.835268+00:00",
+      "started_at": "2026-10-24T19:11:26.829705+00:00",
+      "artifact_available": true,
+      "requested_at": "2026-10-24T19:11:26.831510+00:00",
+      "finding_records": 0,
+      "completed_at": "2026-10-24T19:11:26.835130+00:00"
+    }
+  ],
+  "scope_verification": {
+    "public_addresses_checked": 4,
+    "redirects": 0,
+    "target_http_status": 200,
+    "scope": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "own_requests_ip_pinned": true,
+    "tls": {
+      "source": "existing_scope_validation_tls_handshake",
+      "observed_at": "2026-10-24T19:10:58.629658+00:00",
+      "chain_and_hostname_verified": true,
+      "protocol": "TLSv1.3",
+      "not_after": "2027-01-20T15:33:21+00:00",
+      "days_remaining": 87.85,
+      "limitation": "One verified connection to this origin; not an exhaustive TLS or application-security test.",
+      "certificate_sha256": "b621193378efa34f21c405f82e6991a0d05e4886dadb432d75ba3d3b66c789d2"
+    }
+  },
+  "assessment": {
+    "status": "inconclusive",
+    "incomplete_providers": [
+      "website_auditor",
+      "xlogs",
+      "vibe_check"
+    ],
+    "scope": "public unauthenticated configuration/exposure review, not active application penetration testing",
+    "conclusion": "Incomplete assessment: unavailable or inconclusive checks cannot support a security verdict."
+  },
+  "findings": [],
+  "original_finding_records": [],
+  "counts": {},
+  "coverage_counts": {
+    "rate_limited": 1,
+    "blocked": 1,
+    "completed": 2,
+    "skipped_not_applicable": 1
+  },
+  "limitations": [
+    "Passive/read-only, public and unauthenticated assessment; not a penetration test.",
+    "No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.",
+    "No combined security score is calculated from incompatible provider scores.",
+    "Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.",
+    "Only this application\u2019s own validation requests are IP-pinned; external providers use their own DNS and scope controls.",
+    "No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.",
+    "Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.",
+    "Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked."
+  ],
+  "warnings": [
+    "vibe_check: cors: 41 of 96 CORS probes returned no HTTP result; those cases are untested.",
+    "vibe_check: apiSurface: Some API checks timed out. Findings may be incomplete.; Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage.; 80 requests issued by this bounded provider check; not exhaustive endpoint coverage."
+  ],
+  "ai": {
+    "state": "completed",
+    "model": "gemini-3.5-flash-lite",
+    "model_version": "gemini-3.5-flash-lite",
+    "generated_at": "2026-10-24T19:11:30.007392+00:00",
+    "usage": {
+      "promptTokenCount": 2720,
+      "candidatesTokenCount": 228,
+      "totalTokenCount": 2948,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 2720
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "data": {
+      "summary": "This assessment is inconclusive because multiple provider checks were rate-limited, blocked, or partial. No security verdict can be reached, and zero findings do not indicate a clean result.",
+      "analysis": [],
+      "limitations": [
+        "Passive/read-only, public and unauthenticated assessment; not a penetration test.",
+        "No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.",
+        "No combined security score is calculated from incompatible provider scores.",
+        "Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.",
+        "Only this application's own validation requests are IP-pinned; external providers use their own DNS and scope controls.",
+        "No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.",
+        "Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.",
+        "Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked."
+      ]
+    },
+    "label": "AI interpretation; not independently verified scanner evidence"
+  },
+  "storage": "Temporary file-backed instance; download reports you need.",
+  "security_guarantee": false
+}

@@ -1,7 +1,7 @@
 {
-  "deployment_id": "6560fa48-32fc-4e66-9ca2-1d67e9cf1fec",
+  "deployment_id": "6474a91f-b1e7-48e3-a953-7facad6bbda1",
   "status": "HEALTHY",
-  "code_pin": "8b7f112c92505acf42e1d4549dbd737d9505aa43",
+  "code_pin": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c",
   "root_http": 200,
   "health_http": 200,
   "public_targets_enabled": true,

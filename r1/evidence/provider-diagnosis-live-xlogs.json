@@ -1,0 +1,20 @@
+{
+  "state": "blocked",
+  "error": "The provider blocked automated access at a security checkpoint. No scan result was returned; waiting alone may not resolve this.",
+  "http_status": 429,
+  "retry_at": "2026-10-24T20:10:58.930248+00:00",
+  "reason_code": "provider_security_checkpoint",
+  "diagnostics": {
+    "observed_at": "2026-10-24T19:10:58.928198+00:00",
+    "request_sent": true,
+    "method": "POST",
+    "endpoint": "https://xlogs.com/api/v1/scan",
+    "http_status": 429,
+    "content_type": "text/html; charset=utf-8",
+    "body_sha256": "e42695524899e11a49a5c0bf4d834504816f740e716e981611d716a9d6c4de81",
+    "x-vercel-mitigated": "challenge",
+    "security_checkpoint": "vercel_security_checkpoint"
+  },
+  "source": "xlogs",
+  "mode": "live"
+}

@@ -1,0 +1,16 @@
+{
+  "state": "rate_limited",
+  "error": "A preserved local/provider cooldown is active; this scan request was not sent.",
+  "http_status": null,
+  "retry_at": "2026-10-24T20:04:39.231282+00:00",
+  "reason_code": "local_cooldown",
+  "diagnostics": {
+    "request_sent": false,
+    "quota": "website_trigger",
+    "reason": "Local request budget, per-host interval or operator-preserved cooldown.",
+    "cache_http_status": 404,
+    "scan_acceptance_confirmed": false
+  },
+  "source": "website_auditor",
+  "mode": "live"
+}

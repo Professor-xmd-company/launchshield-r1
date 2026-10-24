@@ -1,0 +1,47 @@
+{
+  "job_id": "d716a1b2c93c3b976e189d13943c27d1",
+  "state": "completed_with_warnings",
+  "providers": {
+    "website_auditor": "rate_limited",
+    "xlogs": "blocked",
+    "vibe_check": "completed",
+    "mdn_observatory": "completed",
+    "osv": "skipped_not_applicable"
+  },
+  "xlogs_reason_code": "provider_security_checkpoint",
+  "xlogs_request_sent": true,
+  "xlogs_diagnostics": {
+    "observed_at": "2026-10-24T19:10:58.928198+00:00",
+    "request_sent": true,
+    "method": "POST",
+    "endpoint": "https://xlogs.com/api/v1/scan",
+    "http_status": 429,
+    "content_type": "text/html; charset=utf-8",
+    "body_sha256": "e42695524899e11a49a5c0bf4d834504816f740e716e981611d716a9d6c4de81",
+    "x-vercel-mitigated": "challenge",
+    "security_checkpoint": "vercel_security_checkpoint"
+  },
+  "ai_state": "completed",
+  "findings": 0,
+  "assessment": {
+    "status": "inconclusive",
+    "incomplete_providers": [
+      "website_auditor",
+      "xlogs",
+      "vibe_check"
+    ],
+    "scope": "public unauthenticated configuration/exposure review, not active application penetration testing",
+    "conclusion": "Incomplete assessment: unavailable or inconclusive checks cannot support a security verdict."
+  },
+  "direct_tls": {
+    "source": "existing_scope_validation_tls_handshake",
+    "observed_at": "2026-10-24T19:10:58.629658+00:00",
+    "chain_and_hostname_verified": true,
+    "protocol": "TLSv1.3",
+    "not_after": "2027-01-20T15:33:21+00:00",
+    "days_remaining": 87.85,
+    "limitation": "One verified connection to this origin; not an exhaustive TLS or application-security test.",
+    "certificate_sha256": "b621193378efa34f21c405f82e6991a0d05e4886dadb432d75ba3d3b66c789d2"
+  },
+  "code_pin": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c"
+}

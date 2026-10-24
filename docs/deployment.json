@@ -5,7 +5,7 @@
     "full_name": "Professor-xmd-company/launchshield-r1",
     "url": "https://github.com/Professor-xmd-company/launchshield-r1",
     "private": false,
-    "release_commit": "8b7f112c92505acf42e1d4549dbd737d9505aa43",
+    "release_commit": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c",
     "initial_release_commit": "010e1798e012c033230ff780e7eadaf9159b6314",
     "evidence_commit": "dc614bd71f37399758a99afb484dc128dcbd4848"
   },
@@ -21,34 +21,35 @@
     "gemini_secret_name": "launchshield-r1-gemini",
     "gemini_secret_id": "d22f2c25-8d00-48f1-824d-4feb215980aa",
     "service_id": "cd48bc18-6659-413f-8254-ea43618210f1",
-    "deployment_id": "6560fa48-32fc-4e66-9ca2-1d67e9cf1fec",
+    "deployment_id": "6474a91f-b1e7-48e3-a953-7facad6bbda1",
     "deployment_state": "HEALTHY",
     "verified_root_http": 200,
     "verified_health_http": 200,
-    "requested_release_commit": "8b7f112c92505acf42e1d4549dbd737d9505aa43",
+    "requested_release_commit": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c",
     "previous_deployments": [
       "8edc5fa5-cad2-42a8-a0bf-57ba5a86b45e",
       "e31d7b8d-d4cf-45ee-bd51-bb24de19b286",
       "0571263c-a143-4044-bb5c-2140825c45a8",
-      "26d65f6a-01ba-4318-a378-7c60a08243de"
+      "26d65f6a-01ba-4318-a378-7c60a08243de",
+      "6560fa48-32fc-4e66-9ca2-1d67e9cf1fec"
     ],
     "provider_cooldowns": {
       "xlogs": "2026-10-24T19:10:28.625821+00:00",
-      "website_trigger": "2026-10-24T20:00:47.325776+00:00",
-      "vibe_start": "2026-10-24T19:02:17.325776+00:00",
-      "vibe_poll": "2026-10-24T19:02:17.325776+00:00",
-      "mdn_observatory": "2026-10-24T19:02:17.325776+00:00"
+      "website_trigger": "2026-10-24T20:04:39.231282+00:00",
+      "vibe_start": "2026-10-24T19:06:09.231282+00:00",
+      "vibe_poll": "2026-10-24T19:06:09.231282+00:00",
+      "mdn_observatory": "2026-10-24T19:06:09.231282+00:00"
     },
     "public_targets_enabled": true,
     "mock_execution_enabled": false,
     "user_flow": "website_link_test_automatic_ai_report",
-    "temporary_diagnostics_until": "2026-10-24T19:20:47.325776+00:00",
-    "previous_runtime_code": "9f74ea1a384293bad975ac755edbf085bb740f56"
+    "temporary_diagnostics_until": "",
+    "previous_runtime_code": "8b7f112c92505acf42e1d4549dbd737d9505aa43"
   },
   "protected_database_app": "database",
   "owner_approved_old_app_removed": "professor-xmd",
   "upstream_cooldowns": {
-    "xlogs": "2026-10-24T19:10:28.625821+00:00",
+    "xlogs": "2026-10-24T20:10:58.930248+00:00",
     "website_trigger": "2026-10-24T19:11:01.962677+00:00"
   },
   "verification_previous_simple_flow": {
@@ -89,5 +90,97 @@
       "html_download_bytes": 6384,
       "downloads_match_server_evidence": true
     }
+  },
+  "verification": {
+    "job_id": "d716a1b2c93c3b976e189d13943c27d1",
+    "state": "completed_with_warnings",
+    "providers": {
+      "website_auditor": "rate_limited",
+      "xlogs": "blocked",
+      "vibe_check": "completed",
+      "mdn_observatory": "completed",
+      "osv": "skipped_not_applicable"
+    },
+    "xlogs_reason_code": "provider_security_checkpoint",
+    "xlogs_request_sent": true,
+    "xlogs_diagnostics": {
+      "observed_at": "2026-10-24T19:10:58.928198+00:00",
+      "request_sent": true,
+      "method": "POST",
+      "endpoint": "https://xlogs.com/api/v1/scan",
+      "http_status": 429,
+      "content_type": "text/html; charset=utf-8",
+      "body_sha256": "e42695524899e11a49a5c0bf4d834504816f740e716e981611d716a9d6c4de81",
+      "x-vercel-mitigated": "challenge",
+      "security_checkpoint": "vercel_security_checkpoint"
+    },
+    "ai_state": "completed",
+    "findings": 0,
+    "assessment": {
+      "status": "inconclusive",
+      "incomplete_providers": [
+        "website_auditor",
+        "xlogs",
+        "vibe_check"
+      ],
+      "scope": "public unauthenticated configuration/exposure review, not active application penetration testing",
+      "conclusion": "Incomplete assessment: unavailable or inconclusive checks cannot support a security verdict."
+    },
+    "direct_tls": {
+      "source": "existing_scope_validation_tls_handshake",
+      "observed_at": "2026-10-24T19:10:58.629658+00:00",
+      "chain_and_hostname_verified": true,
+      "protocol": "TLSv1.3",
+      "not_after": "2027-01-20T15:33:21+00:00",
+      "days_remaining": 87.85,
+      "limitation": "One verified connection to this origin; not an exhaustive TLS or application-security test.",
+      "certificate_sha256": "b621193378efa34f21c405f82e6991a0d05e4886dadb432d75ba3d3b66c789d2"
+    },
+    "code_pin": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c",
+    "evidence_prefix": "provider-diagnosis-live",
+    "isolated_tests_passed": 123,
+    "browser": {
+      "mobile_viewport_width": 390,
+      "mobile_document_width": 390,
+      "initial_input_fields": 1,
+      "selectors": 0,
+      "checkboxes": 0,
+      "raw_code_blocks": 0,
+      "same_job_after_reload": true,
+      "scan_post_count_including_reload": 1,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "downloads": {
+        "json": {
+          "bytes": 8877,
+          "matches_actual_server_report": true
+        },
+        "html": {
+          "bytes": 5486,
+          "matches_actual_server_report": true
+        }
+      }
+    },
+    "final_health": {
+      "observed_at": "2026-10-24T19:20:05.750199+00:00",
+      "deployment_id": "6474a91f-b1e7-48e3-a953-7facad6bbda1",
+      "status": "HEALTHY",
+      "code_pin": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c",
+      "root_http": 200,
+      "health_http": 200,
+      "real_mode": "live",
+      "public_targets_enabled": true,
+      "mock_execution_enabled": false,
+      "gemini_configured": true,
+      "automatic_operator_probe_disabled": true,
+      "git_push_auto_deploy_disabled": true
+    },
+    "screenshots_visually_inspected": true,
+    "screenshots": [
+      "provider-diagnosis-empty-mobile.png",
+      "provider-diagnosis-live-progress.png",
+      "provider-diagnosis-completed-desktop.png",
+      "provider-diagnosis-coverage-mobile.png"
+    ]
   }
 }
