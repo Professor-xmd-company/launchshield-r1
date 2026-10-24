@@ -26,7 +26,7 @@ class JobManager:
     def __init__(self,settings:Settings,store=None,engine=None,validator=None,ai_function=None):
         self.settings=settings;self.store=store or FileStore(settings.data_dir);self.engine=engine or ProviderEngine(settings,self.store)
         self.validator=validator or validate_live;self.ai_function=ai_function or analyze
-        self.queue=asyncio.Queue(maxsize=settings.max_queue);self.worker=None;self.cleaner=None;self.current_id=None;self.current_task=None;self.stopping=False
+        self.queue=asyncio.Queue(maxsize=settings.max_queue);self.worker=None;self.cleaner=None;self.current_id=None;self.current_task=None;self.stopping=False;self.diagnostic_task=None
     async def start(self):
         # Never re-submit provider scan-start POSTs merely because the process restarted.
         for job in self.store.all_jobs():
@@ -38,11 +38,34 @@ class JobManager:
                 self.store.event(job['id'],'restart_interrupted',{'automatic_resubmission':False})
         self.store.cleanup(self.settings.retention_seconds)
         self.worker=asyncio.create_task(self._worker());self.cleaner=asyncio.create_task(self._cleaner())
+        if self.settings.diagnostics_until:self.diagnostic_task=asyncio.create_task(self.provider_access_diagnostic())
     async def close(self):
         self.stopping=True
-        for task in (self.worker,self.cleaner):
+        for task in (self.worker,self.cleaner,self.diagnostic_task):
             if task:task.cancel()
-        await asyncio.gather(*(t for t in (self.worker,self.cleaner) if t),return_exceptions=True)
+        await asyncio.gather(*(t for t in (self.worker,self.cleaner,self.diagnostic_task) if t),return_exceptions=True)
+    async def provider_access_diagnostic(self):
+        """Temporary operator-requested contract diagnostic, NEVER a scan or challenge solver.
+        xlogs documents that GET without its opt-in header cannot initiate a scan.
+        No target is sent, no browser is used, and no alternative IP/key is selected.
+        """
+        try:
+            until=datetime.fromisoformat(self.settings.diagnostics_until.replace('Z','+00:00'))
+            if until.tzinfo is None or not 0<(until.timestamp()-time.time())<=1800:return
+        except (ValueError,TypeError):return
+        path=self.store.root/'provider-access-diagnostic.json'
+        if path.exists():return
+        self.store.write(path,{'state':'pending','observed_at':utcnow(),'purpose':'operator_requested_non_scanning_get_without_target_or_scan_header'})
+        try:
+            status,_=await asyncio.wait_for(self.engine._request_once('GET','https://xlogs.com/api/v1/scan'),20)
+            result={'state':'responded','http_status':status,'code':'non_scanning_response'}
+        except ProviderFailure as error:
+            result={'state':error.state,'http_status':error.http_status,'code':error.code,'diagnostics':error.diagnostics}
+            if error.http_status==400 and error.code!='provider_security_checkpoint':result.update(state='responded_without_scan',code='non_scanning_contract_response')
+        except Exception as error:result={'state':'unavailable','code':'diagnostic_unavailable','error_type':type(error).__name__}
+        result.update(observed_at=utcnow(),purpose='operator_requested_non_scanning_get_without_target_or_scan_header',target_submitted=False,scan_started=False)
+        self.store.write(path,result)
+
     async def _cleaner(self):
         while True:
             await asyncio.sleep(60);self.store.cleanup(self.settings.retention_seconds)
@@ -127,8 +150,12 @@ class JobManager:
                     self.store.artifact(jid,name,{'state':'failed','schema_error':str(e),'native':native,'source':name,'mode':job['mode']})
                     self.store.provider(jid,name,state='failed',message='Unrecognized/invalid response schema: '+str(e),completed_at=utcnow())
                 except ProviderFailure as e:
-                    self.store.provider(jid,name,state=e.state,message=e.message,http_status=e.http_status,retry_at=e.retry_at,completed_at=utcnow())
-                    self.store.artifact(jid,name,{'state':e.state,'error':e.message,'http_status':e.http_status,'retry_at':e.retry_at,'source':name,'mode':job['mode']})
+                    details=dict(e.diagnostics)
+                    if name=='xlogs':
+                        access=self.store.read(self.store.root/'provider-access-diagnostic.json')
+                        if access and access.get('state')!='pending':details['provider_access_check']=access
+                    self.store.provider(jid,name,state=e.state,message=e.message,http_status=e.http_status,retry_at=e.retry_at,reason_code=e.code,diagnostics=details,completed_at=utcnow())
+                    self.store.artifact(jid,name,{'state':e.state,'error':e.message,'http_status':e.http_status,'retry_at':e.retry_at,'reason_code':e.code,'diagnostics':details,'source':name,'mode':job['mode']})
                 except asyncio.TimeoutError:
                     self.store.artifact(jid,name,{'state':'timed_out','source':name,'mode':job['mode'],'error':'Provider deadline reached.'})
                     self.store.provider(jid,name,state='timed_out',message='Provider deadline reached; other providers continue.',completed_at=utcnow())
@@ -158,8 +185,16 @@ class JobManager:
             self.store.write(path,{'attempts':attempts+[now]});return True
     def build_report(self,jid,records,ai):
         job=self.store.get(jid);findings=deduplicate(records);coverage=[]
-        for name,p in job['providers'].items():coverage.append({'provider':name,**p})
-        return {'version':'R1','job_id':jid,'target':job['target'],'mode':job['mode'],'synthetic':job['mode']=='mock','state':job['state'],'created_at':job['created_at'],'completed_at':job.get('completed_at'),'authorization':job['authorization'],'consent_method':job.get('consent_method','explicit_confirmation'),'coverage':coverage,'findings':findings,'original_finding_records':redact(records),'counts':dict(Counter(f['severity'] for f in findings)),'coverage_counts':dict(Counter(p['state'] for p in coverage)),'limitations':LIMITATIONS,'warnings':list(dict.fromkeys(job.get('warnings',[])+[p['provider']+': '+warning for p in coverage for warning in p.get('coverage_warnings',[])])),'ai':ai,'storage':'Temporary file-backed instance; download reports you need.','security_guarantee':False}
+        for name,p in job['providers'].items():
+            item={'provider':name,**p}
+            if name=='xlogs':
+                access=self.store.read(self.store.root/'provider-access-diagnostic.json')
+                if access and access.get('state')!='pending':item['diagnostics']={**item.get('diagnostics',{}),'provider_access_check':access}
+            coverage.append(item)
+        sites=[p for p in coverage if p['provider']!='osv']
+        incomplete=[p['provider'] for p in sites if p['state'] not in ('completed','cached') or p.get('freshness')=='unknown' or p.get('coverage_warnings')]
+        assessment={'status':'inconclusive' if incomplete else 'limited_passive_review','incomplete_providers':incomplete,'scope':'public unauthenticated configuration/exposure review, not active application penetration testing','conclusion':'Incomplete assessment: unavailable or inconclusive checks cannot support a security verdict.' if incomplete else 'Supported passive checks returned; this does not certify the website as secure.'}
+        return {'version':'R1','job_id':jid,'target':job['target'],'mode':job['mode'],'synthetic':job['mode']=='mock','state':job['state'],'created_at':job['created_at'],'completed_at':job.get('completed_at'),'authorization':job['authorization'],'consent_method':job.get('consent_method','explicit_confirmation'),'coverage':coverage,'scope_verification':job.get('validation',{}),'assessment':assessment,'findings':findings,'original_finding_records':redact(records),'counts':dict(Counter(f['severity'] for f in findings)),'coverage_counts':dict(Counter(p['state'] for p in coverage)),'limitations':LIMITATIONS,'warnings':list(dict.fromkeys(job.get('warnings',[])+[p['provider']+': '+warning for p in coverage for warning in p.get('coverage_warnings',[])])),'ai':ai,'storage':'Temporary file-backed instance; download reports you need.','security_guarantee':False}
     def save_report(self,jid,records,ai):
         report=self.build_report(jid,records,ai);folder=self.store.job_dir(jid)
         self.store.write(folder/'findings.json',report['findings']);self.store.write(folder/'report.json',redact(report))
@@ -190,7 +225,11 @@ class JobManager:
             blocks.append(block)
         if not blocks:blocks.append('<article><h3>No findings reported by the available checks</h3><p>This is not proof that the website is secure. Review provider coverage below.</p></article>')
         coverage=''.join('<tr><td>'+esc(p['provider'])+'</td><td>'+esc(p['state'])+'</td><td>'+esc(p.get('message',''))+'</td><td>'+esc(p.get('scanned_at','not supplied'))+'</td></tr>' for p in report['coverage'])
+        module_notes=''.join('<li><strong>'+esc(p['provider'])+' / '+esc(m['module'])+'</strong>: '+esc('; '.join(m.get('notes',[])))+'</li>' for p in report['coverage'] for m in p.get('module_coverage',[]) if m.get('state')!='complete')
+        conclusion=report.get('assessment',{}).get('conclusion','Passive checks only; not a security guarantee.')
+        direct=report.get('scope_verification',{}).get('tls',{})
+        connection='<p>Direct TLS connection: '+esc(direct.get('protocol',''))+'; certificate chain and hostname verified; certificate expires '+esc(direct.get('not_after',''))+'. One connection only, not a full security verdict.</p>' if direct.get('chain_and_hostname_verified') else ''
         limitations=''.join('<li>'+esc(text)+'</li>' for text in report['limitations'])
         warnings=''.join('<li>'+esc(text)+'</li>' for text in report.get('warnings',[]))
         style='body{font:15px/1.65 system-ui,sans-serif;max-width:920px;margin:30px auto;padding:0 20px;color:#182534;overflow-wrap:anywhere;background:#f6f8fb}h1{line-height:1.2}article,.overview,.coverage{background:white;border:1px solid #dce3ed;border-radius:10px;padding:22px;margin:16px 0}.heading{display:flex;gap:14px;align-items:start;justify-content:space-between}.heading h3{margin:0}.heading span{font-size:12px;border:1px solid #ddd;padding:2px 8px;border-radius:5px}.muted{color:#657383;font-size:13px}h4{margin-bottom:4px}p{margin-top:7px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:#f1f4f8;padding:12px}summary{cursor:pointer;color:#5a6c80;font-size:13px}table{width:100%;border-collapse:collapse}td,th{padding:8px;border:1px solid #dce3ed;text-align:left;vertical-align:top}.warning{background:#fff7e7;border:1px solid #eedfc1;padding:12px 18px;border-radius:8px}'
-        return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield report</title><style>'+style+'</style><p class="muted">LaunchShield R1</p><h1>'+esc(title)+'</h1><p>'+esc(report['target'])+'</p><p class="muted">Passive, read-only assessment. No exploitation or security guarantee.</p><section class="overview"><h2>'+('AI overview' if ready else 'Assessment summary')+'</h2><p>'+esc(summary)+'</p><p class="muted">AI explanation is interpretation, not independently verified scanner evidence.</p></section>'+('<div class="warning"><strong>Coverage warnings</strong><ul>'+warnings+'</ul></div>' if warnings else '')+''.join(blocks)+'<section class="coverage"><h2>What was checked</h2><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Observation time</th></tr>'+coverage+'</table></div><details><summary>Report limitations</summary><ul>'+limitations+'</ul></details></section><p class="muted">Temporary file-backed report. Download a copy to keep it.</p></html>'
+        return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield report</title><style>'+style+'</style><p class="muted">LaunchShield R1</p><h1>'+esc(title)+'</h1><p>'+esc(report['target'])+'</p><p class="muted">Passive, read-only assessment. No exploitation or security guarantee.</p><div class="warning">'+esc(conclusion)+'</div><section class="overview"><h2>'+('AI overview' if ready else 'Assessment summary')+'</h2><p>'+esc(summary)+'</p><p class="muted">AI explanation is interpretation, not independently verified scanner evidence.</p></section>'+('<div class="warning"><strong>Coverage warnings</strong><ul>'+warnings+'</ul></div>' if warnings else '')+''.join(blocks)+'<section class="coverage"><h2>What was checked</h2>'+connection+'<ul>'+module_notes+'</ul><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Observation time</th></tr>'+coverage+'</table></div><details><summary>Report limitations</summary><ul>'+limitations+'</ul></details></section><p class="muted">Temporary file-backed report. Download a copy to keep it.</p></html>'

@@ -3,6 +3,7 @@ import hashlib,json,re
 from collections import Counter
 from urllib.parse import urlsplit,urljoin
 from .persistence import redact
+from .diagnostics import inconclusive_expiry
 
 class SchemaChanged(ValueError):pass
 SEVERITIES={'info':0,'unknown':0,'low':1,'medium':2,'high':3,'critical':4}
@@ -53,6 +54,7 @@ def normalize(provider,data,origin):
         tls=modules.get('tls',{}).get('findings',{})
         if isinstance(tls,dict):
             for key,m in tls.items():
+                if key=='certExpiry' and inconclusive_expiry(modules.get('tls',{})):continue
                 if isinstance(m,dict) and (m.get('valid') is False or m.get('strength')=='weak' or m.get('weakestVerdict')=='weak'):
                     rows.append(_finding(provider,'tls:'+key,'TLS configuration signal: '+key,'medium',m,origin))
         surface=modules.get('apiSurface',{}).get('findings',[])

@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-10-24T18:33:17.453913+00:00",
+  "method": "Read-only diagnostics; no scan-start request. Local diagnostic egress is not assumed to be Koyeb egress.",
+  "responses": [
+    {
+      "check": "auditor_owned_cache",
+      "url": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "ok": false,
+        "error": "No cached report. Run a scan first."
+      }
+    },
+    {
+      "check": "auditor_documented_example_cache",
+      "url": "https://websiteauditor.net/api/public/audit/example.com",
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "ok": false,
+        "error": "No cached report. Run a scan first."
+      }
+    },
+    {
+      "check": "xlogs_non_scanning_contract",
+      "url": "https://xlogs.com/api/v1/scan",
+      "status": 429,
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "body_excerpt": "        Vercel Security Checkpoint  .spinner[data-astro-cid-ijmsm3te]{flex-direction:column;justify-content:center;align-items:center;display:flex}.spinner-circle[data-astro-cid-ijmsm3te]{transform-origin:50%;animation:1s step-start infinite spinner-circle-animate}rect[data-astro-cid-ijmsm3te]{fill:var(--ds-gray-900)}@keyframes spinner-circle-animate{0%{transform:rotate(0)}10%{transform:rotate(36deg)}20%{transform:rotate(72deg)}30%{transform:rotate(108deg)}40%{transform:rotate(144deg)}50%{transf"
+    },
+    {
+      "check": "app_health",
+      "url": "https://launchshield-r1-professorcj-43cf1823.koyeb.app/healthz",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "cf-cache-status": "DYNAMIC"
+      },
+      "body": {
+        "ok": true,
+        "revision": "R1",
+        "accounts": false,
+        "database": false,
+        "storage": "temporary files",
+        "gemini_configured": true
+      }
+    }
+  ]
+}

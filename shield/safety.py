@@ -1,5 +1,6 @@
 from __future__ import annotations
-import asyncio,ipaddress,socket,re
+import asyncio,ipaddress,socket,re,ssl,hashlib,time
+from datetime import datetime,timezone
 from dataclasses import dataclass
 from urllib.parse import urlsplit,urlunsplit,urljoin
 import httpx
@@ -63,6 +64,22 @@ def pinned_request(target:Target,ip:str,path='/'):
     authority=urlsplit(target.origin).netloc
     return httpx.Request('HEAD',target.scheme+'://'+host+path,headers={'Host':authority,'User-Agent':'LaunchShield-R1/1.0 (authorized scope validation)'},extensions={'sni_hostname':target.host})
 
+def tls_observation(response,target):
+    """Record only metadata from the TLS handshake already required by scope validation.
+    No extra target request, custom scanner, relaxed verification or protocol sweep.
+    """
+    if target.scheme!='https':return None
+    try:
+        stream=response.extensions.get('network_stream')
+        obj=stream.get_extra_info('ssl_object') if stream is not None else None
+        if obj is None or obj.context.verify_mode!=ssl.CERT_REQUIRED or not obj.context.check_hostname:return None
+        cert=obj.getpeercert();stamp=ssl.cert_time_to_seconds(cert['notAfter'])
+        result={'source':'existing_scope_validation_tls_handshake','observed_at':datetime.now(timezone.utc).isoformat(),'chain_and_hostname_verified':True,'protocol':obj.version(),'not_after':datetime.fromtimestamp(stamp,timezone.utc).isoformat(),'days_remaining':round((stamp-time.time())/86400,2),'limitation':'One verified connection to this origin; not an exhaustive TLS or application-security test.'}
+        raw=obj.getpeercert(binary_form=True)
+        if raw:result['certificate_sha256']=hashlib.sha256(raw).hexdigest()
+        return result
+    except (AttributeError,KeyError,TypeError,ValueError,OverflowError,ssl.SSLError):return None
+
 async def validate_live(target:Target,allowed:tuple[str,...],resolver=None,transport=None):
     approved={normalize_target(x).origin for x in allowed}
     if target.origin not in approved:raise TargetRejected('R1 live testing is restricted to the server owner’s explicit target allowlist.')
@@ -79,7 +96,7 @@ async def validate_live(target:Target,allowed:tuple[str,...],resolver=None,trans
                 except httpx.TransportError as e:last=e
             if response is None:raise TargetRejected('Target could not be reached with validated public DNS and TLS.') from None
             try:
-                status=response.status_code;location=response.headers.get('location')
+                status=response.status_code;location=response.headers.get('location');tls=tls_observation(response,current)
             finally:await response.aclose()
             if status in (301,302,303,307,308) and location:
                 redirected=urljoin(current.origin+path,location);nxt=normalize_target(redirected)
@@ -87,5 +104,7 @@ async def validate_live(target:Target,allowed:tuple[str,...],resolver=None,trans
                 current=nxt;parts=urlsplit(redirected);path=parts.path or '/'
                 if parts.query:raise TargetRejected('Redirect query parameters are not forwarded in R1.')
                 continue
-            return {'public_addresses_checked':len(ips),'redirects':hop,'target_http_status':status,'scope':target.origin,'own_requests_ip_pinned':True}
+            result={'public_addresses_checked':len(ips),'redirects':hop,'target_http_status':status,'scope':target.origin,'own_requests_ip_pinned':True}
+            if tls:result['tls']=tls
+            return result
     raise TargetRejected('Too many redirects.')

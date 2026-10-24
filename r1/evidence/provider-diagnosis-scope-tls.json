@@ -1,0 +1,17 @@
+{
+  "public_addresses_checked": 4,
+  "redirects": 0,
+  "target_http_status": 200,
+  "scope": "https://launchshield-r1-professorcj-43cf1823.koyeb.app",
+  "own_requests_ip_pinned": true,
+  "tls": {
+    "source": "existing_scope_validation_tls_handshake",
+    "observed_at": "2026-10-24T18:52:14.746576+00:00",
+    "chain_and_hostname_verified": true,
+    "protocol": "TLSv1.3",
+    "not_after": "2027-01-20T15:33:21+00:00",
+    "days_remaining": 87.86,
+    "limitation": "One verified connection to this origin; not an exhaustive TLS or application-security test.",
+    "certificate_sha256": "b621193378efa34f21c405f82e6991a0d05e4886dadb432d75ba3d3b66c789d2"
+  }
+}

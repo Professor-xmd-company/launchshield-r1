@@ -13,7 +13,7 @@
   <header class="brand"><img src="/static/favicon.svg" width="30" height="30" alt=""><span>LaunchShield</span><small>R1</small></header>
   <section class="intro" aria-labelledby="page-title">
     <h1 id="page-title">Test your website.</h1>
-    <p class="subtitle">Paste a link. Get a real security report, explained by AI.</p>
+    <p class="subtitle">Real website checks, with an AI explanation.</p>
     <form id="test-form">
       <label for="website">Website link</label>
       <div class="input-row">
@@ -32,12 +32,12 @@
 
   <section id="report" class="report" aria-labelledby="report-title" hidden>
     <header class="report-heading"><div><p class="eyebrow">YOUR REPORT</p><h2 id="report-title">Website security report</h2><p id="report-website" class="report-website"></p></div><span id="report-status" class="status-tag"></span></header>
+    <p id="coverage-note" class="notice" hidden></p>
     <article class="card overview">
       <h3 id="overview-title">AI overview</h3>
       <div id="overview-text"></div>
       <div class="report-facts"><div><strong id="finding-count">0</strong><span>reported signals</span></div><div><strong id="check-count">0 / 4</strong><span>website reports received</span></div></div>
     </article>
-    <p id="coverage-note" class="notice" hidden></p>
     <div id="finding-cards" class="finding-cards"></div>
     <details class="card coverage-details"><summary>What was checked</summary><ul id="coverage-list"></ul><p class="small muted">Provider observations and AI explanations can be incomplete or wrong. Verify a finding before changing your website. No penetration testing or security guarantee is provided.</p></details>
     <div class="report-actions"><button id="download-report" class="secondary" type="button">Download report</button><button id="download-json" class="text-button" type="button">Download JSON</button></div>

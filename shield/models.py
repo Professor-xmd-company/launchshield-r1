@@ -8,7 +8,7 @@ from pydantic import BaseModel,Field,ConfigDict
 
 PROVIDERS=('website_auditor','xlogs','vibe_check','mdn_observatory','osv')
 TERMINAL={'completed','completed_with_warnings','failed','cancelled','expired'}
-PROVIDER_TERMINAL={'completed','cached','stale_result','failed','rate_limited','timed_out','skipped_not_applicable','cancelled','unavailable'}
+PROVIDER_TERMINAL={'completed','cached','stale_result','failed','rate_limited','timed_out','skipped_not_applicable','cancelled','unavailable','blocked'}
 SCENARIOS=('success','partial_failure','rate_limited','malformed','timeout','osv_skip','ai_failure','stale_cache')
 def utcnow():return datetime.now(timezone.utc).isoformat()
 
@@ -29,6 +29,7 @@ class Settings:
     provider_concurrency:int=2
     ai_calls_per_hour:int=10
     provider_cooldowns:dict[str,str]=field(default_factory=lambda:json.loads(os.environ.get('LAUNCHSHIELD_PROVIDER_COOLDOWNS','{}')))
+    diagnostics_until:str=field(default_factory=lambda:os.environ.get('LAUNCHSHIELD_DIAGNOSTICS_UNTIL',''))
     max_queue:int=10
 
 class ScanRequest(BaseModel):

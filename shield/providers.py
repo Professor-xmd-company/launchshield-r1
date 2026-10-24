@@ -1,15 +1,17 @@
 from __future__ import annotations
 import asyncio,json,time,random,re,hashlib,math
-from urllib.parse import quote
+from urllib.parse import quote,urlsplit
 from datetime import datetime,timezone
 from email.utils import parsedate_to_datetime
 import httpx
 from .models import utcnow
 from .fixtures import native_fixture
+from .diagnostics import response_receipt,security_checkpoint,vibe_modules
 
 class ProviderFailure(Exception):
-    def __init__(self,message,state='failed',http_status=None,retry_at=None):
+    def __init__(self,message,state='failed',http_status=None,retry_at=None,code='provider_error',diagnostics=None):
         self.message,self.state,self.http_status,self.retry_at=message,state,http_status,retry_at
+        self.code,self.diagnostics=code,diagnostics or {}
         super().__init__(message)
 
 RULES={'xlogs':(60,3600),'vibe_start':(5,60),'vibe_poll':(100,60),'mdn_observatory':(20,60),'website_trigger':(10,3600),'osv':(60,60)}
@@ -42,11 +44,13 @@ class ProviderEngine:
                     retry=max(retry,stamp.timestamp())
                 except (TypeError,ValueError,OverflowError):raise ProviderFailure('Invalid server cooldown configuration; request not sent.','unavailable') from None
             if len(attempts)>=count:retry=max(retry,attempts[0]+window)
-            host_key=name+'|'+origin
+            host_key=name+'|'+(urlsplit(origin).hostname or origin)
             if name in ('mdn_observatory','website_trigger'):
                 interval=60 if name=='mdn_observatory' else 3600
-                retry=max(retry,saved.get(host_key,0)+interval)
-            if retry>now:raise ProviderFailure('Waiting for provider quota; request was not sent.','rate_limited',retry_at=retry_iso(retry))
+                host=urlsplit(origin).hostname or origin
+                legacy=max(saved.get(name+'|'+origin,0),saved.get(name+'|http://'+host,0),saved.get(name+'|https://'+host,0))
+                retry=max(retry,max(saved.get(host_key,0),legacy)+interval)
+            if retry>now:raise ProviderFailure('A preserved local/provider cooldown is active; this scan request was not sent.','rate_limited',retry_at=retry_iso(retry),code='local_cooldown',diagnostics={'request_sent':False,'quota':name,'reason':'Local request budget, per-host interval or operator-preserved cooldown.'})
             row.update(attempts=attempts+[now]);saved[name]=row
             if name in ('mdn_observatory','website_trigger'):saved[host_key]=now
             self.store.write(path,saved)
@@ -62,6 +66,18 @@ class ProviderEngine:
                 transient=error.state in ('unavailable','timed_out') or (error.http_status is not None and error.http_status>=500)
                 if attempt+1>=attempts or not transient:raise
                 await asyncio.sleep(max(2.5 if url.startswith('https://vibecheckscan.com/') else 1,2**attempt)+random.uniform(0,.25))
+    def response_error(self,method,url,status,headers,content,quota):
+        receipt=response_receipt(method,url,status,headers,content)
+        checkpoint=security_checkpoint(headers,content)
+        if checkpoint:
+            seconds=retry_seconds(headers.get('Retry-After'),quota)
+            if quota:self.block(quota,seconds)
+            return ProviderFailure('The provider blocked automated access at a security checkpoint. No scan result was returned; waiting alone may not resolve this.','blocked',status,retry_iso(time.time()+seconds),code='provider_security_checkpoint',diagnostics=receipt)
+        if status==429:
+            seconds=retry_seconds(headers.get('Retry-After'),quota)
+            if quota:self.block(quota,seconds)
+            return ProviderFailure('Provider returned HTTP429. Retry-After was honored when supplied; otherwise its conservative window applies. The outbound server IP is shared by LaunchShield users.','rate_limited',429,retry_iso(time.time()+seconds),code='upstream_rate_limit',diagnostics=receipt)
+        return ProviderFailure('Provider returned HTTP '+str(status)+'. No clean result can be inferred.',http_status=status,code='upstream_http_error',diagnostics=receipt)
     async def _request_once(self,method,url,quota=None,origin='',**kwargs):
         allowed=('https://websiteauditor.net/','https://xlogs.com/','https://vibecheckscan.com/','https://observatory-api.mdn.mozilla.net/','https://api.osv.dev/')
         if not url.startswith(allowed):raise ProviderFailure('Unapproved provider endpoint.')
@@ -73,34 +89,35 @@ class ProviderEngine:
                     content=b''
                     async for chunk in response.aiter_bytes():
                         content+=chunk
-                        if len(content)>self.settings.maximum_response:raise ProviderFailure('Provider response exceeded the size limit.')
+                        if len(content)>self.settings.maximum_response:raise ProviderFailure('Provider response exceeded the size limit.',code='response_size_limit')
                     status=response.status_code
-                    if status==429:
-                        seconds=retry_seconds(response.headers.get('Retry-After'),quota)
-                        if quota:self.block(quota,seconds)
-                        raise ProviderFailure('Provider returned 429. Retry-After was honored when supplied; otherwise the conservative provider window applies. No IP/key rotation.','rate_limited',429,retry_iso(time.time()+seconds))
+                    if security_checkpoint(response.headers,content) or status==429:raise self.response_error(method,url,status,response.headers,content,quota)
                     if status==404:return status,None
-                    if status!=200:raise ProviderFailure('Provider returned HTTP '+str(status)+'. No clean result can be inferred.',http_status=status)
-                    if 'json' not in response.headers.get('Content-Type','').lower() and kwargs.get('expect_json',True):
-                        # Website Auditor's documented report trigger is HTML;
-                        # its body is ignored, never scraped.
-                        try:data=json.loads(content,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Invalid JSON numeric constant')))
-                        except Exception:raise ProviderFailure('Provider did not return JSON.') from None
-                    else:
-                        try:data=json.loads(content,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Invalid JSON numeric constant')))
-                        except Exception:raise ProviderFailure('Provider returned malformed JSON.') from None
+                    if status!=200:raise self.response_error(method,url,status,response.headers,content,quota)
+                    try:data=json.loads(content,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Invalid JSON numeric constant')))
+                    except Exception:raise ProviderFailure('Provider returned malformed/non-JSON data.',http_status=status,code='invalid_json',diagnostics=response_receipt(method,url,status,response.headers,content)) from None
                     return status,data
-        except httpx.TimeoutException:raise ProviderFailure('Provider request timed out; a scan-start POST was not blindly retried.','timed_out') from None
-        except httpx.HTTPError:raise ProviderFailure('Provider network request failed; no clean result can be inferred.','unavailable') from None
+        except httpx.TimeoutException:raise ProviderFailure('Provider network request timed out; a scan-start POST was not blindly retried.','timed_out',code='network_timeout',diagnostics={'request_sent':True,'method':method,'endpoint':url}) from None
+        except httpx.HTTPError:raise ProviderFailure('Provider network request failed; no clean result can be inferred.','unavailable',code='network_error',diagnostics={'request_sent':True,'method':method,'endpoint':url}) from None
     async def trigger_auditor(self,host,origin):
         self.reserve('website_trigger',origin)
-        client=self.client_factory() if self.client_factory else httpx.AsyncClient(timeout=15,follow_redirects=False,trust_env=False)
-        async with client:
-            async with client.stream('GET','https://websiteauditor.net/report/'+quote(host,safe='')) as response:
-                if response.status_code==429:
-                    seconds=retry_seconds(response.headers.get('Retry-After'),'website_trigger');self.block('website_trigger',seconds);raise ProviderFailure('Website Auditor trigger rate limited; no trigger retry.','rate_limited',429,retry_iso(time.time()+seconds))
-                if response.status_code not in (200,202):raise ProviderFailure('Website Auditor trigger returned HTTP '+str(response.status_code),http_status=response.status_code)
-                # Do not read/scrape the UI response.
+        client=self.client_factory() if self.client_factory else httpx.AsyncClient(timeout=20,follow_redirects=False,trust_env=False)
+        url='https://websiteauditor.net/report/'+quote(host,safe='')
+        try:
+            async with client:
+                async with client.stream('GET',url) as response:
+                    # Drain the bounded documented response instead of closing after headers.
+                    # Its HTML is never scraped for evidence or executed.
+                    body=b''
+                    async for chunk in response.aiter_bytes():
+                        body+=chunk
+                        if len(body)>self.settings.maximum_response:raise ProviderFailure('Website Auditor trigger response exceeded the size limit.',code='response_size_limit')
+                    if security_checkpoint(response.headers,body) or response.status_code==429:raise self.response_error('GET',url,response.status_code,response.headers,body,'website_trigger')
+                    if response.status_code not in (200,202):raise self.response_error('GET',url,response.status_code,response.headers,body,'website_trigger')
+                    receipt=response_receipt('GET',url,response.status_code,response.headers,body);receipt['scan_acceptance_confirmed']=False
+                    return receipt
+        except httpx.TimeoutException:raise ProviderFailure('Documented Website Auditor trigger request timed out; it was not repeated.','timed_out',code='trigger_network_timeout') from None
+        except httpx.HTTPError:raise ProviderFailure('Website Auditor trigger connection failed; acceptance was not confirmed.','unavailable',code='trigger_network_error') from None
     async def run(self,name,target,mode,scenario,progress,packages=None):
         requested=utcnow();origin=target.origin
         if name=='osv' and not packages:return {'state':'skipped_not_applicable','message':'No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.','requested_at':requested,'native':None}
@@ -122,12 +139,16 @@ class ProviderEngine:
             endpoint='https://websiteauditor.net/api/public/audit/'+quote(target.host,safe='')
             status,native=await self.request('GET',endpoint)
             if status==404:
-                await progress('running','No cached report; triggering the documented report route once.')
-                await self.trigger_auditor(target.host,origin)
-                for _ in range(5):
-                    await asyncio.sleep(4);status,native=await self.request('GET',endpoint)
+                await progress('running','No cached report; requesting the documented report route once. Scan acceptance is not yet confirmed.')
+                try:trigger=await self.trigger_auditor(target.host,origin)
+                except ProviderFailure as error:
+                    error.diagnostics.update(cache_http_status=404,scan_acceptance_confirmed=False)
+                    raise
+                polls=0
+                for delay in (4,8,12,16,20):
+                    await asyncio.sleep(delay);status,native=await self.request('GET',endpoint);polls+=1
                     if status==200:break
-                if status!=200:raise ProviderFailure('No cached report became available within bounded polling.','timed_out',status)
+                if status!=200:raise ProviderFailure('The provider API still has no cached report after its documented report-page request. A completed scan could not be confirmed.','unavailable',status,code='report_not_generated',diagnostics={'request_sent':True,'cache_http_status':status,'cache_reads':polls+1,'poll_wait_seconds':60,'trigger':trigger,'scan_acceptance_confirmed':False})
         elif name=='xlogs':
             status,native=await self.request('POST','https://xlogs.com/api/v1/scan','xlogs',origin,json={'url':origin})
         elif name=='vibe_check':
@@ -165,16 +186,8 @@ class ProviderEngine:
         result={'state':'completed','native':native,'http_status':200,'requested_at':requested,'received_at':utcnow(),'message':'MOCK fixture; no external check ran.' if mode=='mock' else 'Provider response received.','scanned_at':native.get('scannedAt',native.get('scanned_at'))}
         if name=='vibe_check':
             result['scanned_at']=native.get('timestamp',result['scanned_at'])
-            warnings=[]
-            modules=native.get('modules')
-            for module_name,module in (modules.items() if isinstance(modules,dict) else ()):
-                if not isinstance(module,dict):continue
-                if module.get('partial') is True or module.get('status') in ('error','timed_out'):
-                    notes=module.get('notes',module.get('note','Provider reported partial/error coverage.'))
-                    warnings.append(module_name+': '+str(notes)[:500])
-                if module_name=='cve' and module.get('advisorySource')=='unavailable':warnings.append('cve: upstream advisory intelligence unavailable; not a clean result.')
-                findings=module.get('findings')
-                if isinstance(findings,dict) and any(isinstance(v,dict) and v.get('assessment')=='unknown' for v in findings.values()):warnings.append(module_name+': one or more assessments are unknown, not passed.')
+            summaries=vibe_modules(native);result['module_coverage']=summaries
+            warnings=[item['module']+': '+'; '.join(item['notes']) for item in summaries if item['state']=='partial']
             if warnings:
                 result['coverage_warnings']=warnings
                 result['message']='Provider completed with partial/unknown module coverage: '+'; '.join(warnings)

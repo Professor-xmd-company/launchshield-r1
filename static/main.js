@@ -25,6 +25,7 @@ function normalizeLink(value){const text=value.trim();if(!text)throw new Error('
 function showProgress(job){
   $('progress').hidden=false;
   let title='Checking your website…',message='Real website checks are running. Your AI report will appear here automatically.';
+  if(finished.has(job.state)){title='Loading your existing report…';message='Retrieving saved evidence. No website checks are being restarted.';}
   if(job.state==='queued'){title='Your test is queued';message='The test will start automatically when the current check finishes.';}
   if(job.state==='validating'){title='Connecting to your website…';message='Checking that the link is a reachable public website.';}
   if(job.state==='normalizing'||job.state==='analyzing'){title='Preparing your AI report…';message='The website checks have finished. Turning the available evidence into a readable report.';}
@@ -32,14 +33,20 @@ function showProgress(job){
 }
 function dateLabel(value){if(value===undefined||value===null)return null;const d=new Date(typeof value==='number'?(value>1e12?value:value*1000):value);return Number.isNaN(d.getTime())?null:d.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});}
 function sourceStatus(p){
-  if(p.state==='skipped_not_applicable')return 'Not applicable: no reliable exact package version was detected. This is not a clean advisory result.';
-  if(p.state==='rate_limited')return 'Temporarily unavailable because of a request limit. No limit was bypassed.';
-  if(p.state==='timed_out')return 'The provider did not return a report in time.';
+  const access=p.diagnostics?.provider_access_check;
+  const checkpoint=p.reason_code==='provider_security_checkpoint'||access?.code==='provider_security_checkpoint';
+  const retry=dateLabel(p.retry_at);const waiting=retry?' Next scan attempt not before '+retry+'.':'';
+  if(checkpoint)return (p.diagnostics?.request_sent===false?'Scan not sent during cooldown. A separate no-scan API check from this server was blocked at the provider’s security checkpoint.':'The provider blocked automated API access at its security checkpoint. No scan report was returned.')+waiting+' Provider access may still need to be resolved after the wait.';
+  if(p.reason_code==='report_not_generated')return 'The provider API still returned404 (no cached report) after its documented report-page request and60seconds of bounded polling. A completed scan could not be confirmed.';
+  if(p.state==='skipped_not_applicable')return 'Not tested: no reliable exact package version was detected. This is not a clean advisory result.';
+  if(p.provider==='website_auditor'&&p.reason_code==='local_cooldown')return 'The provider API has no cached report. A new report trigger was not sent while its cooldown is active.'+waiting;
+  if(p.state==='rate_limited')return (p.reason_code==='local_cooldown'?'Request not sent: preserving the shared provider cooldown or per-host interval.':'The provider returned HTTP429 and no scan report. LaunchShield users share the server’s provider quota.')+waiting;
+  if(p.state==='timed_out')return 'A network or provider deadline was reached. No completed result was received.';
   if(p.state==='stale_result')return 'Older cached evidence was returned; it may not describe the current website.';
   if(p.state==='cached')return p.freshness==='unknown'?'Cached report received; its original scan age is unknown.':'Cached provider report received.';
-  if(p.state==='completed')return p.coverage_warnings?.length?'Report received, but some checks within it did not finish.':'Report received.';
+  if(p.state==='completed')return p.coverage_warnings?.length?'Limited report received. Some module results are inconclusive or constrained by the provider’s scan budget.':'Report received for this provider’s limited scope.';
   if(p.state==='cancelled')return 'This check did not finish.';
-  return 'No usable report was returned by this provider.';
+  return 'No usable report was returned.'+(typeof p.message==='string'?' '+p.message:'');
 }
 function paragraph(container,text){if(text)container.append(element('p',text));}
 function drawReport(data){
@@ -51,7 +58,7 @@ function drawReport(data){
   const aiReady=data.ai?.state==='completed'&&typeof data.ai.data?.summary==='string';
   $('report-title').textContent=total?'Your website report':'Assessment could not be completed';
   $('report-website').textContent=data.target;
-  $('report-status').textContent=hasGaps?'Limited coverage':'Checks completed';
+  $('report-status').textContent=hasGaps?'Assessment incomplete':'Passive checks returned';
   $('report-status').className='status-tag'+(hasGaps?' limited':'');
   $('overview-title').textContent=aiReady?'AI overview':'Assessment summary';
   $('overview-text').replaceChildren();
@@ -59,10 +66,10 @@ function drawReport(data){
   else{paragraph($('overview-text'),total?'The available website checks have returned. The AI explanation is temporarily unavailable, but the real provider results are included below.':'The checks did not return enough usable evidence to assess this website. This is not a clean security result.');}
   const findings=Array.isArray(data.findings)?data.findings:[];
   $('finding-count').textContent=String(findings.length);$('check-count').textContent=total+' / '+sites.length;
-  const note=$('coverage-note');note.hidden=!hasGaps&&aiReady;note.textContent=hasGaps?'Some checks were unavailable or incomplete. This report only describes the evidence that was returned; it does not prove the website is secure.':'AI explanation is unavailable. Provider evidence and downloads remain available.';
+  const note=$('coverage-note');note.hidden=!hasGaps&&aiReady;note.textContent=hasGaps?'Security result: inconclusive. Important checks are unavailable or incomplete, so this is not a full security audit or a clean result. The evidence below covers only what actually returned.':'AI explanation is unavailable. Provider evidence and downloads remain available.';
   const cards=$('finding-cards');cards.replaceChildren();
   const explanations=new Map((aiReady&&Array.isArray(data.ai.data.analysis)?data.ai.data.analysis:[]).map(a=>[a.finding_id,a]));
-  if(!findings.length){const empty=element('article',undefined,'card finding-card');empty.append(element('h3',total?'No findings were reported by the available checks':'No findings can be concluded'),element('p',total?'This is not proof that the website is secure. Review which checks were able to finish.':'The unavailable checks must not be interpreted as a pass.'));cards.append(empty);}
+  if(!findings.length){const empty=element('article',undefined,'card finding-card');empty.append(element('h3',hasGaps?'No reliable vulnerability verdict':'No findings were reported by the available checks'),element('p',total?'This is not proof that the website is secure. Review which checks were able to finish.':'The unavailable checks must not be interpreted as a pass.'));cards.append(empty);}
   for(const finding of findings){
     const card=element('article',undefined,'card finding-card');const heading=element('div',undefined,'finding-heading');
     const severity=['critical','high','medium','low','info','unknown'].includes(finding.severity)?finding.severity:'unknown';
@@ -79,7 +86,14 @@ function drawReport(data){
     card.append(detail);cards.append(card);
   }
   const list=$('coverage-list');list.replaceChildren();
-  for(const provider of coverage){const li=element('li');li.append(element('strong',providerNames[provider.provider]||provider.provider),element('span',sourceStatus(provider)));const when=dateLabel(provider.scanned_at??provider.cached_at);if(when)li.append(element('span','Provider observation: '+when,'source-time'));list.append(li);}
+  for(const provider of coverage){
+    const li=element('li');li.append(element('strong',providerNames[provider.provider]||provider.provider),element('span',sourceStatus(provider)));
+    const when=dateLabel(provider.scanned_at??provider.cached_at);if(when)li.append(element('span','Provider observation: '+when,'source-time'));
+    const modules=(provider.module_coverage||[]).filter(m=>m.state!=='complete');
+    if(modules.length){const details=element('details');details.append(element('summary','Module coverage'));for(const module of modules)paragraph(details,module.module+': '+module.notes.join(' '));li.append(details);}list.append(li);
+  }
+  const tls=data.scope_verification?.tls;
+  if(tls?.chain_and_hostname_verified&&tls.not_after){const li=element('li');li.append(element('strong','Direct connection verification'),element('span',(tls.protocol||'TLS')+' connection verified with certificate-chain and hostname checks. Certificate expires '+dateLabel(tls.not_after)+'.'),element('span','Observed during the existing scope-validation connection, not an extra scan. This does not verify every TLS setting or application vulnerability.','source-time'));list.append(li);} 
   $('progress').hidden=true;$('report').hidden=false;renderedId=data.job_id;
 }
 async function refresh(v){

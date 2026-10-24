@@ -1,0 +1,70 @@
+{
+  "headers": {
+    "finalUrl": "https://launchshield-r1-professorcj-43cf1823.koyeb.app/",
+    "score": 37,
+    "maxScore": 37,
+    "coverage": {
+      "evaluatorVersion": "headers-eval/1",
+      "responseContext": "HTML document, HTTP 200",
+      "limitations": [
+        "HTML meta policies and per-element overrides are not inspected.",
+        "HSTS coverage is limited to the observed host.",
+        "Permissions-Policy is informational in this release."
+      ]
+    },
+    "inconclusive_findings": {}
+  },
+  "tls": {
+    "score": 20,
+    "maxScore": 25,
+    "inconclusive_findings": {
+      "certExpiry": {
+        "valid": false,
+        "daysUntilExpiry": 0,
+        "score": 0
+      },
+      "keyStrength": {
+        "score": 0,
+        "maxScore": 0,
+        "weakestVerdict": "unknown",
+        "keys": [
+          {
+            "subject": "Unknown subject",
+            "role": "leaf",
+            "type": "unknown",
+            "verdict": "unknown",
+            "reasons": [
+              "key.raw_certificate_unavailable"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "cors": {
+    "score": 15,
+    "maxScore": 15,
+    "inconclusive_findings": {}
+  },
+  "cve": {
+    "score": 100,
+    "maxScore": 100,
+    "status": "not_vulnerable",
+    "affectsGrade": false,
+    "isVulnerable": false,
+    "rscDetected": false,
+    "advisorySource": "not_queried",
+    "advisories": [],
+    "message": "No React Server Components infrastructure was detected. The RSC advisories do not apply to this origin.",
+    "recommendations": []
+  },
+  "apiSurface": {
+    "score": 10,
+    "maxScore": 10,
+    "partial": true,
+    "notes": [
+      "Stopped after probing 80 paths to keep the scan responsive. Use a dedicated crawler for exhaustive coverage."
+    ],
+    "requestsIssued": 80
+  }
+}
