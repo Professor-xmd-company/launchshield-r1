@@ -1,0 +1,14 @@
+{
+  "deleted_app": "professor-xmd",
+  "delete_http": 200,
+  "organization_id": "637dcf7b-b9f8-444d-836c-e5d6a068322e",
+  "old_app_http": 404,
+  "database_preserved": true,
+  "quota": {
+    "services_used": 1,
+    "services_limit": 2,
+    "memory_mb_used": 0,
+    "memory_mb_limit": 512,
+    "instances_by_type": []
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "test": "Real OSV querybatch with known exact package/version fixture; NOT a website scan",
+  "at": "2026-10-24T13:14:18.719954+00:00",
+  "queries": [
+    {
+      "package": {
+        "ecosystem": "npm",
+        "name": "lodash"
+      },
+      "version": "4.17.20"
+    }
+  ],
+  "state": "completed",
+  "advisory_count": 5,
+  "advisory_ids": [
+    "GHSA-29mw-wpgm-hmr9",
+    "GHSA-35jh-r3h4-6jhm",
+    "GHSA-f23m-r3pf-42rh",
+    "GHSA-r5fr-rjxr-66jc",
+    "GHSA-xxjr-mmjv-4gpg"
+  ],
+  "native": {
+    "queries": [
+      {
+        "package": {
+          "ecosystem": "npm",
+          "name": "lodash"
+        },
+        "version": "4.17.20"
+      }
+    ],
+    "results": [
+      {
+        "vulns": [
+          {
+            "id": "GHSA-29mw-wpgm-hmr9",
+            "modified": "2025-09-29T21:12:31.102523Z"
+          },
+          {
+            "id": "GHSA-35jh-r3h4-6jhm",
+            "modified": "2026-10-17T02:55:38.085813Z"
+          },
+          {
+            "id": "GHSA-f23m-r3pf-42rh",
+            "modified": "2026-10-17T02:56:13.084362Z"
+          },
+          {
+            "id": "GHSA-r5fr-rjxr-66jc",
+            "modified": "2026-10-17T02:56:15.633068Z"
+          },
+          {
+            "id": "GHSA-xxjr-mmjv-4gpg",
+            "modified": "2026-10-17T02:55:54.229635Z"
+          }
+        ]
+      }
+    ],
+    "package_sources": [
+      {
+        "provider": "xlogs",
+        "field": "sbom.libraries",
+        "package": "lodash",
+        "version": "4.17.20",
+        "ecosystem": "npm",
+        "note": "Explicit version supplied by provider SBOM; no banner/AI version guessing."
+      }
+    ]
+  }
+}

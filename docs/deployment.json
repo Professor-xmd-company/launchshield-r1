@@ -1,0 +1,15 @@
+{
+  "revision": "R1",
+  "repository": {
+    "id": 1432395924,
+    "full_name": "Professor-xmd-company/launchshield-r1",
+    "url": "https://github.com/Professor-xmd-company/launchshield-r1",
+    "private": false
+  },
+  "hosting": {
+    "provider": "Koyeb",
+    "status": "not_yet_deployed"
+  },
+  "protected_database_app": "database",
+  "owner_approved_old_app_removed": "professor-xmd"
+}

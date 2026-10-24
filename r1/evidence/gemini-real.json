@@ -1,0 +1,42 @@
+{
+  "test": "real Gemini generation with explicitly synthetic fixture findings",
+  "at": "2026-10-24T13:14:18.526061+00:00",
+  "selected_key_label": "GEMINI_API_KEY_1",
+  "model": "gemini-3.5-flash-lite",
+  "result": {
+    "state": "completed",
+    "model": "gemini-3.5-flash-lite",
+    "model_version": "gemini-3.5-flash-lite",
+    "generated_at": "2026-10-24T13:14:18.525919+00:00",
+    "usage": {
+      "promptTokenCount": 420,
+      "candidatesTokenCount": 227,
+      "totalTokenCount": 647,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 420
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "data": {
+      "summary": "This assessment provides a read-only review of a synthetic finding regarding the Content Security Policy for https://fixture.example based on provider evidence.",
+      "analysis": [
+        {
+          "finding_id": "f_1df2f8af0af67f7dcbf4",
+          "explanation": "Provider xlogs observed that no Content Security Policy header was present in the response from https://fixture.example. This indicates a configuration observation rather than confirmed exploitation, as no active testing for cross-site scripting was conducted.",
+          "remediation": "Define a suitable CSP and test in report-only mode.",
+          "verification": "Repeat the header check to confirm the presence of the CSP header."
+        }
+      ],
+      "limitations": [
+        "Synthetic fixture evidence only; no real website scan was performed.",
+        "Data relies on cached or stale provider logs with potential coverage failures or OSV skips.",
+        "All descriptions of impact are conditional since intent and interpretation remain uncertain."
+      ]
+    },
+    "label": "AI interpretation; not independently verified scanner evidence"
+  },
+  "website_scanned": false
+}

@@ -1,0 +1,257 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LaunchShield R1 report</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:1000px;margin:30px auto;padding:0 20px;color:#17202b}table{border-collapse:collapse;width:100%}td,th{padding:9px;border:1px solid #bbc2ca;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f4f6;padding:15px}section{border-top:1px solid #bbc2ca;padding:15px 0}</style><h1>LaunchShield R1 — MOCK FIXTURE REPORT</h1><p>https://demo.example · completed</p><p>No guarantee of security. No exploitation was performed.</p><h2>Provider coverage</h2><div style="overflow:auto"><table><tr><th>Provider</th><th>State</th><th>Detail</th><th>Scan timestamp</th></tr><tr><td>website_auditor</td><td>cached</td><td>MOCK fixture; no external check ran.</td><td>1792848122120</td></tr><tr><td>xlogs</td><td>completed</td><td>MOCK fixture; no external check ran.</td><td>2026-10-24T13:22:02.124901+00:00</td></tr><tr><td>vibe_check</td><td>completed</td><td>MOCK fixture; no external check ran.</td><td>None</td></tr><tr><td>mdn_observatory</td><td>completed</td><td>MOCK fixture; no external check ran.</td><td>2026-10-24T13:22:02.286073+00:00</td></tr><tr><td>osv</td><td>completed</td><td>MOCK fixture; no external check ran.</td><td>None</td></tr></table></div><h2>Findings and evidence</h2><section><h3>Content Security Policy needs review</h3><p>Severity: medium · Source records: 2</p><pre>{
+  &quot;id&quot;: &quot;f_408723e7efd41ad10dc0&quot;,
+  &quot;type&quot;: &quot;header:csp&quot;,
+  &quot;title&quot;: &quot;Content Security Policy needs review&quot;,
+  &quot;severity&quot;: &quot;medium&quot;,
+  &quot;resource&quot;: &quot;https://demo.example&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;provider&quot;: &quot;xlogs&quot;,
+      &quot;native_id&quot;: &quot;csp-missing&quot;,
+      &quot;type&quot;: &quot;header:csp&quot;,
+      &quot;title&quot;: &quot;Content Security Policy needs review&quot;,
+      &quot;severity&quot;: &quot;medium&quot;,
+      &quot;provider_severity&quot;: &quot;medium&quot;,
+      &quot;resource&quot;: &quot;https://demo.example&quot;,
+      &quot;observation_confidence&quot;: &quot;confirmed&quot;,
+      &quot;interpretation_confidence&quot;: &quot;potential&quot;,
+      &quot;evidence&quot;: {
+        &quot;statements&quot;: {
+          &quot;observed&quot;: &quot;SYNTHETIC: no CSP header was observed.&quot;,
+          &quot;notTested&quot;: &quot;No XSS exploitation was performed.&quot;
+        },
+        &quot;cwe&quot;: null,
+        &quot;interpretationBasis&quot;: &quot;configuration&quot;,
+        &quot;reviewReasons&quot;: []
+      },
+      &quot;remediation&quot;: &quot;Define a suitable CSP and test in report-only mode.&quot;,
+      &quot;verification&quot;: &quot;Repeat the header check.&quot;,
+      &quot;scanned_at&quot;: &quot;2026-10-24T13:22:02.124901+00:00&quot;,
+      &quot;requested_at&quot;: &quot;2026-10-24T13:22:01.966265+00:00&quot;,
+      &quot;mode&quot;: &quot;mock&quot;
+    },
+    {
+      &quot;provider&quot;: &quot;vibe_check&quot;,
+      &quot;native_id&quot;: &quot;csp&quot;,
+      &quot;type&quot;: &quot;header:csp&quot;,
+      &quot;title&quot;: &quot;csp configuration: missing&quot;,
+      &quot;severity&quot;: &quot;medium&quot;,
+      &quot;provider_severity&quot;: null,
+      &quot;resource&quot;: &quot;https://demo.example&quot;,
+      &quot;observation_confidence&quot;: &quot;provider_reported&quot;,
+      &quot;interpretation_confidence&quot;: &quot;potential&quot;,
+      &quot;evidence&quot;: {
+        &quot;assessment&quot;: &quot;missing&quot;,
+        &quot;reason&quot;: &quot;SYNTHETIC: no CSP header.&quot;,
+        &quot;present&quot;: false
+      },
+      &quot;remediation&quot;: &quot;&quot;,
+      &quot;verification&quot;: &quot;&quot;,
+      &quot;scanned_at&quot;: null,
+      &quot;requested_at&quot;: &quot;2026-10-24T13:22:02.129334+00:00&quot;,
+      &quot;mode&quot;: &quot;mock&quot;
+    }
+  ],
+  &quot;confidence&quot;: {
+    &quot;observation&quot;: &quot;mixed&quot;,
+    &quot;interpretation&quot;: &quot;potential&quot;
+  },
+  &quot;overlap_count&quot;: 2,
+  &quot;note&quot;: &quot;Related signals grouped; original provider records and distinct confidence fields retained.&quot;
+}</pre></section><section><h3>HSTS configuration needs review</h3><p>Severity: low · Source records: 1</p><pre>{
+  &quot;id&quot;: &quot;f_d4428e0c4444d8b01e31&quot;,
+  &quot;type&quot;: &quot;header:hsts&quot;,
+  &quot;title&quot;: &quot;HSTS configuration needs review&quot;,
+  &quot;severity&quot;: &quot;low&quot;,
+  &quot;resource&quot;: &quot;https://demo.example&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;provider&quot;: &quot;website_auditor&quot;,
+      &quot;native_id&quot;: &quot;hsts&quot;,
+      &quot;type&quot;: &quot;header:hsts&quot;,
+      &quot;title&quot;: &quot;HSTS configuration needs review&quot;,
+      &quot;severity&quot;: &quot;low&quot;,
+      &quot;provider_severity&quot;: &quot;warn&quot;,
+      &quot;resource&quot;: &quot;https://demo.example&quot;,
+      &quot;observation_confidence&quot;: &quot;provider_reported&quot;,
+      &quot;interpretation_confidence&quot;: &quot;potential&quot;,
+      &quot;evidence&quot;: {
+        &quot;details&quot;: &quot;SYNTHETIC: HSTS header was not present.&quot;,
+        &quot;status&quot;: &quot;warn&quot;,
+        &quot;mapping_note&quot;: &quot;LaunchShield configuration-status mapping, not a provider vulnerability severity.&quot;
+      },
+      &quot;remediation&quot;: &quot;Review HTTPS coverage before enabling HSTS.&quot;,
+      &quot;verification&quot;: &quot;&quot;,
+      &quot;scanned_at&quot;: 1792848122120,
+      &quot;requested_at&quot;: &quot;2026-10-24T13:22:01.964069+00:00&quot;,
+      &quot;mode&quot;: &quot;mock&quot;
+    }
+  ],
+  &quot;confidence&quot;: {
+    &quot;observation&quot;: &quot;provider_reported&quot;,
+    &quot;interpretation&quot;: &quot;potential&quot;
+  },
+  &quot;overlap_count&quot;: 1,
+  &quot;note&quot;: &quot;Related signals grouped; original provider records and distinct confidence fields retained.&quot;
+}</pre></section><section><h3>permissionsPolicy configuration: missing</h3><p>Severity: info · Source records: 1</p><pre>{
+  &quot;id&quot;: &quot;f_8b9b3617c71c5eb5b65d&quot;,
+  &quot;type&quot;: &quot;permissionspolicy&quot;,
+  &quot;title&quot;: &quot;permissionsPolicy configuration: missing&quot;,
+  &quot;severity&quot;: &quot;info&quot;,
+  &quot;resource&quot;: &quot;https://demo.example&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;provider&quot;: &quot;vibe_check&quot;,
+      &quot;native_id&quot;: &quot;permissionsPolicy&quot;,
+      &quot;type&quot;: &quot;permissionspolicy&quot;,
+      &quot;title&quot;: &quot;permissionsPolicy configuration: missing&quot;,
+      &quot;severity&quot;: &quot;info&quot;,
+      &quot;provider_severity&quot;: null,
+      &quot;resource&quot;: &quot;https://demo.example&quot;,
+      &quot;observation_confidence&quot;: &quot;provider_reported&quot;,
+      &quot;interpretation_confidence&quot;: &quot;potential&quot;,
+      &quot;evidence&quot;: {
+        &quot;assessment&quot;: &quot;missing&quot;,
+        &quot;gradeEligible&quot;: false,
+        &quot;maxScore&quot;: 0,
+        &quot;reason&quot;: &quot;informational only&quot;
+      },
+      &quot;remediation&quot;: &quot;&quot;,
+      &quot;verification&quot;: &quot;&quot;,
+      &quot;scanned_at&quot;: null,
+      &quot;requested_at&quot;: &quot;2026-10-24T13:22:02.129334+00:00&quot;,
+      &quot;mode&quot;: &quot;mock&quot;
+    }
+  ],
+  &quot;confidence&quot;: {
+    &quot;observation&quot;: &quot;provider_reported&quot;,
+    &quot;interpretation&quot;: &quot;potential&quot;
+  },
+  &quot;overlap_count&quot;: 1,
+  &quot;note&quot;: &quot;Related signals grouped; original provider records and distinct confidence fields retained.&quot;
+}</pre></section><section><h3>MDN reports failed HTTP configuration tests (summary only)</h3><p>Severity: info · Source records: 1</p><pre>{
+  &quot;id&quot;: &quot;f_af130c07eec9c02db19d&quot;,
+  &quot;type&quot;: &quot;mdn-summary&quot;,
+  &quot;title&quot;: &quot;MDN reports failed HTTP configuration tests (summary only)&quot;,
+  &quot;severity&quot;: &quot;info&quot;,
+  &quot;resource&quot;: &quot;https://demo.example&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;provider&quot;: &quot;mdn_observatory&quot;,
+      &quot;native_id&quot;: &quot;mdn-summary&quot;,
+      &quot;type&quot;: &quot;mdn-summary&quot;,
+      &quot;title&quot;: &quot;MDN reports failed HTTP configuration tests (summary only)&quot;,
+      &quot;severity&quot;: &quot;info&quot;,
+      &quot;provider_severity&quot;: null,
+      &quot;resource&quot;: &quot;https://demo.example&quot;,
+      &quot;observation_confidence&quot;: &quot;provider_reported&quot;,
+      &quot;interpretation_confidence&quot;: &quot;details_require_provider_report&quot;,
+      &quot;evidence&quot;: {
+        &quot;tests_failed&quot;: 2,
+        &quot;tests_quantity&quot;: 10,
+        &quot;grade&quot;: &quot;B&quot;,
+        &quot;details_url&quot;: &quot;https://developer.mozilla.org/en-US/observatory/&quot;,
+        &quot;note&quot;: &quot;The v2 summary does not identify individual failed headers. No specific header vulnerability was inferred.&quot;
+      },
+      &quot;remediation&quot;: &quot;&quot;,
+      &quot;verification&quot;: &quot;&quot;,
+      &quot;scanned_at&quot;: &quot;2026-10-24T13:22:02.286073+00:00&quot;,
+      &quot;requested_at&quot;: &quot;2026-10-24T13:22:02.130154+00:00&quot;,
+      &quot;mode&quot;: &quot;mock&quot;
+    }
+  ],
+  &quot;confidence&quot;: {
+    &quot;observation&quot;: &quot;provider_reported&quot;,
+    &quot;interpretation&quot;: &quot;details_require_provider_report&quot;
+  },
+  &quot;overlap_count&quot;: 1,
+  &quot;note&quot;: &quot;Related signals grouped; original provider records and distinct confidence fields retained.&quot;
+}</pre></section><section><h3>SYNTHETIC advisory, not a real OSV finding</h3><p>Severity: unknown · Source records: 1</p><pre>{
+  &quot;id&quot;: &quot;f_bd0e0c0f8d1921c2a418&quot;,
+  &quot;type&quot;: &quot;fixture-only-001&quot;,
+  &quot;title&quot;: &quot;SYNTHETIC advisory, not a real OSV finding&quot;,
+  &quot;severity&quot;: &quot;unknown&quot;,
+  &quot;resource&quot;: &quot;https://demo.example&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;provider&quot;: &quot;osv&quot;,
+      &quot;native_id&quot;: &quot;FIXTURE-ONLY-001&quot;,
+      &quot;type&quot;: &quot;fixture-only-001&quot;,
+      &quot;title&quot;: &quot;SYNTHETIC advisory, not a real OSV finding&quot;,
+      &quot;severity&quot;: &quot;unknown&quot;,
+      &quot;provider_severity&quot;: null,
+      &quot;resource&quot;: &quot;https://demo.example&quot;,
+      &quot;observation_confidence&quot;: &quot;provider_reported&quot;,
+      &quot;interpretation_confidence&quot;: &quot;package_version_advisory_match&quot;,
+      &quot;evidence&quot;: {
+        &quot;advisory_id&quot;: &quot;FIXTURE-ONLY-001&quot;,
+        &quot;package&quot;: {
+          &quot;ecosystem&quot;: &quot;npm&quot;,
+          &quot;name&quot;: &quot;lodash&quot;
+        },
+        &quot;version&quot;: &quot;4.17.20&quot;,
+        &quot;package_sources&quot;: [
+          {
+            &quot;provider&quot;: &quot;xlogs&quot;,
+            &quot;field&quot;: &quot;sbom.libraries&quot;,
+            &quot;reliability&quot;: &quot;explicit versioned library fixture&quot;
+          }
+        ],
+        &quot;note&quot;: &quot;Package/version match, not verified website exploitation.&quot;
+      },
+      &quot;remediation&quot;: &quot;&quot;,
+      &quot;verification&quot;: &quot;&quot;,
+      &quot;scanned_at&quot;: null,
+      &quot;requested_at&quot;: &quot;2026-10-24T13:22:02.291216+00:00&quot;,
+      &quot;mode&quot;: &quot;mock&quot;
+    }
+  ],
+  &quot;confidence&quot;: {
+    &quot;observation&quot;: &quot;provider_reported&quot;,
+    &quot;interpretation&quot;: &quot;package_version_advisory_match&quot;
+  },
+  &quot;overlap_count&quot;: 1,
+  &quot;note&quot;: &quot;Related signals grouped; original provider records and distinct confidence fields retained.&quot;
+}</pre></section><h2>AI interpretation — separate from observed evidence</h2><pre>{
+  &quot;state&quot;: &quot;mock&quot;,
+  &quot;model&quot;: &quot;fixture-only&quot;,
+  &quot;generated_at&quot;: &quot;2026-10-24T13:22:02.452163+00:00&quot;,
+  &quot;data&quot;: {
+    &quot;summary&quot;: &quot;MOCK explanation. This is sample evidence, not a real security assessment.&quot;,
+    &quot;analysis&quot;: [
+      {
+        &quot;finding_id&quot;: &quot;f_408723e7efd41ad10dc0&quot;,
+        &quot;explanation&quot;: &quot;The sample provider reported this configuration signal; exploitability was not tested.&quot;,
+        &quot;remediation&quot;: &quot;Review the configuration against the linked provider guidance.&quot;,
+        &quot;verification&quot;: &quot;Repeat the relevant read-only check after changing it.&quot;
+      },
+      {
+        &quot;finding_id&quot;: &quot;f_d4428e0c4444d8b01e31&quot;,
+        &quot;explanation&quot;: &quot;The sample provider reported this configuration signal; exploitability was not tested.&quot;,
+        &quot;remediation&quot;: &quot;Review the configuration against the linked provider guidance.&quot;,
+        &quot;verification&quot;: &quot;Repeat the relevant read-only check after changing it.&quot;
+      },
+      {
+        &quot;finding_id&quot;: &quot;f_8b9b3617c71c5eb5b65d&quot;,
+        &quot;explanation&quot;: &quot;The sample provider reported this configuration signal; exploitability was not tested.&quot;,
+        &quot;remediation&quot;: &quot;Review the configuration against the linked provider guidance.&quot;,
+        &quot;verification&quot;: &quot;Repeat the relevant read-only check after changing it.&quot;
+      },
+      {
+        &quot;finding_id&quot;: &quot;f_af130c07eec9c02db19d&quot;,
+        &quot;explanation&quot;: &quot;The sample provider reported this configuration signal; exploitability was not tested.&quot;,
+        &quot;remediation&quot;: &quot;Review the configuration against the linked provider guidance.&quot;,
+        &quot;verification&quot;: &quot;Repeat the relevant read-only check after changing it.&quot;
+      },
+      {
+        &quot;finding_id&quot;: &quot;f_bd0e0c0f8d1921c2a418&quot;,
+        &quot;explanation&quot;: &quot;The sample provider reported this configuration signal; exploitability was not tested.&quot;,
+        &quot;remediation&quot;: &quot;Review the configuration against the linked provider guidance.&quot;,
+        &quot;verification&quot;: &quot;Repeat the relevant read-only check after changing it.&quot;
+      }
+    ],
+    &quot;limitations&quot;: [
+      &quot;Synthetic mock data; no real provider or AI request.&quot;
+    ]
+  }
+}</pre><h2>Limitations</h2><ul><li>Passive/read-only, public and unauthenticated assessment; not a penetration test.</li><li>No exploitation, authentication/business-logic testing or guarantee of finding every vulnerability.</li><li>No combined security score is calculated from incompatible provider scores.</li><li>Public third-party providers may publish/cache the target and their results; confidentiality is not guaranteed.</li><li>Only this application’s own validation requests are IP-pinned; external providers use their own DNS and scope controls.</li><li>No database: reports depend on the current host filesystem. Sleep, restart or redeploy may interrupt jobs or erase files.</li><li>Stopping local polling cannot guarantee cancellation of an already-started remote provider scan.</li><li>Evidence values may be redacted for secrets; original provider findings and confidence distinctions otherwise remain linked.</li></ul></html>
