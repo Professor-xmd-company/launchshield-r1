@@ -1,0 +1,277 @@
+{
+  "job_id": "e43ad16d127ed45dc88ee87fa00506ad",
+  "state": "completed_with_warnings",
+  "code_pin": "8f993435748179995a2c3d31e02e3c10b8915cf8",
+  "providers": {
+    "website_auditor": {
+      "state": "unavailable",
+      "reason_code": "report_not_generated",
+      "http_status": 404,
+      "retry_at": "2026-10-24T21:02:26.298216+00:00",
+      "requests_sent": 7,
+      "scan_requests_sent": 1,
+      "report_received": false,
+      "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+      "requests": [
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "read_cache",
+          "request_sent": true,
+          "http_status": 404,
+          "category": "cache_miss",
+          "dispatched_at": "2026-10-24T20:02:25.695259+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "trigger_scan",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "trigger_response_not_report",
+          "dispatched_at": "2026-10-24T20:02:26.298216+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "request_sent": true,
+          "http_status": 404,
+          "category": "cache_miss",
+          "dispatched_at": "2026-10-24T20:02:30.620627+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "request_sent": true,
+          "http_status": 404,
+          "category": "cache_miss",
+          "dispatched_at": "2026-10-24T20:02:39.045310+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "request_sent": true,
+          "http_status": 404,
+          "category": "cache_miss",
+          "dispatched_at": "2026-10-24T20:02:51.422716+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "request_sent": true,
+          "http_status": 404,
+          "category": "cache_miss",
+          "dispatched_at": "2026-10-24T20:03:08.491007+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "request_sent": true,
+          "http_status": 404,
+          "category": "cache_miss",
+          "dispatched_at": "2026-10-24T20:03:28.719350+00:00"
+        }
+      ]
+    },
+    "xlogs": {
+      "state": "skipped_cooldown",
+      "reason_code": "local_cooldown",
+      "http_status": null,
+      "retry_at": "2026-10-24T20:10:58.930248+00:00",
+      "requests_sent": 0,
+      "scan_requests_sent": 0,
+      "report_received": false,
+      "next_allowed_at": "2026-10-24T20:10:58.930248+00:00",
+      "requests": [
+        {
+          "method": "POST",
+          "endpoint": "https://xlogs.com/api/v1/scan",
+          "operation": "scan_start",
+          "request_sent": false,
+          "http_status": null,
+          "category": "skipped_cooldown",
+          "dispatched_at": null
+        }
+      ]
+    },
+    "vibe_check": {
+      "state": "completed",
+      "reason_code": null,
+      "http_status": 200,
+      "retry_at": null,
+      "requests_sent": 13,
+      "scan_requests_sent": 1,
+      "report_received": true,
+      "next_allowed_at": null,
+      "requests": [
+        {
+          "method": "POST",
+          "endpoint": "https://vibecheckscan.com/api/scan/start",
+          "operation": "scan_start",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:25.702018+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:28.667248+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:31.498650+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:34.523120+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:37.624165+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:40.522681+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:43.421424+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:46.224931+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:49.023005+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:51.996069+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:02:54.996940+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/status",
+          "operation": "poll_status",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:03:00.320936+00:00"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://vibecheckscan.com/api/scan/result",
+          "operation": "fetch_result",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:03:00.728435+00:00"
+        }
+      ]
+    },
+    "mdn_observatory": {
+      "state": "completed",
+      "reason_code": null,
+      "http_status": 200,
+      "retry_at": null,
+      "requests_sent": 1,
+      "scan_requests_sent": 1,
+      "report_received": true,
+      "next_allowed_at": "2026-10-24T20:04:01.722444+00:00",
+      "requests": [
+        {
+          "method": "POST",
+          "endpoint": "https://observatory-api.mdn.mozilla.net/api/v2/scan",
+          "operation": "scan_start",
+          "request_sent": true,
+          "http_status": 200,
+          "category": "json_received",
+          "dispatched_at": "2026-10-24T20:03:01.722444+00:00"
+        }
+      ]
+    },
+    "osv": {
+      "state": "skipped_not_applicable",
+      "reason_code": null,
+      "http_status": null,
+      "retry_at": null,
+      "requests_sent": 0,
+      "scan_requests_sent": 0,
+      "report_received": false,
+      "next_allowed_at": null,
+      "requests": []
+    }
+  },
+  "ai_state": "completed",
+  "signals": 0,
+  "assessment": {
+    "status": "inconclusive",
+    "incomplete_providers": [
+      "website_auditor",
+      "xlogs",
+      "vibe_check"
+    ],
+    "scope": "public unauthenticated configuration/exposure review, not active application penetration testing",
+    "conclusion": "Incomplete assessment: unavailable or inconclusive checks cannot support a security verdict."
+  },
+  "isolated_tests_passed": 174
+}

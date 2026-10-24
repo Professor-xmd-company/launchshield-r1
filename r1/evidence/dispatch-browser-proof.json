@@ -1,0 +1,24 @@
+{
+  "viewport": 390,
+  "document_width": 390,
+  "one_field": true,
+  "selectors": 0,
+  "checkboxes": 0,
+  "raw_code_blocks": 0,
+  "console_errors": 0,
+  "console_warnings": 0,
+  "first_job_same_after_refresh": true,
+  "retry_job_same_after_refresh": true,
+  "scan_post_count_including_both_refreshes": 2,
+  "posts_explained": "one original Test and one explicit Retry test after unchanged expiry",
+  "downloads": {
+    "json": {
+      "bytes": 29947,
+      "matches_server": true
+    },
+    "html": {
+      "bytes": 6544,
+      "matches_server": true
+    }
+  }
+}

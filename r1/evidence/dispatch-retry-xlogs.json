@@ -1,0 +1,131 @@
+{
+  "state": "blocked",
+  "error": "The provider blocked automated access at a security checkpoint; no report was returned.",
+  "http_status": 429,
+  "retry_at": "2026-10-24T21:11:48.001190+00:00",
+  "reason_code": "provider_security_checkpoint",
+  "diagnostics": {
+    "observed_at": "2026-10-24T20:11:48.001104+00:00",
+    "request_sent": true,
+    "method": "POST",
+    "endpoint": "https://xlogs.com/api/v1/scan",
+    "http_status": 429,
+    "content_type": "text/html; charset=utf-8",
+    "body_sha256": "66a796beec4f33aa6b8581a2d808ce0fb6f0dcf3144f7f0c2cc004d81c1a3034",
+    "x-vercel-mitigated": "challenge",
+    "security_checkpoint": "vercel_security_checkpoint",
+    "elapsed_ms": 208.98,
+    "dispatch": {
+      "lifecycle_state": "failed",
+      "request_sent": true,
+      "scan_request_sent": true,
+      "requests_sent": 1,
+      "scan_requests_sent": 1,
+      "report_received": false,
+      "local_cache_hit": false,
+      "next_allowed_at": "2026-10-24T21:11:48.001190+00:00",
+      "cooldown": null,
+      "last_dispatched_at": "2026-10-24T20:11:47.897005+00:00",
+      "requests": [
+        {
+          "method": "POST",
+          "endpoint": "https://xlogs.com/api/v1/scan",
+          "operation": "scan_start",
+          "started_at": "2026-10-24T20:11:47.699207+00:00",
+          "request_sent": true,
+          "http_status": 429,
+          "dispatched_at": "2026-10-24T20:11:47.897005+00:00",
+          "response_category": "provider_security_checkpoint",
+          "response_at": "2026-10-24T20:11:48.003255+00:00",
+          "elapsed_ms": 207.0,
+          "content_type": "text/html; charset=utf-8",
+          "body_sha256": "66a796beec4f33aa6b8581a2d808ce0fb6f0dcf3144f7f0c2cc004d81c1a3034",
+          "security_checkpoint": "vercel_security_checkpoint"
+        }
+      ],
+      "events": [
+        {
+          "at": "2026-10-24T20:11:47.899974+00:00",
+          "state": "request_sent",
+          "method": "POST",
+          "endpoint": "https://xlogs.com/api/v1/scan",
+          "operation": "scan_start",
+          "dispatched_at": "2026-10-24T20:11:47.897005+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:11:48.003273+00:00",
+          "state": "response_received",
+          "operation": "scan_start",
+          "http_status": 429,
+          "category": "provider_security_checkpoint",
+          "elapsed_ms": 207.0
+        },
+        {
+          "at": "2026-10-24T20:11:48.006521+00:00",
+          "state": "failed",
+          "category": "provider_security_checkpoint",
+          "next_allowed_at": "2026-10-24T21:11:48.001190+00:00",
+          "report_received": false
+        }
+      ]
+    }
+  },
+  "dispatch": {
+    "lifecycle_state": "failed",
+    "request_sent": true,
+    "scan_request_sent": true,
+    "requests_sent": 1,
+    "scan_requests_sent": 1,
+    "report_received": false,
+    "local_cache_hit": false,
+    "next_allowed_at": "2026-10-24T21:11:48.001190+00:00",
+    "cooldown": null,
+    "last_dispatched_at": "2026-10-24T20:11:47.897005+00:00",
+    "requests": [
+      {
+        "method": "POST",
+        "endpoint": "https://xlogs.com/api/v1/scan",
+        "operation": "scan_start",
+        "started_at": "2026-10-24T20:11:47.699207+00:00",
+        "request_sent": true,
+        "http_status": 429,
+        "dispatched_at": "2026-10-24T20:11:47.897005+00:00",
+        "response_category": "provider_security_checkpoint",
+        "response_at": "2026-10-24T20:11:48.003255+00:00",
+        "elapsed_ms": 207.0,
+        "content_type": "text/html; charset=utf-8",
+        "body_sha256": "66a796beec4f33aa6b8581a2d808ce0fb6f0dcf3144f7f0c2cc004d81c1a3034",
+        "security_checkpoint": "vercel_security_checkpoint"
+      }
+    ],
+    "events": [
+      {
+        "at": "2026-10-24T20:11:47.899974+00:00",
+        "state": "request_sent",
+        "method": "POST",
+        "endpoint": "https://xlogs.com/api/v1/scan",
+        "operation": "scan_start",
+        "dispatched_at": "2026-10-24T20:11:47.897005+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:11:48.003273+00:00",
+        "state": "response_received",
+        "operation": "scan_start",
+        "http_status": 429,
+        "category": "provider_security_checkpoint",
+        "elapsed_ms": 207.0
+      },
+      {
+        "at": "2026-10-24T20:11:48.006521+00:00",
+        "state": "failed",
+        "category": "provider_security_checkpoint",
+        "next_allowed_at": "2026-10-24T21:11:48.001190+00:00",
+        "report_received": false
+      }
+    ]
+  },
+  "source": "xlogs",
+  "mode": "live"
+}

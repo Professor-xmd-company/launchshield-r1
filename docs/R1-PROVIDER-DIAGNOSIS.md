@@ -1,5 +1,6 @@
 # R1 — user-reported missing providers and evidence reliability
 
+> Historical diagnosis. The subsequent underlying cooldown/dispatch fix and current174-test/live proof are in [R1-COOLDOWN-DISPATCH-FIX.md](R1-COOLDOWN-DISPATCH-FIX.md).
 ## Why the earlier report was not sufficient
 
 The user's screenshots correctly show an incomplete assessment. Returned configuration/header observations are real, but missing exposure/dependency checks and inconclusive modules cannot support a full website-security verdict. AI does not create missing test coverage.

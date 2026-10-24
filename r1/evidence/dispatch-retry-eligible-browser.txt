@@ -1,0 +1,10 @@
+### Result
+{
+  "retryDisabled": false,
+  "retryText": "Retry test",
+  "jobId": "e43ad16d127ed45dc88ee87fa00506ad"
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({retryDisabled:document.getElementById(\'retry-test\').disabled,retryText:document.getElementById(\'retry-test\').textContent,jobId:JSON.parse(sessionStorage.getItem(\'ls_last\')||\'null\')?.id})');
+```

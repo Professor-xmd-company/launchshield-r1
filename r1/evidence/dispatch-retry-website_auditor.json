@@ -1,0 +1,162 @@
+{
+  "state": "skipped_cooldown",
+  "error": "Request was not dispatched: target_interval.",
+  "http_status": null,
+  "retry_at": "2026-10-24T21:02:26.298216+00:00",
+  "reason_code": "local_cooldown",
+  "diagnostics": {
+    "request_sent": false,
+    "quota": "website_trigger",
+    "cooldown": {
+      "scope": "target",
+      "reason": "target_interval",
+      "quota": "website_trigger",
+      "until": "2026-10-24T21:02:26.298216+00:00"
+    },
+    "method": "GET",
+    "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "elapsed_ms": 94.62,
+    "cache_http_status": 404,
+    "scan_acceptance_confirmed": false,
+    "dispatch": {
+      "lifecycle_state": "skipped_cooldown",
+      "request_sent": true,
+      "scan_request_sent": false,
+      "requests_sent": 1,
+      "scan_requests_sent": 0,
+      "report_received": false,
+      "local_cache_hit": false,
+      "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+      "cooldown": {
+        "scope": "target",
+        "reason": "target_interval",
+        "quota": "website_trigger",
+        "until": "2026-10-24T21:02:26.298216+00:00"
+      },
+      "last_dispatched_at": "2026-10-24T20:11:47.917110+00:00",
+      "requests": [
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "read_cache",
+          "started_at": "2026-10-24T20:11:47.607350+00:00",
+          "request_sent": true,
+          "http_status": 404,
+          "dispatched_at": "2026-10-24T20:11:47.917110+00:00",
+          "response_category": "cache_miss",
+          "response_at": "2026-10-24T20:11:48.199628+00:00",
+          "elapsed_ms": 502.87,
+          "content_type": "application/json",
+          "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+          "provider_error": "No cached report. Run a scan first."
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "trigger_scan",
+          "started_at": "2026-10-24T20:11:48.207036+00:00",
+          "request_sent": false,
+          "http_status": null,
+          "response_category": "skipped_cooldown"
+        }
+      ],
+      "events": [
+        {
+          "at": "2026-10-24T20:11:47.996528+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "read_cache",
+          "dispatched_at": "2026-10-24T20:11:47.917110+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:11:48.199647+00:00",
+          "state": "response_received",
+          "operation": "read_cache",
+          "http_status": 404,
+          "category": "cache_miss",
+          "elapsed_ms": 502.87
+        },
+        {
+          "at": "2026-10-24T20:11:48.298768+00:00",
+          "state": "skipped_cooldown",
+          "reason_code": "local_cooldown",
+          "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+          "request_sent": false
+        }
+      ]
+    }
+  },
+  "dispatch": {
+    "lifecycle_state": "skipped_cooldown",
+    "request_sent": true,
+    "scan_request_sent": false,
+    "requests_sent": 1,
+    "scan_requests_sent": 0,
+    "report_received": false,
+    "local_cache_hit": false,
+    "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+    "cooldown": {
+      "scope": "target",
+      "reason": "target_interval",
+      "quota": "website_trigger",
+      "until": "2026-10-24T21:02:26.298216+00:00"
+    },
+    "last_dispatched_at": "2026-10-24T20:11:47.917110+00:00",
+    "requests": [
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "read_cache",
+        "started_at": "2026-10-24T20:11:47.607350+00:00",
+        "request_sent": true,
+        "http_status": 404,
+        "dispatched_at": "2026-10-24T20:11:47.917110+00:00",
+        "response_category": "cache_miss",
+        "response_at": "2026-10-24T20:11:48.199628+00:00",
+        "elapsed_ms": 502.87,
+        "content_type": "application/json",
+        "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+        "provider_error": "No cached report. Run a scan first."
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "trigger_scan",
+        "started_at": "2026-10-24T20:11:48.207036+00:00",
+        "request_sent": false,
+        "http_status": null,
+        "response_category": "skipped_cooldown"
+      }
+    ],
+    "events": [
+      {
+        "at": "2026-10-24T20:11:47.996528+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "read_cache",
+        "dispatched_at": "2026-10-24T20:11:47.917110+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:11:48.199647+00:00",
+        "state": "response_received",
+        "operation": "read_cache",
+        "http_status": 404,
+        "category": "cache_miss",
+        "elapsed_ms": 502.87
+      },
+      {
+        "at": "2026-10-24T20:11:48.298768+00:00",
+        "state": "skipped_cooldown",
+        "reason_code": "local_cooldown",
+        "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+        "request_sent": false
+      }
+    ]
+  },
+  "source": "website_auditor",
+  "mode": "live"
+}

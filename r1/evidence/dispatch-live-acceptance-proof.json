@@ -1,0 +1,19 @@
+{
+  "first_job": "e43ad16d127ed45dc88ee87fa00506ad",
+  "retry_job": "c3443208cf2318c888baa0de151871f7",
+  "no_redeploy_between_attempts": true,
+  "website_real_trigger_at": "2026-10-24T20:02:26.298216+00:00",
+  "website_next_allowed_before_retry": "2026-10-24T21:02:26.298216+00:00",
+  "website_next_allowed_after_locally_skipped_retry": "2026-10-24T21:02:26.298216+00:00",
+  "website_deadline_not_extended": true,
+  "website_additional_scan_triggers_on_retry": 0,
+  "original_xlogs_deadline": "2026-10-24T20:10:58.930248+00:00",
+  "xlogs_post_actually_dispatched_after_expiry": "2026-10-24T20:11:47.897005+00:00",
+  "xlogs_real_http_status": 429,
+  "xlogs_real_response_category": "provider_security_checkpoint",
+  "xlogs_next_allowed_from_new_actual_response": "2026-10-24T21:11:48.001190+00:00",
+  "independent_provider_reports_received": [
+    "vibe_check",
+    "mdn_observatory"
+  ]
+}

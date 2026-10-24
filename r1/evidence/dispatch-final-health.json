@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-24T20:20:14.585466+00:00",
+  "deployment_id": "e19ba3b8-edc1-4dc2-a8f7-b9c968a4de30",
+  "code_pin": "8f993435748179995a2c3d31e02e3c10b8915cf8",
+  "status": "HEALTHY",
+  "root_http": 200,
+  "health_http": 200,
+  "public_targets_enabled": true,
+  "mock_execution_enabled": false,
+  "gemini_configured": true,
+  "auto_deploy_on_push": false,
+  "ssrf_auth_controls_preserved": true
+}

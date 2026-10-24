@@ -8,7 +8,15 @@ https://launchshield-r1-professorcj-43cf1823.koyeb.app
 
 One blank website-link field and one Test button initially. No execution/scenario selectors, permission checkboxes, AI switch, provider dashboard, raw AI JSON, manual report generation or accounts. Clicking Test attests to the plainly displayed ownership/permission and public-provider disclosure. Accepts authorized public website origins, not just LaunchShield itself. Bare hostnames automatically receive HTTPS.
 
-## Latest provider-reliability verification —2026-10-24
+## Current cooldown/dispatch fix verification
+
+Runtime `8f993435748179995a2c3d31e02e3c10b8915cf8`, deployment `e19ba3b8-edc1-4dc2-a8f7-b9c968a4de30`, healthy/root200/health200. **174isolated tests passed (51new acceptance cases)**. [Full root-cause/files/test report](R1-COOLDOWN-DISPATCH-FIX.md).
+
+Actual first job `e43ad16d127ed45dc88ee87fa00506ad` sent the Website Auditor trigger at20:02:26UTC, before the removed bogus20:04:39 hold. Trigger200,5polls404, no report falsely received. Genuine xlogs penalty20:10:58UTC was respected with0requests. After expiry, the real Retry test button created `c3443208cf2318c888baa0de151871f7`: xlogs POST20:11:47UTC actually sent/returned429checkpoint. Website target deadline remained21:02:26.298216UTC; no duplicate trigger or deadline movement. Vibe/MDN returned reports in both jobs. Real Gemini completed first, returned503on retry; evidence/export remained available.
+
+Actual browser:390/390px, console0, HTML6544/JSON29947bytes match server, same jobs restored by refresh, exactly2scanPOSTs (one Test/one explicit Retry), no auto-scan/replacement/rotation after verification. All final screenshots captured and inspected. Details in `r1/evidence/dispatch-*` and deployment metadata.
+
+## Historical previous provider-diagnosis verification —2026-10-24
 
 The current runtime is `c2172b41dae3f8d182bb2e8365ea1d091ea5267c`, deployment `6474a91f-b1e7-48e3-a953-7facad6bbda1`, HEALTHY/root200/health200. **123isolated tests passed**. See [provider diagnosis](R1-PROVIDER-DIAGNOSIS.md) for exact causes, fixes and unresolved provider limitations.
 

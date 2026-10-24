@@ -1,5 +1,6 @@
 # R1 — kwa nini providers hawajibu vizuri?
 
+> Historical diagnosis. The subsequent underlying cooldown/dispatch fix and current174-test/live proof are in [R1-COOLDOWN-DISPATCH-FIX.md](R1-COOLDOWN-DISPATCH-FIX.md).
 **Uko sahihi: report iliyokuwa na coverage hii haikutosha kuitwa full security audit.** Nimekagua majibu halisi ya API, nikarekebisha makosa yetu ya kutafsiri matokeo, na kufanya jaribio moja kwenye website yetu wenyewe.
 
 ## Kilichothibitishwa

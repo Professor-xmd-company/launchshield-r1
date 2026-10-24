@@ -1,0 +1,79 @@
+{
+  "state": "completed",
+  "native": {
+    "id": 130737870,
+    "details_url": "https://developer.mozilla.org/en-US/observatory/analyze?host=launchshield-r1-professorcj-43cf1823.koyeb.app",
+    "algorithm_version": 6,
+    "scanned_at": "2026-10-24T20:11:48.676Z",
+    "error": null,
+    "grade": "A+",
+    "score": 115,
+    "status_code": 200,
+    "tests_failed": 0,
+    "tests_passed": 12,
+    "tests_quantity": 12
+  },
+  "http_status": 200,
+  "requested_at": "2026-10-24T20:11:48.404949+00:00",
+  "received_at": "2026-10-24T20:11:50.014187+00:00",
+  "message": "Provider response received.",
+  "scanned_at": "2026-10-24T20:11:48.676Z",
+  "dispatch": {
+    "lifecycle_state": "completed",
+    "request_sent": true,
+    "scan_request_sent": true,
+    "requests_sent": 1,
+    "scan_requests_sent": 1,
+    "report_received": true,
+    "local_cache_hit": false,
+    "next_allowed_at": "2026-10-24T20:12:48.514347+00:00",
+    "cooldown": null,
+    "last_dispatched_at": "2026-10-24T20:11:48.514347+00:00",
+    "requests": [
+      {
+        "method": "POST",
+        "endpoint": "https://observatory-api.mdn.mozilla.net/api/v2/scan",
+        "operation": "scan_start",
+        "started_at": "2026-10-24T20:11:48.405151+00:00",
+        "request_sent": true,
+        "http_status": 200,
+        "dispatched_at": "2026-10-24T20:11:48.514347+00:00",
+        "response_category": "json_received",
+        "response_at": "2026-10-24T20:11:50.009502+00:00",
+        "elapsed_ms": 1509.84,
+        "content_type": "application/json; charset=utf-8",
+        "body_sha256": "cc0643d4c08a687c3f81aa934d6a9790969179151fa69a49c07c940f2aa72503"
+      }
+    ],
+    "events": [
+      {
+        "at": "2026-10-24T20:11:48.596280+00:00",
+        "state": "request_sent",
+        "method": "POST",
+        "endpoint": "https://observatory-api.mdn.mozilla.net/api/v2/scan",
+        "operation": "scan_start",
+        "dispatched_at": "2026-10-24T20:11:48.514347+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:11:50.009517+00:00",
+        "state": "response_received",
+        "operation": "scan_start",
+        "http_status": 200,
+        "category": "json_received",
+        "elapsed_ms": 1509.84
+      },
+      {
+        "at": "2026-10-24T20:11:50.014392+00:00",
+        "state": "completed",
+        "report_received": true,
+        "local_cache_hit": false
+      }
+    ]
+  },
+  "lifecycle_state": "completed",
+  "source": "mdn_observatory",
+  "mode": "live",
+  "native_response_sha256": "a3298d7fc4740f0efb8df4ada3b0769685045573216641517adfc1db7f203e2c",
+  "normalized_findings": []
+}

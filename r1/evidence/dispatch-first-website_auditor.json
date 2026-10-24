@@ -1,0 +1,648 @@
+{
+  "state": "unavailable",
+  "error": "The provider API still has no cached report after its documented report-page request. A completed scan could not be confirmed.",
+  "http_status": 404,
+  "retry_at": "2026-10-24T21:02:26.298216+00:00",
+  "reason_code": "report_not_generated",
+  "diagnostics": {
+    "request_sent": true,
+    "cache_http_status": 404,
+    "cache_reads": 6,
+    "poll_wait_seconds": 60,
+    "trigger": {
+      "observed_at": "2026-10-24T20:02:26.488038+00:00",
+      "request_sent": true,
+      "method": "GET",
+      "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "body_sha256": "ccf78681b2d362c41701fd734d03eb645709a54fa6dc2044d6e11515088ea1c7",
+      "scan_acceptance_confirmed": false
+    },
+    "scan_acceptance_confirmed": false,
+    "dispatch": {
+      "lifecycle_state": "failed",
+      "request_sent": true,
+      "scan_request_sent": true,
+      "requests_sent": 7,
+      "scan_requests_sent": 1,
+      "report_received": false,
+      "local_cache_hit": false,
+      "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+      "cooldown": null,
+      "last_dispatched_at": "2026-10-24T20:03:28.719350+00:00",
+      "requests": [
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "read_cache",
+          "started_at": "2026-10-24T20:02:25.001618+00:00",
+          "request_sent": true,
+          "http_status": 404,
+          "dispatched_at": "2026-10-24T20:02:25.695259+00:00",
+          "response_category": "cache_miss",
+          "response_at": "2026-10-24T20:02:25.994247+00:00",
+          "elapsed_ms": 895.26,
+          "content_type": "application/json",
+          "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+          "provider_error": "No cached report. Run a scan first."
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "trigger_scan",
+          "started_at": "2026-10-24T20:02:26.003390+00:00",
+          "request_sent": true,
+          "http_status": 200,
+          "dispatched_at": "2026-10-24T20:02:26.298216+00:00",
+          "response_category": "trigger_response_not_report",
+          "response_at": "2026-10-24T20:02:26.488377+00:00",
+          "elapsed_ms": 389.33,
+          "content_type": "text/html; charset=utf-8",
+          "body_sha256": "ccf78681b2d362c41701fd734d03eb645709a54fa6dc2044d6e11515088ea1c7"
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "started_at": "2026-10-24T20:02:30.500365+00:00",
+          "request_sent": true,
+          "http_status": 404,
+          "dispatched_at": "2026-10-24T20:02:30.620627+00:00",
+          "response_category": "cache_miss",
+          "response_at": "2026-10-24T20:02:30.890997+00:00",
+          "elapsed_ms": 375.12,
+          "content_type": "application/json",
+          "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+          "provider_error": "No cached report. Run a scan first."
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "started_at": "2026-10-24T20:02:38.901312+00:00",
+          "request_sent": true,
+          "http_status": 404,
+          "dispatched_at": "2026-10-24T20:02:39.045310+00:00",
+          "response_category": "cache_miss",
+          "response_at": "2026-10-24T20:02:39.282315+00:00",
+          "elapsed_ms": 253.98,
+          "content_type": "application/json",
+          "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+          "provider_error": "No cached report. Run a scan first."
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "started_at": "2026-10-24T20:02:51.347268+00:00",
+          "request_sent": true,
+          "http_status": 404,
+          "dispatched_at": "2026-10-24T20:02:51.422716+00:00",
+          "response_category": "cache_miss",
+          "response_at": "2026-10-24T20:02:51.738843+00:00",
+          "elapsed_ms": 342.84,
+          "content_type": "application/json",
+          "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+          "provider_error": "No cached report. Run a scan first."
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "started_at": "2026-10-24T20:03:08.100539+00:00",
+          "request_sent": true,
+          "http_status": 404,
+          "dispatched_at": "2026-10-24T20:03:08.491007+00:00",
+          "response_category": "cache_miss",
+          "response_at": "2026-10-24T20:03:08.553555+00:00",
+          "elapsed_ms": 85.24,
+          "content_type": "application/json",
+          "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+          "provider_error": "No cached report. Run a scan first."
+        },
+        {
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "started_at": "2026-10-24T20:03:28.613231+00:00",
+          "request_sent": true,
+          "http_status": 404,
+          "dispatched_at": "2026-10-24T20:03:28.719350+00:00",
+          "response_category": "cache_miss",
+          "response_at": "2026-10-24T20:03:29.006507+00:00",
+          "elapsed_ms": 309.97,
+          "content_type": "application/json",
+          "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+          "provider_error": "No cached report. Run a scan first."
+        }
+      ],
+      "events": [
+        {
+          "at": "2026-10-24T20:02:25.697266+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "read_cache",
+          "dispatched_at": "2026-10-24T20:02:25.695259+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:02:25.994265+00:00",
+          "state": "response_received",
+          "operation": "read_cache",
+          "http_status": 404,
+          "category": "cache_miss",
+          "elapsed_ms": 895.26
+        },
+        {
+          "at": "2026-10-24T20:02:26.302167+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "trigger_scan",
+          "dispatched_at": "2026-10-24T20:02:26.298216+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:02:26.488393+00:00",
+          "state": "response_received",
+          "operation": "trigger_scan",
+          "http_status": 200,
+          "category": "trigger_response_not_report",
+          "elapsed_ms": 389.33
+        },
+        {
+          "at": "2026-10-24T20:02:26.497245+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "next_poll_in_seconds": 4
+        },
+        {
+          "at": "2026-10-24T20:02:30.500389+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+        },
+        {
+          "at": "2026-10-24T20:02:30.696241+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "dispatched_at": "2026-10-24T20:02:30.620627+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:02:30.891020+00:00",
+          "state": "response_received",
+          "operation": "poll_report",
+          "http_status": 404,
+          "category": "cache_miss",
+          "elapsed_ms": 375.12
+        },
+        {
+          "at": "2026-10-24T20:02:30.897771+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "next_poll_in_seconds": 8
+        },
+        {
+          "at": "2026-10-24T20:02:38.901339+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+        },
+        {
+          "at": "2026-10-24T20:02:39.062699+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "dispatched_at": "2026-10-24T20:02:39.045310+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:02:39.282336+00:00",
+          "state": "response_received",
+          "operation": "poll_report",
+          "http_status": 404,
+          "category": "cache_miss",
+          "elapsed_ms": 253.98
+        },
+        {
+          "at": "2026-10-24T20:02:39.320727+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "next_poll_in_seconds": 12
+        },
+        {
+          "at": "2026-10-24T20:02:51.347297+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+        },
+        {
+          "at": "2026-10-24T20:02:51.424361+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "dispatched_at": "2026-10-24T20:02:51.422716+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:02:51.738865+00:00",
+          "state": "response_received",
+          "operation": "poll_report",
+          "http_status": 404,
+          "category": "cache_miss",
+          "elapsed_ms": 342.84
+        },
+        {
+          "at": "2026-10-24T20:02:51.748167+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "next_poll_in_seconds": 16
+        },
+        {
+          "at": "2026-10-24T20:03:08.195586+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+        },
+        {
+          "at": "2026-10-24T20:03:08.493570+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "dispatched_at": "2026-10-24T20:03:08.491007+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:03:08.553573+00:00",
+          "state": "response_received",
+          "operation": "poll_report",
+          "http_status": 404,
+          "category": "cache_miss",
+          "elapsed_ms": 85.24
+        },
+        {
+          "at": "2026-10-24T20:03:08.604929+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "next_poll_in_seconds": 20
+        },
+        {
+          "at": "2026-10-24T20:03:28.613260+00:00",
+          "state": "polling",
+          "operation": "poll_report",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+        },
+        {
+          "at": "2026-10-24T20:03:28.720710+00:00",
+          "state": "request_sent",
+          "method": "GET",
+          "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+          "operation": "poll_report",
+          "dispatched_at": "2026-10-24T20:03:28.719350+00:00",
+          "request_sent": true
+        },
+        {
+          "at": "2026-10-24T20:03:29.006527+00:00",
+          "state": "response_received",
+          "operation": "poll_report",
+          "http_status": 404,
+          "category": "cache_miss",
+          "elapsed_ms": 309.97
+        },
+        {
+          "at": "2026-10-24T20:03:29.013880+00:00",
+          "state": "failed",
+          "category": "report_not_generated",
+          "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+          "report_received": false
+        }
+      ]
+    }
+  },
+  "dispatch": {
+    "lifecycle_state": "failed",
+    "request_sent": true,
+    "scan_request_sent": true,
+    "requests_sent": 7,
+    "scan_requests_sent": 1,
+    "report_received": false,
+    "local_cache_hit": false,
+    "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+    "cooldown": null,
+    "last_dispatched_at": "2026-10-24T20:03:28.719350+00:00",
+    "requests": [
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "read_cache",
+        "started_at": "2026-10-24T20:02:25.001618+00:00",
+        "request_sent": true,
+        "http_status": 404,
+        "dispatched_at": "2026-10-24T20:02:25.695259+00:00",
+        "response_category": "cache_miss",
+        "response_at": "2026-10-24T20:02:25.994247+00:00",
+        "elapsed_ms": 895.26,
+        "content_type": "application/json",
+        "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+        "provider_error": "No cached report. Run a scan first."
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "trigger_scan",
+        "started_at": "2026-10-24T20:02:26.003390+00:00",
+        "request_sent": true,
+        "http_status": 200,
+        "dispatched_at": "2026-10-24T20:02:26.298216+00:00",
+        "response_category": "trigger_response_not_report",
+        "response_at": "2026-10-24T20:02:26.488377+00:00",
+        "elapsed_ms": 389.33,
+        "content_type": "text/html; charset=utf-8",
+        "body_sha256": "ccf78681b2d362c41701fd734d03eb645709a54fa6dc2044d6e11515088ea1c7"
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "started_at": "2026-10-24T20:02:30.500365+00:00",
+        "request_sent": true,
+        "http_status": 404,
+        "dispatched_at": "2026-10-24T20:02:30.620627+00:00",
+        "response_category": "cache_miss",
+        "response_at": "2026-10-24T20:02:30.890997+00:00",
+        "elapsed_ms": 375.12,
+        "content_type": "application/json",
+        "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+        "provider_error": "No cached report. Run a scan first."
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "started_at": "2026-10-24T20:02:38.901312+00:00",
+        "request_sent": true,
+        "http_status": 404,
+        "dispatched_at": "2026-10-24T20:02:39.045310+00:00",
+        "response_category": "cache_miss",
+        "response_at": "2026-10-24T20:02:39.282315+00:00",
+        "elapsed_ms": 253.98,
+        "content_type": "application/json",
+        "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+        "provider_error": "No cached report. Run a scan first."
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "started_at": "2026-10-24T20:02:51.347268+00:00",
+        "request_sent": true,
+        "http_status": 404,
+        "dispatched_at": "2026-10-24T20:02:51.422716+00:00",
+        "response_category": "cache_miss",
+        "response_at": "2026-10-24T20:02:51.738843+00:00",
+        "elapsed_ms": 342.84,
+        "content_type": "application/json",
+        "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+        "provider_error": "No cached report. Run a scan first."
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "started_at": "2026-10-24T20:03:08.100539+00:00",
+        "request_sent": true,
+        "http_status": 404,
+        "dispatched_at": "2026-10-24T20:03:08.491007+00:00",
+        "response_category": "cache_miss",
+        "response_at": "2026-10-24T20:03:08.553555+00:00",
+        "elapsed_ms": 85.24,
+        "content_type": "application/json",
+        "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+        "provider_error": "No cached report. Run a scan first."
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "started_at": "2026-10-24T20:03:28.613231+00:00",
+        "request_sent": true,
+        "http_status": 404,
+        "dispatched_at": "2026-10-24T20:03:28.719350+00:00",
+        "response_category": "cache_miss",
+        "response_at": "2026-10-24T20:03:29.006507+00:00",
+        "elapsed_ms": 309.97,
+        "content_type": "application/json",
+        "body_sha256": "49337083394ba3f938eff390cbd5af339ce255ca02db45709dfc1dde8334149b",
+        "provider_error": "No cached report. Run a scan first."
+      }
+    ],
+    "events": [
+      {
+        "at": "2026-10-24T20:02:25.697266+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "read_cache",
+        "dispatched_at": "2026-10-24T20:02:25.695259+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:02:25.994265+00:00",
+        "state": "response_received",
+        "operation": "read_cache",
+        "http_status": 404,
+        "category": "cache_miss",
+        "elapsed_ms": 895.26
+      },
+      {
+        "at": "2026-10-24T20:02:26.302167+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/report/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "trigger_scan",
+        "dispatched_at": "2026-10-24T20:02:26.298216+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:02:26.488393+00:00",
+        "state": "response_received",
+        "operation": "trigger_scan",
+        "http_status": 200,
+        "category": "trigger_response_not_report",
+        "elapsed_ms": 389.33
+      },
+      {
+        "at": "2026-10-24T20:02:26.497245+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "next_poll_in_seconds": 4
+      },
+      {
+        "at": "2026-10-24T20:02:30.500389+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+      },
+      {
+        "at": "2026-10-24T20:02:30.696241+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "dispatched_at": "2026-10-24T20:02:30.620627+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:02:30.891020+00:00",
+        "state": "response_received",
+        "operation": "poll_report",
+        "http_status": 404,
+        "category": "cache_miss",
+        "elapsed_ms": 375.12
+      },
+      {
+        "at": "2026-10-24T20:02:30.897771+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "next_poll_in_seconds": 8
+      },
+      {
+        "at": "2026-10-24T20:02:38.901339+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+      },
+      {
+        "at": "2026-10-24T20:02:39.062699+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "dispatched_at": "2026-10-24T20:02:39.045310+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:02:39.282336+00:00",
+        "state": "response_received",
+        "operation": "poll_report",
+        "http_status": 404,
+        "category": "cache_miss",
+        "elapsed_ms": 253.98
+      },
+      {
+        "at": "2026-10-24T20:02:39.320727+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "next_poll_in_seconds": 12
+      },
+      {
+        "at": "2026-10-24T20:02:51.347297+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+      },
+      {
+        "at": "2026-10-24T20:02:51.424361+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "dispatched_at": "2026-10-24T20:02:51.422716+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:02:51.738865+00:00",
+        "state": "response_received",
+        "operation": "poll_report",
+        "http_status": 404,
+        "category": "cache_miss",
+        "elapsed_ms": 342.84
+      },
+      {
+        "at": "2026-10-24T20:02:51.748167+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "next_poll_in_seconds": 16
+      },
+      {
+        "at": "2026-10-24T20:03:08.195586+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+      },
+      {
+        "at": "2026-10-24T20:03:08.493570+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "dispatched_at": "2026-10-24T20:03:08.491007+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:03:08.553573+00:00",
+        "state": "response_received",
+        "operation": "poll_report",
+        "http_status": 404,
+        "category": "cache_miss",
+        "elapsed_ms": 85.24
+      },
+      {
+        "at": "2026-10-24T20:03:08.604929+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "next_poll_in_seconds": 20
+      },
+      {
+        "at": "2026-10-24T20:03:28.613260+00:00",
+        "state": "polling",
+        "operation": "poll_report",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app"
+      },
+      {
+        "at": "2026-10-24T20:03:28.720710+00:00",
+        "state": "request_sent",
+        "method": "GET",
+        "endpoint": "https://websiteauditor.net/api/public/audit/launchshield-r1-professorcj-43cf1823.koyeb.app",
+        "operation": "poll_report",
+        "dispatched_at": "2026-10-24T20:03:28.719350+00:00",
+        "request_sent": true
+      },
+      {
+        "at": "2026-10-24T20:03:29.006527+00:00",
+        "state": "response_received",
+        "operation": "poll_report",
+        "http_status": 404,
+        "category": "cache_miss",
+        "elapsed_ms": 309.97
+      },
+      {
+        "at": "2026-10-24T20:03:29.013880+00:00",
+        "state": "failed",
+        "category": "report_not_generated",
+        "next_allowed_at": "2026-10-24T21:02:26.298216+00:00",
+        "report_received": false
+      }
+    ]
+  },
+  "source": "website_auditor",
+  "mode": "live"
+}

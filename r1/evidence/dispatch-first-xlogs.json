@@ -1,0 +1,96 @@
+{
+  "state": "skipped_cooldown",
+  "error": "Request was not dispatched: provider_security_checkpoint.",
+  "http_status": null,
+  "retry_at": "2026-10-24T20:10:58.930248+00:00",
+  "reason_code": "local_cooldown",
+  "diagnostics": {
+    "request_sent": false,
+    "quota": "xlogs",
+    "cooldown": {
+      "scope": "provider",
+      "reason": "provider_security_checkpoint",
+      "quota": "xlogs",
+      "until": "2026-10-24T20:10:58.930248+00:00"
+    },
+    "method": "POST",
+    "endpoint": "https://xlogs.com/api/v1/scan",
+    "elapsed_ms": 116.44,
+    "dispatch": {
+      "lifecycle_state": "skipped_cooldown",
+      "request_sent": false,
+      "scan_request_sent": false,
+      "requests_sent": 0,
+      "scan_requests_sent": 0,
+      "report_received": false,
+      "local_cache_hit": false,
+      "next_allowed_at": "2026-10-24T20:10:58.930248+00:00",
+      "cooldown": {
+        "scope": "provider",
+        "reason": "provider_security_checkpoint",
+        "quota": "xlogs",
+        "until": "2026-10-24T20:10:58.930248+00:00"
+      },
+      "last_dispatched_at": null,
+      "requests": [
+        {
+          "method": "POST",
+          "endpoint": "https://xlogs.com/api/v1/scan",
+          "operation": "scan_start",
+          "started_at": "2026-10-24T20:02:25.101974+00:00",
+          "request_sent": false,
+          "http_status": null,
+          "response_category": "skipped_cooldown"
+        }
+      ],
+      "events": [
+        {
+          "at": "2026-10-24T20:02:25.198254+00:00",
+          "state": "skipped_cooldown",
+          "reason_code": "local_cooldown",
+          "next_allowed_at": "2026-10-24T20:10:58.930248+00:00",
+          "request_sent": false
+        }
+      ]
+    }
+  },
+  "dispatch": {
+    "lifecycle_state": "skipped_cooldown",
+    "request_sent": false,
+    "scan_request_sent": false,
+    "requests_sent": 0,
+    "scan_requests_sent": 0,
+    "report_received": false,
+    "local_cache_hit": false,
+    "next_allowed_at": "2026-10-24T20:10:58.930248+00:00",
+    "cooldown": {
+      "scope": "provider",
+      "reason": "provider_security_checkpoint",
+      "quota": "xlogs",
+      "until": "2026-10-24T20:10:58.930248+00:00"
+    },
+    "last_dispatched_at": null,
+    "requests": [
+      {
+        "method": "POST",
+        "endpoint": "https://xlogs.com/api/v1/scan",
+        "operation": "scan_start",
+        "started_at": "2026-10-24T20:02:25.101974+00:00",
+        "request_sent": false,
+        "http_status": null,
+        "response_category": "skipped_cooldown"
+      }
+    ],
+    "events": [
+      {
+        "at": "2026-10-24T20:02:25.198254+00:00",
+        "state": "skipped_cooldown",
+        "reason_code": "local_cooldown",
+        "next_allowed_at": "2026-10-24T20:10:58.930248+00:00",
+        "request_sent": false
+      }
+    ]
+  },
+  "source": "xlogs",
+  "mode": "live"
+}

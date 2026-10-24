@@ -40,8 +40,8 @@ The application needs only its Gemini runtime secret. It does not need GitHub, K
 
 ## Verification
 
-- **123 isolated tests passed**: lifecycle, provider contracts, real-only defaults, production mock rejection, automatic AI, public submission permission, DNS/SSRF/redirect guards, private capabilities, exports, cache age, quota handling and readable/escaped reports.
-- Tests inject fixtures/transports. They do not mean123 websites were scanned and need no production key.
+- **174 isolated tests passed**: lifecycle, provider contracts, real-only defaults, production mock rejection, automatic AI, public submission permission, DNS/SSRF/redirect guards, private capabilities, exports, cache age, quota handling and readable/escaped reports.
+- Tests inject fixtures/transports. They do not mean174 websites were scanned and need no production key.
 - Genuine previous owned-origin assessments verified MDN, full Vibe retrieval and Gemini. They also exposed actual provider limits/failures and a corrected Vibe agent-summary contract. Original failures remain preserved rather than rewritten.
 - The simple real-only flow was genuinely tested. A later user report exposed insufficient diagnostic fidelity and an unsupported zero-date Vibe TLS signal. The current correction distinguishes security checkpoints, actual HTTP429 quotas, preserved local cooldowns, and Website Auditor404/no-generated-report. Vibe module coverage and direct verified TLS metadata are explicit, and incomplete coverage cannot produce a security verdict. Current live recheck and exact source pin are recorded in `docs/deployment.json`, `docs/R1-PROVIDER-DIAGNOSIS.md` and the append-only R1 record. No fixture is presented as a live result.
 
@@ -51,11 +51,17 @@ python -m pytest -q
 node --check static/main.js
 ```
 
+## Cooldown/dispatch correction
+
+The recurring first-scan Website Auditor block was an underlying release bug: the updater fabricated a global deployment-time+1hour hold. That initialization is removed, and only verified upstream penalties are carried forward. Sent accounting now commits at confirmed transport dispatch, not reservation/client creation. A user-visible Retry test action becomes eligible after the unchanged server deadline; refresh only retrieves existing evidence.
+
+174isolated tests passed. Actual owned-origin evidence shows a Website Auditor trigger sent before the former bogus hold, and an xlogs POST sent after the genuine deadline. The Website target interval stayed unchanged during retry. Actual provider failures remain visible: Website cached API404, xlogs429security checkpoint, and one Gemini503. These are not claimed as provider recovery or a clean security result. See [root cause, files and test/live evidence](docs/R1-COOLDOWN-DISPATCH-FIX.md).
+
 ## Evidence, AI and provider limits
 
 - Four website providers: Website Auditor, xlogs, Vibe Check and MDN Observatory. OSV is queried only for reliable exact package/version evidence; otherwise it is explicitly not applicable, not a clean vulnerability result.
 - Quotas and `Retry-After` are respected. No blind scan-start POST retries, IP rotation, account/key rotation or quota reset workaround.
-- Optional `LAUNCHSHIELD_PROVIDER_COOLDOWNS` carries known provider not-before times across an ephemeral redeploy. It is operator configuration, not a UI control.
+- `LAUNCHSHIELD_PROVIDER_COOLDOWNS` carries evidence-based absolute upstream deadlines, not deployment-time windows. `tools/cooldown_manifest.py` never creates `now + hour`. Provider-wide penalties/budgets, per-target dispatch intervals and unsent permits are separate. A local skip cannot change sent counters or deadlines.
 - Vibe agent summaries are not complete findings: retrieve the full result using the existing scan ID when required. Preserve native timestamps, confidence, partial/unknown module coverage and original evidence.
 - Website Auditor cache age is retained; SEO-only modules are not security findings. MDN summary grades do not become invented per-header vulnerabilities. Provider scores are not combined into a security guarantee.
 - AI is automatic but separate from observed evidence. Its structured output can only reference supplied finding IDs. It receives no server credentials. Provider output is untrusted; nothing in it is executed. AI failure cannot block evidence downloads.

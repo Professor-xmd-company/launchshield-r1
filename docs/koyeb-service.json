@@ -67,7 +67,7 @@
       },
       {
         "key": "LAUNCHSHIELD_PROVIDER_COOLDOWNS",
-        "value": "{\"xlogs\":\"2026-10-24T19:10:28.625821+00:00\",\"website_trigger\":\"2026-10-24T20:04:39.231282+00:00\",\"vibe_start\":\"2026-10-24T19:06:09.231282+00:00\",\"vibe_poll\":\"2026-10-24T19:06:09.231282+00:00\",\"mdn_observatory\":\"2026-10-24T19:06:09.231282+00:00\"}"
+        "value": "{\"xlogs\":{\"until\":\"2026-10-24T20:10:58.930248+00:00\",\"observed_at\":\"2026-10-24T19:10:58.928198+00:00\",\"source\":\"provider_security_checkpoint\",\"http_status\":429}}"
       },
       {
         "key": "LAUNCHSHIELD_DIAGNOSTICS_UNTIL",
@@ -126,7 +126,7 @@
       "repository": "github.com/Professor-xmd-company/launchshield-r1",
       "branch": "main",
       "tag": "",
-      "sha": "c2172b41dae3f8d182bb2e8365ea1d091ea5267c",
+      "sha": "8f993435748179995a2c3d31e02e3c10b8915cf8",
       "build_command": "",
       "run_command": "",
       "no_deploy_on_push": true,

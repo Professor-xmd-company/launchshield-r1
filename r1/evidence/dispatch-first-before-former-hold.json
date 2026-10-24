@@ -1,0 +1,13 @@
+{
+  "former_artificial_hold_until": "2026-10-24T20:04:39.231282+00:00",
+  "actual_trigger_dispatched_at": "2026-10-24T20:02:26.298216+00:00",
+  "trigger_http_status": 200,
+  "trigger_sent_before_former_hold": true,
+  "valid_website_report_received": false,
+  "actual_xlogs_hold_unchanged": "2026-10-24T20:10:58.930248+00:00",
+  "xlogs_requests_sent_during_hold": 0,
+  "independent_reports_returned": [
+    "vibe_check",
+    "mdn_observatory"
+  ]
+}

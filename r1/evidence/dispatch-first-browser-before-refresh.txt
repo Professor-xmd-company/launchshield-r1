@@ -1,0 +1,12 @@
+### Result
+{
+  "jobId": "e43ad16d127ed45dc88ee87fa00506ad",
+  "viewport": 390,
+  "documentWidth": 390,
+  "retryDisabled": true,
+  "retryText": "Retry after Oct 24, 2026, 8:10 PM"
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({jobId:JSON.parse(sessionStorage.getItem(\'ls_last\')||\'null\')?.id,viewport:innerWidth,documentWidth:document.documentElement.scrollWidth,retryDisabled:document.getElementById(\'retry-test\').disabled,retryText:document.getElementById(\'retry-test\').textContent})');
+```

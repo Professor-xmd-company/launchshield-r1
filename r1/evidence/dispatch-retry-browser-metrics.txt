@@ -1,0 +1,16 @@
+### Result
+{
+  "viewport": 390,
+  "documentWidth": 390,
+  "fields": 1,
+  "selectors": 0,
+  "checkboxes": 0,
+  "rawCodeBlocks": 0,
+  "reportVisible": true,
+  "progressHidden": true,
+  "jobId": "c3443208cf2318c888baa0de151871f7"
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({viewport:innerWidth,documentWidth:document.documentElement.scrollWidth,fields:document.querySelectorAll(\'input\').length,selectors:document.querySelectorAll(\'select\').length,checkboxes:document.querySelectorAll(\'input[type=checkbox]\').length,rawCodeBlocks:document.querySelectorAll(\'pre\').length,reportVisible:!document.getElementById(\'report\').hidden,progressHidden:document.getElementById(\'progress\').hidden,jobId:JSON.parse(sessionStorage.getItem(\'ls_last\')||\'null\')?.id})');
+```

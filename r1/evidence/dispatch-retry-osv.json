@@ -1,0 +1,25 @@
+{
+  "state": "skipped_not_applicable",
+  "message": "No reliable package ecosystem/name/exact-version evidence. This is not a clean vulnerability result.",
+  "requested_at": "2026-10-24T20:12:24.397998+00:00",
+  "native": null,
+  "dispatch": {
+    "lifecycle_state": "completed",
+    "request_sent": false,
+    "scan_request_sent": false,
+    "requests_sent": 0,
+    "scan_requests_sent": 0,
+    "report_received": false,
+    "local_cache_hit": false,
+    "next_allowed_at": null,
+    "cooldown": null,
+    "last_dispatched_at": null,
+    "requests": [],
+    "events": []
+  },
+  "lifecycle_state": "completed",
+  "source": "osv",
+  "mode": "live",
+  "native_response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+  "normalized_findings": []
+}
